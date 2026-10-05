@@ -1,0 +1,10 @@
+---
+import Arrow from './Arrow.astro';
+const { items = [], title = 'Keep reading' } = Astro.props;
+---
+<section class="wrap" style="padding-bottom:96px" aria-labelledby="rel-h">
+  <h2 id="rel-h" class="h2s" style="margin-bottom:20px">{title}</h2>
+  <div class="tiles" style={`--n:${Math.min(3, items.length)}`}>
+    {items.map(([t, d, h]) => <a class="tile" href={h}><span class="h3">{t}</span><span class="muted small">{d}</span><span class="arrow">Go <Arrow /></span></a>)}
+  </div>
+</section>

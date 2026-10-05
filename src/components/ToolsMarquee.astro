@@ -1,0 +1,23 @@
+---
+import Logo from './Logo.astro';
+import { TOOLS } from '../data/site.js';
+const { title = 'Plugs into the tools you already use.', sub = 'Sales, tickets, ads, CRM, app stores, dashboards. We connect to the accounts you have, so nothing moves and there’s no new dashboard for your team to learn.' } = Astro.props;
+---
+<section class="tools" aria-labelledby="tools-h">
+  <div class="wrap tools-h">
+    <h2 id="tools-h" class="h2s">{title}</h2>
+    <p class="muted">{sub}</p>
+  </div>
+  <div class="mq" data-mq>
+    <ul class="mq-t" aria-label="Tools Arcus works with">
+      {TOOLS.map((t) => <li><Logo name={t.name} logo={t.logo} /></li>)}
+    </ul>
+    <ul class="mq-t" aria-hidden="true">
+      {TOOLS.map((t) => <li><Logo name={t.name} logo={t.logo} /></li>)}
+    </ul>
+  </div>
+  <div class="wrap tools-f">
+    <p class="tiny faint">And the spreadsheets, exports and agency decks you already have. If you use it, we can usually read it. <a class="ul" href="/listening">See everywhere we listen</a></p>
+    <button type="button" class="mq-btn" data-mq-toggle aria-pressed="false">Pause</button>
+  </div>
+</section>

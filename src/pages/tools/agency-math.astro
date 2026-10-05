@@ -1,0 +1,42 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import PageFAQ from '../../components/PageFAQ.astro';
+import { SITE } from '../../data/site.js';
+const crumbs = [{ name: 'Library', href: '/library' }, { name: 'Agency math calculator', href: '/tools/agency-math' }];
+const schema = [{ '@type': 'WebApplication', name: 'Agency math calculator', url: `${SITE}/tools/agency-math`, applicationCategory: 'BusinessApplication', operatingSystem: 'Any', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, description: 'Add up what each agency claims and compare it with your own numbers to see how much is counted twice.' }];
+const agencies = [['claim1', 'Social agency'], ['claim2', 'Search agency'], ['claim3', 'Creator agency'], ['claim4', 'Other']];
+---
+<Site title="Agency math calculator: do your agencies’ claims add up? | Arcus" description="Type in what each agency claims and your own numbers for the same month. See how many claims overlap or came from somewhere else. Nothing leaves your browser." path="/tools/agency-math" page="tool" crumbs={crumbs} schema={schema}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">Do your agencies’ claims add up?</h1>
+    <QuickAnswer q="How do I know if my agencies are double counting?" a="Add up what each agency says it drove in one month, and compare it with your own numbers for that month: sales, tickets, sign-ups or streams. If the claims add up to more, the same results are being counted more than once, or credited for things that came from elsewhere." />
+  </header>
+  <section class="wrap" style="padding-bottom:96px">
+    <form class="calc" data-calc aria-label="Agency math calculator">
+      <div class="form">
+        <p class="h3">One month, your numbers</p>
+        {agencies.map(([n, l]) => <div class="fld"><label for={n}>{l} says it drove</label><input id={n} name={n} data-name={l} type="number" inputmode="numeric" min="0" placeholder="0" /></div>)}
+        <div class="fld"><label for="real">Your own number for that month</label><input id="real" name="real" type="number" inputmode="numeric" min="0" placeholder="0" /><span class="hint">Sales, tickets, sign-ups or streams. Whatever the agencies are claiming.</span></div>
+        <p class="tiny faint">Nothing you type leaves your browser.</p>
+      </div>
+      <div class="card" style="padding:32px;display:flex;flex-direction:column;gap:18px" aria-live="polite">
+        <p class="small faint">Claims beyond your own number</p>
+        <output data-calc-out class="num">0</output>
+        <p class="small">Claims are <b class="num" data-calc-ratio>–</b> your own number</p>
+        <div class="bars" data-calc-bars></div>
+        <p data-calc-note class="muted"></p>
+        <a href="/free-report?start=agency_check" class="jb k" data-jelly data-loc="calc" style="align-self:flex-start"><span class="bg"></span><span class="lb">Find out which claims hold up</span></a>
+      </div>
+    </form>
+  </section>
+  <PageFAQ id="calc-faq" items={[
+    ['What does this number mean?', 'It’s the smallest possible overlap. If claims add up to more than your own number, at least that many are counted twice or came from somewhere else. The real overlap is usually bigger, because some claims inside the total are double counted too.'],
+    ['What if the claims add up to less?', 'That’s rare, and a good sign. It doesn’t prove every claim is right. A check shows which ones hold up, and where the rest came from.'],
+    ['Is my data stored?', 'No. The math runs in your browser and nothing is sent anywhere.'],
+  ]} />
+  <Close variant="or" lines={['We show you', 'which ones.']} body="The calculator shows how much doesn’t add up. Make it your first question: send one agency report and we’ll check every claim against your own numbers, show you which ones held up, and walk you through it in 30 minutes. Free, no card." loc="calc-close" />
+</Site>

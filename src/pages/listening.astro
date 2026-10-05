@@ -1,0 +1,124 @@
+---
+import Site from '../layouts/Site.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Close from '../components/Close.astro';
+import Logo from '../components/Logo.astro';
+import Arrow from '../components/Arrow.astro';
+import { LISTEN_SOURCES, OWN, TOOLS, SITE } from '../data/site.js';
+import { PLATFORMS } from '../data/industries-deep.js';
+import { INTEGRATIONS } from '../data/all.js';
+import { INDUSTRIES } from '../data/content.js';
+import PageFAQ from '../components/PageFAQ.astro';
+import QuickAnswer from '../components/QuickAnswer.astro';
+const crumbs = [{ name: 'What people say', href: '/listening' }];
+const schema = [{ '@type': 'WebPage', name: 'What people say, next to what they did', url: `${SITE}/listening`, about: ['third-party data', 'first-party data', 'social listening'] }];
+---
+<Site title="What people say, next to what they did | Arcus" description="Arcus reads what your audience says on Reddit, TikTok, YouTube, Discord, Twitch, Kick, Facebook groups, Google, Goodreads, Fable and more, and lines it up with your own sales and customer data." path="/listening" page="listening" crumbs={crumbs} schema={schema}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">What people say, next to what they did.</h1>
+    <p class="lead">Your numbers tell you what happened. What people say on Reddit, TikTok or in a Twitch chat tells you why. On its own, talk is a hunch. Next to your own sales, it’s a decision.</p>
+    <QuickAnswer q="What does Arcus listen to?" a="Public conversation where your audience spends time: Reddit, TikTok, YouTube, Instagram, X, Facebook groups, Discord, Twitch, Kick, Google Search, Goodreads, Fable, Letterboxd, Steam, reviews and more. We count what comes up, the words, jokes, questions and complaints, and line it up with your own numbers: sales, tickets, sign-ups, streams and customers." />
+  </header>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="w-h">
+    <div class="sec-h">
+      <h2 id="w-h" class="h2s">Where they talk</h2>
+      <p class="muted" style="max-width:60ch">Public posts, comments, reviews, chats and searches. We pick the places that matter for your audience. A streaming service and a whiskey brand don’t need the same list.</p>
+    </div>
+    <div class="btnrow l" data-filter="#lw-list" data-live="#lw-live" role="group" aria-label="Filter by industry" style="margin-bottom:10px">
+      <button class="chip" type="button" data-val="all" aria-pressed="true">All</button>
+      {INDUSTRIES.map((ind) => <button class="chip" type="button" data-val={ind.slug} aria-pressed="false">{ind.name}</button>)}
+    </div>
+    <p id="lw-live" class="tiny faint" aria-live="polite" style="margin-bottom:12px">Showing {LISTEN_SOURCES.length}</p>
+    <ul class="lw" id="lw-list" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">
+      {LISTEN_SOURCES.map((s) => { const p = PLATFORMS[s.name] || {}; return (
+        <li data-cat={(p.bestFor || []).join(' ')} data-multi>
+          <Logo name={s.name} logo={s.logo} size={20} />
+          <span class="small">{p.goodFor || s.what}</span>
+          {p.weCount && <span class="tiny"><b>We count:</b> {p.weCount}</span>}
+          {p.ask && <span class="tiny"><b>Answers:</b> “{p.ask}”</span>}
+        </li>); })}
+      <li style="background:var(--ink);color:#F4F4F4"><span class="lg" style="color:inherit">And more</span><span class="tiny" style="color:#F4F4F4B3">Fan wikis, forums, app stores, wherever your audience is</span></li>
+    </ul>
+  </section>
+
+  <section class="slab s-gr" aria-labelledby="own-h">
+    <div class="split mid">
+      <div class="sec-h" style="margin:0">
+        <h2 id="own-h" class="dh d72 wipe" data-reveal><span class="ln">Then we line it up</span><span class="ln">with yours.</span></h2>
+        <p class="lead">Third-party data is what the internet says. First-party data is what your company already knows: sales, tickets, sign-ups, viewing, customers, your own posts. Arcus connects both into one layer you own, so every answer sees the whole picture.</p>
+      </div>
+      <ul class="own">{OWN.map((o) => <li><i></i>{o}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="q-h">
+    <div class="sec-h">
+      <h2 id="q-h" class="dh d72">Questions only both can answer.</h2>
+      <p class="lead muted">Each one needs the conversation and your own numbers in the same place. Neither half can answer it alone.</p>
+    </div>
+    <div class="tiles" style="--n:3">
+      {[
+        ['Did the buzz sell anything?', 'The trailer comments went wild. Did sign-ups or sales move in the same weeks, and where?'],
+        ['Who are the fans who buy?', 'The people talking loudest aren’t always the ones buying. We find out which group your best customers look like.'],
+        ['What words should we use?', 'We count the words your audience uses, and check which ones show up around the posts that sold.'],
+        ['What are they asking for?', 'Requests and complaints, counted across Reddit, reviews and Discord, next to what they bought before asking.'],
+        ['Which creators do they trust?', 'Who fans quote and share, next to whose codes and links hold up in your own numbers.'],
+        ['What should we make next?', 'What the audience already does on its own, next to the posts of yours that worked.'],
+      ].map(([q, a]) => <div class="tile rise" data-reveal><p class="h3">{q}</p><p class="muted">{a}</p></div>)}
+    </div>
+  </section>
+
+  <section class="slab s-ic" aria-labelledby="keep-h">
+    <div class="split mid">
+      <div class="sec-h" style="margin:0">
+        <h2 id="keep-h" class="dh d72 wipe" data-reveal><span class="ln">Already have a</span><span class="ln">listening tool? Keep it.</span></h2>
+        <p class="lead">It hears the conversation. It can’t see whether the conversation sold anything, because your sales live somewhere else. We plug in what your tool already collects, add the places it doesn’t reach, and connect it all to your sales, tickets and sign-ups.</p>
+        <a href="/integrations" class="arrow">Everything we plug into <Arrow /></a>
+      </div>
+      <ul class="lw sm">{INTEGRATIONS.filter((i) => i.category === 'Listening tools').map((i) => <li><a href={`/integrations/${i.slug}`}><Logo name={i.name} logo={i.logo} size={18} /></a></li>)}<li><span class="lg">Or whatever you run</span></li></ul>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:120px;padding-top:96px" aria-labelledby="how-h">
+    <div class="split">
+      <div class="sec-h" style="margin:0">
+        <h2 id="how-h" class="h2s">Counted, not summarized</h2>
+        <p class="muted">How loud it got is only the start. We count specific things, sort them by hand where it matters, and show you the comments behind every number, so each count can be checked and lined up with what people did.</p>
+        <ul class="dash" style="font-size:16px">
+          <li>Every post and comment we use is filed, so you can read it yourself</li>
+          <li>The same counting rules for your audience and for your brand, so the comparison is fair</li>
+          <li>Small groups are marked directional, so you know what’s solid</li>
+        </ul>
+        <a href="/reports/audience-report" class="arrow">See a real audience report <Arrow /></a>
+      </div>
+      <div class="rc wide" aria-label="From a real audience report">
+        <div class="hd">Audience report, real counts</div>
+        <div class="r"><span>TikToks watched and sorted</span><span>293</span></div>
+        <div class="r"><span>Comments sorted by hand</span><span>2,965</span></div>
+        <div class="r"><span>Comments counted</span><span>6,622</span></div>
+        <div class="r"><span>Reddit questions read</span><span>4,283</span></div>
+        <div class="r"><span>Trailer comments counted</span><span>78,682</span></div>
+        <div class="r tot"><span>Rules for the brand’s voice</span><span>4</span></div>
+        <div class="bar"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="t-h">
+    <h2 id="t-h" class="h2s" style="margin-bottom:8px">Your side connects too</h2>
+    <p class="muted" style="margin-bottom:24px">Your sales, CRM, ad and social accounts join the same layer, inside your own setup. Nothing moves into a new tool.</p>
+    <ul class="lw sm">{TOOLS.map((t) => <li><Logo name={t.name} logo={t.logo} size={18} /></li>)}</ul>
+  </section>
+
+  <PageFAQ id="listen-faq" items={[
+    ['Do we need to drop our listening tool?', 'No. Keep it. We plug in what it already collects, add the places it doesn’t reach, and connect it to your sales, tickets and sign-ups. That’s the part it can’t do on its own.'],
+    ['Do you read private groups or messages?', '[Confirm policy before publishing: we read public posts, comments and communities, and anything you give us access to.]'],
+    ['Which platforms matter for my brand?', 'It depends on where your audience spends time. Filter the list above by industry for a starting point. We pick the list with you before we start.'],
+    ['What is first-party data?', 'Anything your company collects itself: sales, tickets, sign-ups, viewing, customer lists, email and your own social accounts. It’s the most reliable data you have, and usually the least read.'],
+    ['What does lining it up mean?', 'Putting conversation and results on the same timeline and the same audience groups. For example, checking whether the weeks when fans talked most about a title were the weeks sign-ups rose, and in which regions.'],
+  ]} />
+
+  <Close variant="ink" lines={['What they say.', 'What they did.']} body="Bring us one question. Start with what your audience says about you, and we’ll put it next to your own numbers." loc="listening-close" />
+</Site>

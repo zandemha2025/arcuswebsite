@@ -1,0 +1,21 @@
+---
+// Inline a Simple Icons SVG from public/logos so it takes the text color. No file: the name is set as a wordmark.
+import fs from 'node:fs';
+import path from 'node:path';
+interface Props { name: string; logo?: string; size?: number; label?: boolean }
+const { name, logo = '', size = 22, label = true, img = true } = Astro.props;
+let svg = '';
+if (logo && !img) {
+  try {
+    svg = fs.readFileSync(path.join(process.cwd(), 'public/logos', `${logo}.svg`), 'utf8')
+      .replace(/<title>.*?<\/title>/, '')
+      .replace('<svg ', `<svg width="${size}" height="${size}" fill="currentColor" aria-hidden="true" focusable="false" `);
+  } catch { svg = ''; }
+}
+---
+<span class={`lg${svg || (img && logo) ? '' : ' wm'}`}>
+  {img && logo && <img src={`/logos/${logo}.svg`} alt="" width={size} height={size} loading="lazy" decoding="async" class="lg-i" />}
+  {svg && <Fragment set:html={svg} />}
+  {(label || !(svg || (img && logo))) && <span class="lg-n">{name}</span>}
+  {!label && (svg || (img && logo)) && <span class="sr-only">{name}</span>}
+</span>

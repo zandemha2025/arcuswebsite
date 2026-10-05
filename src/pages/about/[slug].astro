@@ -1,0 +1,31 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import Arrow from '../../components/Arrow.astro';
+import { TEAM, SITE } from '../../data/site.js';
+import { ALL_ARTICLES as ARTICLES } from '../../data/all.js';
+export function getStaticPaths() { return TEAM.map((t) => ({ params: { slug: t.slug }, props: { t } })); }
+const { t } = Astro.props;
+const posts = ARTICLES.filter((a) => a.author === t.slug);
+const crumbs = [{ name: 'About', href: '/about' }, { name: t.name, href: `/about/${t.slug}` }];
+const schema = [{ '@type': 'ProfilePage', url: `${SITE}/about/${t.slug}`, mainEntity: { '@type': 'Person', '@id': `${SITE}/about/${t.slug}#person`, name: t.name, jobTitle: t.title, worksFor: { '@id': `${SITE}/#org` }, description: t.line, url: `${SITE}/about/${t.slug}`, ...(t.photo ? { image: `${SITE}${t.photo}` } : {}), ...(t.linkedin ? { sameAs: [t.linkedin] } : {}), ...(t.knowsAbout?.length ? { knowsAbout: t.knowsAbout } : {}), ...(t.credentials?.length ? { hasCredential: t.credentials.map((c) => ({ '@type': 'EducationalOccupationalCredential', name: c })) } : {}) } }];
+---
+<Site title={`${t.name}, ${t.title} | Arcus`} description={`${t.name} is ${t.title} at Arcus. ${t.line}`} path={`/about/${t.slug}`} page="person" crumbs={crumbs} schema={schema}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <div class="person" style="gap:28px">{t.photo ? <img src={t.photo} alt={t.name} width="120" height="120" style="border-radius:50%;width:120px;height:120px;object-fit:cover" /> : <span class="av lg2">{t.initials}</span>}<div><h1 class="dh d96">{t.name}</h1><p class="h3 muted">{t.title}, Arcus</p></div></div>
+  </header>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="split">
+      <div class="prose"><p style="font-weight:600">{t.line}</p><p>{t.bio}</p></div>
+      <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px">
+        <p class="h3">Written by {t.name.split(' ')[0]}</p>
+        {posts.length ? posts.map((p) => <a class="arrow" href={`/library/${p.slug}`}>{p.title} <Arrow /></a>) : <p class="muted small">Nothing published yet.</p>}
+        {t.linkedin ? <a class="arrow" href={t.linkedin} rel="me noopener" target="_blank">LinkedIn <Arrow /></a> : <p class="small faint">[Add LinkedIn profile link]</p>}
+        {t.credentials?.length > 0 && <ul class="dash">{t.credentials.map((c) => <li>{c}</li>)}</ul>}
+      </div>
+    </div>
+  </section>
+  <Close variant="ink" lines={['Talk to', `${t.name.split(' ')[0]}.`]} primary={['Book a call', '/book']} secondary={['Bring us one question', '/free-report']} body="30 minutes, no pitch. Bring your questions." loc="person-close" />
+</Site>

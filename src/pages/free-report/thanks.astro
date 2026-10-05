@@ -1,0 +1,34 @@
+---
+import Site from '../../layouts/Site.astro';
+import Arrow from '../../components/Arrow.astro';
+import { TBD } from '../../data/site.js';
+---
+<Site title="Got it. Pick a time | Arcus" description="Your question is in. Pick a time for your walkthrough." path="/free-report/thanks" page="thanks" noindex>
+  <section class="split-hero" data-prefill style="align-items:start">
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <h1 class="dh d96">Got it, <span data-lead-name>thanks</span>.</h1>
+      <p class="lead">Your question is in. Pick a time for your walkthrough below, and we’ll email you a short list of what to connect.</p>
+      <div data-printer style="position:relative;padding-top:12px">
+        <div class="rc wide prn">
+          <div class="hd">Your question</div>
+          <div class="r"><span>Form</span><span>Received</span></div>
+          <div class="r"><span>Access list</span><span>On its way</span></div>
+          <div class="r"><span>Turnaround</span><span>{TBD.turnaround}</span></div>
+          <div class="r"><span>Walkthrough</span><span>Pick a time</span></div>
+          <div class="r tot"><span>Total</span><span>$0</span></div>
+          <div class="bar"></div>
+        </div>
+        <span class="stamp stp" style="right:24px;bottom:60px;rotate:-9deg">Received</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <h2 class="h2s">Pick a time for your walkthrough</h2>
+      <div data-cal={TBD.calLink} class="card ph" style="min-height:520px;padding:24px">[Cal.com booking embed: set the booking link in site.js]</div>
+      <div class="card" style="padding:24px;display:flex;flex-direction:column;gap:12px">
+        <p class="h3">Bring someone along</p>
+        <p class="muted small">Walkthroughs go better with whoever signs off on the budget in the room.</p>
+        <div class="btnrow l"><a data-boss href="mailto:" class="jb ln sm" data-track="boss_invited"><span class="bg"></span><span class="lb">Loop in your boss</span></a><a href="/make-the-case" class="arrow">Get the one-pager <Arrow /></a></div>
+      </div>
+    </div>
+  </section>
+</Site>

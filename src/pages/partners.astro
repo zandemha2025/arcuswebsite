@@ -1,0 +1,57 @@
+---
+import Site from '../layouts/Site.astro';
+import Crumbs from '../components/Crumbs.astro';
+import QuickAnswer from '../components/QuickAnswer.astro';
+import PageFAQ from '../components/PageFAQ.astro';
+import Close from '../components/Close.astro';
+const crumbs = [{ name: 'Partners', href: '/partners' }];
+---
+<Site title="Partners: for advisors and consultants | Arcus" description="For fractional CMOs, finance advisors, talent managers and consultants who want their clients to see the whole picture. Introduce a brand, and get paid if they sign." path="/partners" page="partners" crumbs={crumbs}>
+  <section class="split-hero" style="align-items:start">
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <Crumbs items={crumbs} />
+      <h1 class="dh d96">Help your clients see the whole picture.</h1>
+      <p class="lead">Your clients’ data is in pieces, and every team and agency reports from its own slice. You can’t give good advice on a fraction of the picture. Introduce a brand to Arcus. We answer their first question free, with their own numbers and what people say. If they sign, you get paid.</p>
+      <QuickAnswer q="How does the Arcus partner program work?" a="Introduce a brand team. Arcus answers one of their questions free, with a 30-minute walkthrough. If the brand signs, you receive a referral fee. [Confirm: fee or revenue share, and payment terms.]" />
+    </div>
+    <form class="form paper" data-lead="partner" novalidate aria-labelledby="pt-h">
+      <div data-body style="display:flex;flex-direction:column;gap:16px">
+        <h2 id="pt-h" class="h3">Become a partner</h2>
+        <div class="row2">
+          <div class="fld"><label for="pt-name">Your name</label><input id="pt-name" name="name" required autocomplete="name" /></div>
+          <div class="fld"><label for="pt-email">Email</label><input id="pt-email" name="email" type="email" required autocomplete="email" /></div>
+        </div>
+        <div class="fld"><label for="pt-co">Firm</label><input id="pt-co" name="company" required autocomplete="organization" /></div>
+        <div class="fld"><label for="pt-type">You are a</label><select id="pt-type" name="topic" required><option value="">Pick one</option><option value="fractional_cmo">Fractional CMO</option><option value="finance">CFO or finance advisor</option><option value="talent">Talent manager</option><option value="consultant">Consultant</option><option value="other">Something else</option></select></div>
+        <div class="fld"><label for="pt-notes">Who do you work with? <span class="hint">(optional)</span></label><textarea id="pt-notes" name="notes" placeholder="Three beverage brands and a streamer."></textarea></div>
+        <span class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off" /></span>
+        <button type="submit" class="jb k" data-jelly data-loc="partners-form"><span class="bg"></span><span class="lb">Become a partner</span></button>
+        <p data-status class="form-err" hidden tabindex="-1" role="alert"></p>
+      </div>
+      <p data-ok hidden tabindex="-1" role="status" class="ok"><b>Thanks.</b> Min will reply within a business day with your partner link.</p>
+    </form>
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <h2 class="dh d56" style="margin-bottom:20px">Who it’s for.</h2>
+    <div class="tiles" style="--n:4">
+      <div class="tile"><p class="h3">Fractional CMOs</p><p class="muted">Get an independent read on the agencies you inherited, in your first month.</p></div>
+      <div class="tile"><p class="h3">CFOs and finance advisors</p><p class="muted">See whether the results agencies claim match the brand’s own numbers, before the next budget.</p></div>
+      <div class="tile"><p class="h3">Talent managers</p><p class="muted">Show what a brand deal did, with the conversation around it counted.</p></div>
+      <div class="tile"><p class="h3">Consultants</p><p class="muted">Put checked numbers under your advice. You see the whole picture, and you stay the strategic lead.</p></div>
+    </div>
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="honest">
+      <div><h2 class="h3">What your clients get</h2><p class="muted">One question answered free, with their own numbers and what people say in the same picture. Then a 30-minute walkthrough of the answer and the one test worth running next.</p></div>
+      <div><h2 class="h3">What you get</h2><ul class="nolist yeslist"><li>[Confirm: referral fee or revenue share]</li><li>A seat in the walkthrough, if your client wants you there</li><li>A seat at our monthly Agency Report Teardown</li><li>Early access to Arcus research</li><li>One named contact: Min Kwak, Chief Revenue Officer</li></ul></div>
+    </div>
+  </section>
+  <PageFAQ id="pt-faq" items={[
+    ['Do I see my client’s data?', 'Only if your client gives permission in writing. We share findings with the brand. If they want you in the walkthrough, you’re welcome.'],
+    ['Will the agencies know?', '[Confirm: whether agencies are told about a check, and who decides.] The brand decides how and when to share the results.'],
+    ['Can agencies join?', 'No. We check agency work, so we don’t pay agencies for referrals. That keeps every answer independent. Agencies are welcome to send clients our way. There’s just no fee.'],
+    ['What kinds of brands are a good fit?', 'In-house marketing teams at entertainment and lifestyle brands (studios, streamers, drinks, games, music, fashion and beauty) that spend serious money on marketing and want to know what it did.'],
+    ['What does it cost my client after the first question?', 'A one-time setup fee, then a monthly fee. The Pricing page has the details.'],
+  ]} />
+  <Close variant="ink" title="Know a team that needs answers?" lines={['Know a team that', 'needs answers?']} primary={['Become a partner', '#pt-h']} body="Introduce one brand. We answer their first question free, with a 30-minute walkthrough. If they sign, you get paid." loc="partners-close" />
+</Site>

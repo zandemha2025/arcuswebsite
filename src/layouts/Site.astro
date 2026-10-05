@@ -1,0 +1,119 @@
+---
+import '../styles/site.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import AskArcus from '../components/AskArcus.astro';
+import { SITE, ENTITY, TEAM, DOMAIN, SAME_AS } from '../data/site.js';
+
+interface Crumb { name: string; href?: string }
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  active?: string;
+  page?: string;
+  schema?: Record<string, unknown>[];
+  crumbs?: Crumb[];
+  noindex?: boolean;
+  og?: string;
+  article?: { published: string; modified: string; author: string; section: string };
+  footer?: boolean;
+}
+const { title, description, path, active = 'none', page = 'page', schema = [], crumbs = [], noindex = false, og, article, footer = true, md } = Astro.props;
+const canonical = new URL(path, SITE).href.replace(/\/$/, path === '/' ? '/' : '');
+const ogImage = new URL(og || `/og/${path === '/' ? 'home' : path.replace(/^\//, '').replace(/\//g, '-')}.png`, SITE).href;
+
+const org = {
+  '@type': 'Organization', '@id': `${SITE}/#org`, name: 'Arcus', url: `${SITE}/`,
+  logo: { '@type': 'ImageObject', url: `${SITE}/logo-512.png`, width: 512, height: 512 },
+  description: ENTITY,
+  disambiguatingDescription: `Arcus (${DOMAIN}) is the truth layer for marketing leaders, founders and executives at entertainment and lifestyle brands. It is not a biotech, investment or infrastructure firm.`,
+  slogan: 'If it can’t be checked, it doesn’t count.',
+  knowsAbout: ['marketing measurement', 'agency reporting', 'double counting', 'incrementality', 'holdout testing', 'first-party data', 'social listening', 'audience research', 'creator marketing'],
+  areaServed: 'US',
+  employee: TEAM.map((t) => ({ '@id': `${SITE}/about/${t.slug}#person` })),
+  contactPoint: { '@type': 'ContactPoint', contactType: 'sales', url: `${SITE}/book` },
+  ...(SAME_AS.length ? { sameAs: SAME_AS } : {}),
+};
+const site = { '@type': 'WebSite', '@id': `${SITE}/#site`, url: `${SITE}/`, name: 'Arcus', publisher: { '@id': `${SITE}/#org` }, inLanguage: 'en-US' };
+const bc = crumbs.length ? [{
+  '@type': 'BreadcrumbList',
+  itemListElement: [{ name: 'Home', href: '/' }, ...crumbs].map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, ...(c.href ? { item: new URL(c.href, SITE).href } : {}) })),
+}] : [];
+const graph = { '@context': 'https://schema.org', '@graph': [org, site, ...bc, ...schema] };
+
+const cfg = {
+  posthogKey: import.meta.env.PUBLIC_POSTHOG_KEY || '',
+  posthogHost: import.meta.env.PUBLIC_POSTHOG_HOST || '',
+  metaPixel: import.meta.env.PUBLIC_META_PIXEL || '',
+  linkedinId: import.meta.env.PUBLIC_LINKEDIN_ID || '',
+  visitorIdScript: import.meta.env.PUBLIC_VISITOR_ID_SCRIPT || '',
+  leadEndpoint: import.meta.env.PUBLIC_LEAD_ENDPOINT || '/api/lead',
+  askEndpoint: import.meta.env.PUBLIC_ASK_ENDPOINT || '/api/ask',
+  googleAdsId: import.meta.env.PUBLIC_GOOGLE_ADS_ID || '',
+  googleAdsLeadLabel: import.meta.env.PUBLIC_GOOGLE_ADS_LEAD_LABEL || '',
+  linkedinConversionId: import.meta.env.PUBLIC_LINKEDIN_CONVERSION_ID || '',
+  redditPixel: import.meta.env.PUBLIC_REDDIT_PIXEL || '',
+  sentryLoader: import.meta.env.PUBLIC_SENTRY_LOADER || '',
+  speedInsights: import.meta.env.PUBLIC_SPEED_INSIGHTS === 'true',
+  contactEmail: 'hello@usearcus.ai',
+};
+---
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-snippet:-1, max-image-preview:large'} />
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:site_name" content="Arcus" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={title.replace(/ \| Arcus$/, '')} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title.replace(/ \| Arcus$/, '')} />
+    {article && <>
+      <meta property="article:published_time" content={article.published} />
+      <meta property="article:modified_time" content={article.modified} />
+      <meta property="article:author" content={`${SITE}/about/${article.author}`} />
+      <meta property="article:section" content={article.section} />
+    </>}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="theme-color" content="#F4F4F4" />
+    {import.meta.env.PUBLIC_GSC_VERIFICATION && <meta name="google-site-verification" content={import.meta.env.PUBLIC_GSC_VERIFICATION} />}
+    {import.meta.env.PUBLIC_BING_VERIFICATION && <meta name="msvalidate.01" content={import.meta.env.PUBLIC_BING_VERIFICATION} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="Arcus Library" href="/rss.xml" />
+    {md && <link rel="alternate" type="text/markdown" href={md} />}
+    <link rel="preload" href="/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist.woff2" as="font" type="font/woff2" crossorigin />
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
+    <meta name="arcus-config" content={JSON.stringify(cfg)} />
+    <slot name="head" />
+  </head>
+  <body data-page={page}>
+    <a class="skip" href="#main">Skip to content</a>
+    <Nav active={active} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    {footer && <Footer />}
+    {import.meta.env.PUBLIC_ASK_ENABLED !== 'false' && <AskArcus />}
+    <aside class="consent" data-consent hidden aria-label="Cookie choices">
+      <p class="h3">Cookies, briefly.</p>
+      <p class="small muted">We use cookies to see which pages help people, and to measure our ads. You can say no and the site works the same. <a class="ul" href="/cookies">Cookie policy</a></p>
+      <div class="btnrow">
+        <button class="jb k sm" type="button" data-consent-choice="all"><span class="bg"></span><span class="lb">Accept all</span></button>
+        <button class="jb ln sm" type="button" data-consent-choice="necessary"><span class="bg"></span><span class="lb">Only necessary</span></button>
+      </div>
+    </aside>
+    <script>import '../scripts/site.js';</script>
+  </body>
+</html>

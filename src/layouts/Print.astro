@@ -1,0 +1,30 @@
+---
+// Bare layout for PDF rendering (scripts/pdf.mjs). Not linked, not indexed.
+import '../styles/site.css';
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <style is:global>
+      @page { size: Letter; margin: 0.6in 0.65in; }
+      body { background: #FFFFFF; font-size: 12.5px; line-height: 1.5; }
+      .pp { max-width: 7.2in; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+      .pp h1 { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: 40px; line-height: .95; }
+      .pp h2 { font-size: 17px; font-weight: 700; letter-spacing: -.02em; margin-top: 10px; border-top: 2px solid var(--ink); padding-top: 10px; break-after: avoid; }
+      .pp .big { font-family: var(--display); text-transform: uppercase; font-size: 22px; line-height: 1; }
+      .pp .sl { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; break-inside: avoid; display: flex; flex-direction: column; gap: 6px; }
+      .pp .lab { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--faint); }
+      .pp ul, .pp ol { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+      .pp .row { display: flex; justify-content: space-between; align-items: center; }
+      .pp .cta { background: var(--ink); color: #FFF; border-radius: 10px; padding: 14px 16px; break-inside: avoid; }
+      .pp .n { font-family: var(--display); font-size: 30px; color: var(--stamp); line-height: 1; }
+      .pp .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .pp a { text-decoration: none; }
+    </style>
+  </head>
+  <body><main class="pp"><slot /></main></body>
+</html>

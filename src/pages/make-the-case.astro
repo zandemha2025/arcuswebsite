@@ -1,0 +1,78 @@
+---
+import Site from '../layouts/Site.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Close from '../components/Close.astro';
+import QuickAnswer from '../components/QuickAnswer.astro';
+import Arrow from '../components/Arrow.astro';
+import { SHORT, TBD } from '../data/site.js';
+const crumbs = [{ name: 'Make the case', href: '/make-the-case' }];
+const email = `Subject: Can we check one agency report for free?
+
+Hi,
+
+I'd like Arcus to check one of our agency reports against our own numbers. The first question is free and there's no contract.
+
+What they do: Arcus connects the data our teams keep in separate places (sales, customer data, ads, social, agency reports) into one layer we own, adds what people say online, and checks every claim against it. Each result is counted once, and every answer ends with what to keep, test and stop. They don't make ads, buy media or take a cut of spend, so they have no stake in the answer.
+
+What they need for the first question: the report, access to our own numbers (sales, tickets or sign-ups) and the ad accounts it covers, and 30 minutes for a walkthrough.
+
+Worst case, we confirm our agency's numbers before the next renewal.
+
+More: https://usearcus.ai/make-the-case
+
+Thanks`;
+---
+<Site title="Make the case for Arcus: a one-pager and an email for your boss | Arcus" description="Everything you need to get a yes: a one-page summary of Arcus, a copy-ready email to your boss, and answers for legal and finance." path="/make-the-case" page="case" crumbs={crumbs}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">Get the yes.</h1>
+    <p class="lead">You’re sold. Your boss, finance and legal need a reason. Here’s everything to send them.</p>
+    <QuickAnswer q="How do I pitch Arcus internally?" a="Start with one free question: no cost, no contract, and it answers something we’re unsure about with our own numbers and what people say. Send your boss the email below, print the one-pager for finance, and hand the Security page to legal." />
+  </header>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="email-h">
+    <div class="split">
+      <div class="sec-h" style="margin:0">
+        <h2 id="email-h" class="dh d56">1. The email</h2>
+        <p class="muted">Copy it, change what you like, send it.</p>
+        <div class="btnrow l">
+          <button type="button" class="jb k" data-copy="#case-email" data-jelly data-loc="case-copy"><span class="bg"></span><span class="lb">Copy the email</span></button>
+          <a class="jb ln" href={`mailto:?subject=${encodeURIComponent('Can we check one agency report for free?')}&body=${encodeURIComponent(email.split('\n').slice(2).join('\n'))}`} data-track="case_email_opened"><span class="bg"></span><span class="lb">Open in email</span></a>
+        </div>
+        <p class="small" data-copied hidden role="status">Copied.</p>
+      </div>
+      <pre id="case-email" class="card" style="padding:24px;white-space:pre-wrap;font:15px/1.6 var(--text);margin:0">{email}</pre>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="one-h">
+    <div class="sec-h"><h2 id="one-h" class="dh d56">2. The one-pager</h2><button type="button" class="arrow" data-print style="background:none;border:0;font:inherit;font-weight:600;cursor:pointer;padding:0">Print it <Arrow /></button><a class="arrow" href="/pdf/arcus-one-pager.pdf" download data-track="one_pager_downloaded">Download the PDF <Arrow /></a></div>
+    <article class="card onepager" style="padding:40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <p class="logo">arcus<i></i></p>
+        <p class="h2s">{SHORT}</p>
+        <p class="h3">What it answers</p>
+        <ul class="dash"><li>Which agency claims hold up against our own numbers</li><li>What our audience says, and whether it lines up with what they buy</li><li>Which posts, creators and channels to keep, test or stop</li><li>Anything else we ask, with the whole picture behind it</li></ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <p class="h3">What it costs</p>
+        <ul class="dash"><li>First question: $0</li><li>Setup, about three months: {TBD.setup}</li><li>Monthly: {TBD.monthly}</li></ul>
+        <p class="h3">What it takes</p>
+        <ul class="dash"><li>One question, and access to the numbers it needs</li><li>30 minutes for a walkthrough</li></ul>
+        <p class="h3">Risk</p>
+        <ul class="dash"><li>No contract for the first question</li><li>No change to our agencies or tools</li></ul>
+        <p class="small faint">usearcus.ai/free-report</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="legal-h">
+    <h2 id="legal-h" class="dh d56" style="margin-bottom:20px">3. For legal and finance</h2>
+    <div class="tiles" style="--n:3">
+      <a class="tile" href="/security"><span class="h3">Security</span><span class="muted small">What we access, who sees it, what the AI can do.</span><span class="arrow">Hand it to legal <Arrow /></span></a>
+      <a class="tile" href="/pricing"><span class="h3">Pricing</span><span class="muted small">Three lines, itemized. The first one is free.</span><span class="arrow">For finance <Arrow /></span></a>
+      <a class="tile" href="/reports"><span class="h3">Real answers</span><span class="muted small">What you’d get, with names removed.</span><span class="arrow">For your boss <Arrow /></span></a>
+    </div>
+  </section>
+  <Close variant="ink" lines={['Or skip the', 'meeting.']} body="It costs nothing and needs no contract. You may not need anyone’s yes to start." loc="case-close" />
+</Site>

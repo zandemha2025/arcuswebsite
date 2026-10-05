@@ -1,0 +1,27 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import Arrow from '../../components/Arrow.astro';
+import { COMPARE_ALL as COMPARE } from '../../data/all.js';
+const crumbs = [{ name: 'Compare', href: '/compare' }];
+---
+<Site title="How Arcus compares: agencies, software, data teams | Arcus" description="How Arcus compares with your agency’s own reports, agency audit firms, analytics software, hiring a data team, HAUS, Hex, IRIS and Northbeam. Honest about when each one is the better pick." path="/compare" page="compare" crumbs={crumbs}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">The other ways to get the answer.</h1>
+    <p class="lead">Each comparison says when the other option is the better pick. Some of the time, it is.</p>
+    <QuickAnswer q="How is Arcus different?" a="Most options hold one piece or do one job. An agency reports on its own work. An attribution tool tracks online sales. A listening tool hears the conversation. An audit firm checks invoices. Arcus connects all of those pieces, plus your own numbers and what people say, into one layer you own, and answers your questions with the whole picture. Nobody being graded writes the answer." />
+  </header>
+  <section class="wrap" style="padding-bottom:96px">
+    {COMPARE.map((c) => (
+      <a href={`/compare/${c.slug}`} class="listrow">
+        <span class="h3">vs. {c.name}</span>
+        <span class="muted">{c.lead}</span>
+        <span class="go"><Arrow /></span>
+      </a>
+    ))}
+  </section>
+  <Close variant="or" lines={['Compare us on', 'one question.']} loc="compare-close" />
+</Site>

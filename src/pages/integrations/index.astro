@@ -1,0 +1,32 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import Logo from '../../components/Logo.astro';
+import { INTEGRATIONS } from '../../data/all.js';
+import { SITE } from '../../data/site.js';
+const crumbs = [{ name: 'Integrations', href: '/integrations' }];
+const cats = [...new Set(INTEGRATIONS.map((i) => i.category))];
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+const schema = [{ '@type': 'CollectionPage', name: 'Tools Arcus works with', url: `${SITE}/integrations`, hasPart: INTEGRATIONS.map((i) => ({ '@type': 'WebPage', name: `Arcus and ${i.name}`, url: `${SITE}/integrations/${i.slug}` })) }];
+---
+<Site title="Integrations: the tools Arcus works with | Arcus" description="Arcus plugs into the tools you already use, inside your own setup: ad accounts, sales and ticketing, streaming and apps, CRM and email, analytics, spreadsheets and listening tools. See what we read from each one and what it helps answer." path="/integrations" page="integrations" crumbs={crumbs} schema={schema}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">Whatever you run, we plug into it.</h1>
+    <p class="lead">Your ad accounts, your sales, your CRM, your listening tool, your agencies’ decks. Each one holds one piece of the picture. Arcus plugs into all of them, inside your own setup, and connects them into one layer you own. Then any question gets answered with the whole picture. Nothing to move, no new tool to learn. Not on the list? We make it work.</p>
+    <QuickAnswer q="What does Arcus connect to?" a={`Arcus reads the data you already have: ad accounts like Meta, Google, TikTok and LinkedIn; sales, ticketing and streaming numbers; CRM and email; analytics and the systems where your company keeps its data; listening tools; and the spreadsheets and decks your agencies send. ${INTEGRATIONS.length} tools are listed here, and if you use something else, we can usually read it.`} />
+  </header>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="btnrow l" data-filter="#int-list" data-live="#int-live" role="group" aria-label="Filter by category" style="margin-bottom:10px">
+      <button class="chip" type="button" data-val="all" aria-pressed="true">All</button>
+      {cats.map((c) => <button class="chip" type="button" data-val={slug(c)} aria-pressed="false">{c}</button>)}
+    </div>
+    <p id="int-live" class="tiny faint" aria-live="polite" style="margin-bottom:12px">Showing {INTEGRATIONS.length}</p>
+    <ul class="lw" id="int-list" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+      {INTEGRATIONS.map((i) => <li data-cat={slug(i.category)}><a href={`/integrations/${i.slug}`} style="display:flex;flex-direction:column;gap:6px"><Logo name={i.name} logo={i.logo} size={20} /><span class="small muted">{i.lead}</span><span class="tiny">{i.category}</span></a></li>)}
+    </ul>
+  </section>
+  <Close variant="ink" lines={['Bring the tools', 'you have.']} body="Bring us one question. We answer it with your own numbers, wherever they live, plus what people say about you, and walk you through it in 30 minutes. Free, no card." loc="integrations-close" />
+</Site>

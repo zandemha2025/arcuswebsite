@@ -1,0 +1,127 @@
+---
+import Pic from '../../components/Pic.astro';
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import PageFAQ from '../../components/PageFAQ.astro';
+import Related from '../../components/Related.astro';
+import Logo from '../../components/Logo.astro';
+import Arrow from '../../components/Arrow.astro';
+import { INDUSTRIES } from '../../data/content.js';
+import { bySlug } from '../../data/reports.js';
+import { LISTEN_SOURCES } from '../../data/site.js';
+import { IND_DEEP, PLATFORMS } from '../../data/industries-deep.js';
+export function getStaticPaths() { return INDUSTRIES.map((i) => ({ params: { slug: i.slug }, props: { i } })); }
+const { i } = Astro.props;
+const d = IND_DEEP[i.slug] || {};
+const r = bySlug[d.proof?.report || i.report];
+const crumbs = [{ name: 'Who it’s for', href: '/for' }, { name: i.name, href: `/for/${i.slug}` }];
+const where = {
+  'spirits-and-beverage': ['Reddit', 'TikTok', 'Instagram', 'Facebook groups', 'YouTube', 'Google Search', 'Yelp', 'Amazon reviews'],
+  'studios-and-streaming': ['Reddit', 'TikTok', 'YouTube', 'Discord', 'Twitch', 'Letterboxd', 'IMDb', 'Rotten Tomatoes', 'Goodreads', 'Fable', 'X'],
+  'games-and-music': ['Discord', 'Twitch', 'Kick', 'Reddit', 'Steam', 'Roblox', 'TikTok', 'YouTube', 'Spotify'],
+  'fashion-and-beauty': ['TikTok', 'Instagram', 'Reddit', 'Pinterest', 'YouTube', 'Trustpilot', 'Amazon reviews', 'Google Search'],
+}[i.slug] || [];
+const deepListen = (d.listen || []).map(([n, t]) => ({ ...(LISTEN_SOURCES.find((s) => s.name === n) || { name: n, logo: '' }), why: t }));
+const srcs = deepListen.length ? deepListen : LISTEN_SOURCES.filter((s) => where.includes(s.name));
+const others = INDUSTRIES.filter((x) => x.slug !== i.slug);
+---
+<Site md={`/for/${i.slug}.md`} title={`Arcus for ${i.name.toLowerCase()} marketing teams | Arcus`} description={i.lead} path={`/for/${i.slug}`} active="for" page="industry" crumbs={crumbs}>
+  <section class="split-hero">
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <Crumbs items={crumbs} />
+      <h1 class="dh d96">{i.h1}</h1>
+      <p class="lead">{i.lead}</p>
+      <div class="btnrow l">
+        <a href="/free-report" class="jb k" data-jelly data-loc="industry-hero"><span class="bg"></span><span class="lb">Bring us one question</span></a>
+        <a href={`/reports/${r.slug}`} class="jb ln" data-jelly data-loc="industry-hero-2"><span class="bg"></span><span class="lb">See a real answer</span></a>
+      </div>
+    </div>
+    <div style="position:relative">
+      <Pic name={i.img} alt={i.alt} sizes="(max-width:900px) 100vw, 45vw" eager style="border-radius:16px;aspect-ratio:4/3;object-fit:cover;width:100%" />
+      <div class="rc" style="position:absolute;left:-20px;bottom:-30px">
+        <span class="ex">Example</span>
+        <div class="hd">{i.stamp}, checked</div>
+        <div class="r"><span>Claimed</span><span>4,200</span></div>
+        <div class="r tot"><span>Held up</span><span>1,380</span></div>
+        <div class="bar"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px">
+    <QuickAnswer q={`What does Arcus do for ${i.name.toLowerCase()} brands?`} a={d.answer || i.lead} points={i.questions.map(([q]) => q)} />
+  </section>
+
+  {d.intro && (
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="intro-h">
+    <div class="split">
+      <h2 id="intro-h" class="dh d72">Why nobody sees the whole picture.</h2>
+      <div class="prose">{d.intro.map((p) => <p>{p}</p>)}</div>
+    </div>
+  </section>)}
+
+  {d.pains && (
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="pains-h">
+    <div class="sec-h"><h2 id="pains-h" class="dh d56">What teams like yours tell us.</h2></div>
+    <div class="tiles" style="--n:2">{d.pains.map(([t, x]) => <div class="tile"><p class="h3">{t}</p><p class="muted">{x}</p></div>)}</div>
+  </section>)}
+
+  {d.measures && (
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="meas-h">
+    <div class="sec-h"><h2 id="meas-h" class="dh d56">The numbers that matter.</h2><p class="lead muted">The ones that tell you if marketing worked in {i.name.toLowerCase()}, where each one lives today, and what it shows once it sits next to the rest.</p></div>
+    <div class="tbl"><table><thead><tr><th scope="col">Measure</th><th scope="col">Why it matters</th></tr></thead><tbody>{d.measures.map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}</tbody></table></div>
+  </section>)}
+
+  <section class="slab s-gr" aria-labelledby="proof-h">
+    <div class="split mid">
+      <div class="sec-h" style="margin:0">
+        <p class="tiny" style="font-weight:700;letter-spacing:.08em;text-transform:uppercase">From a real answer</p>
+        <h2 id="proof-h" class="dh d72">{d.proof?.h || r.headline.n}</h2>
+        <p class="lead">{d.proof?.body || i.proof}</p>
+        <a href={`/reports/${r.slug}`} class="arrow">See the answer <Arrow /></a>
+      </div>
+      <div class="rc wide">
+        <div class="hd">{r.kind}</div>
+        {r.stats.map((s) => <div class="r" style="padding:6px 0"><span style="font-weight:700;white-space:nowrap">{s.n}</span><span style="text-align:right">{s.label}</span></div>)}
+        <div class="bar"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="where-h">
+    <div class="sec-h">
+      <h2 id="where-h" class="dh d72">Where your audience talks.</h2>
+      <p class="lead muted">The places we usually read for {i.name.toLowerCase()} brands. What people say there joins the same layer as your own sales and customers.</p>
+    </div>
+    <ul class="lw" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">{srcs.map((s) => <li><Logo name={s.name} logo={s.logo} size={20} /><span class="small muted">{s.why || s.what}</span></li>)}</ul>
+    <p class="small" style="margin-top:16px"><a class="ul" href="/listening">Everywhere people talk about you</a></p>
+  </section>
+
+  {d.patterns && (
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="pat-h">
+    <div class="split">
+      <div class="sec-h" style="margin:0"><h2 id="pat-h" class="dh d56">What we look for first.</h2><p class="muted">Most teams start with an agency recap. These are the patterns that most often explain the gap between what was claimed and what your own numbers show.</p></div>
+      <ol class="qa" style="padding:0;margin:0;list-style:none">{d.patterns.map(([t, x], n) => <li style="padding:18px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px"><span class="dh" style="font-size:28px;color:var(--stamp-text)">{n + 1}</span><span><b class="h3" style="display:block">{t}</b><span class="muted">{x}</span></span></li>)}</ol>
+    </div>
+  </section>)}
+
+  {d.agencyQuestions && (
+  <section class="slab s-or" aria-labelledby="aq-h">
+    <div class="split mid">
+      <div class="sec-h" style="margin:0"><h2 id="aq-h" class="dh d72">Ask your agency.</h2><p class="lead">Six questions for your next review, written in your industry’s terms. Good agencies answer them without flinching.</p><a href="/library/questions-before-you-renew" class="arrow">More questions before you renew <Arrow /></a></div>
+      <div class="rc wide"><div class="hd">For your next agency review</div>{d.agencyQuestions.map((q, n) => <div class="r" style="padding:6px 0;border-top:1px dashed #A8A8A0"><span style="font-weight:700">{n + 1}.</span><span style="text-align:left;flex:1;margin-left:8px">{q}</span></div>)}<div class="bar"></div></div>
+    </div>
+  </section>)}
+
+  {d.start && (
+  <section class="wrap sec" aria-labelledby="st-h">
+    <div class="sec-h"><h2 id="st-h" class="dh d56">Start with one question.</h2></div>
+    <ol class="steps" style={`--n:${d.start.length};padding:0;list-style:none`}>{d.start.map(([t, x], n) => <li class="step"><span class="n">{String(n + 1).padStart(2, '0')}</span><p class="h3">{t}</p><p class="muted">{x}</p></li>)}</ol>
+  </section>)}
+
+  <PageFAQ id="ind-faq" title={`Questions ${i.name.toLowerCase()} teams ask`} items={[...i.questions, ...(d.faq || [])]} />
+  <Related title="Other teams we work with" items={others.map((o) => [o.name, o.h1, `/for/${o.slug}`])} />
+  <Close variant="ink" lines={['See the whole', 'picture.']} loc="industry-close" />
+</Site>

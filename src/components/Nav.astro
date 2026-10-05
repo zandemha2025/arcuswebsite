@@ -1,0 +1,26 @@
+---
+import { NAV } from '../data/site.js';
+const { active = 'none' } = Astro.props;
+---
+<header class="nav" data-nav>
+  <div class="nav-l">
+    <a href="/" class="logo" aria-label="Arcus home">arcus<i></i></a>
+    <nav class="nav-links" aria-label="Main">
+      {NAV.map((n) => <a href={n.href} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a>)}
+    </nav>
+  </div>
+  <div class="nav-r">
+    <a href="/book" class="pill">Book a call</a>
+    <a href="/free-report" class="jb k full" data-jelly data-loc="nav"><span class="bg"></span><span class="lb">Bring us one question</span></a>
+    <a href="/free-report" class="jb k sm mini-cta" data-loc="nav-mobile"><span class="bg"></span><span class="lb">One free question</span></a>
+    <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-sheet" data-burger>
+      <svg data-i="open" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h12M3 12h12"/></svg>
+      <svg data-i="close" hidden width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4l10 10M14 4L4 14"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="sheet" id="menu-sheet" aria-label="Menu" hidden>
+  {NAV.map((n) => <a href={n.href} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a>)}
+  <a href="/book">Book a call</a>
+  <a href="/free-report" style="color:#C2410C">Bring us one question</a>
+</nav>

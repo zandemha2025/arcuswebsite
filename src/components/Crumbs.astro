@@ -1,0 +1,7 @@
+---
+const { items = [] } = Astro.props;
+---
+<nav aria-label="Breadcrumb" class="crumbs">
+  <a href="/">Home</a>
+  {items.map((c, i) => <><span aria-hidden="true">/</span>{c.href && i < items.length - 1 ? <a href={c.href}>{c.name}</a> : <span aria-current="page">{c.name}</span>}</>)}
+</nav>

@@ -1,0 +1,35 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import Arrow from '../../components/Arrow.astro';
+import { STUDIES } from '../../data/research.js';
+import { bySlug } from '../../data/reports.js';
+import { SITE } from '../../data/site.js';
+export function getStaticPaths() { return STUDIES.map((s) => ({ params: { slug: s.slug }, props: { s } })); }
+const { s } = Astro.props;
+const r = bySlug[s.report];
+const crumbs = [{ name: 'Research', href: '/research' }, { name: s.title, href: `/research/${s.slug}` }];
+const csv = `/research/${s.slug}.csv`;
+const schema = [{ '@type': 'Dataset', name: s.title, description: s.short, url: `${SITE}/research/${s.slug}`, creator: { '@id': `${SITE}/#org` }, publisher: { '@id': `${SITE}/#org` }, license: 'https://creativecommons.org/licenses/by/4.0/', isAccessibleForFree: true, temporalCoverage: s.period, spatialCoverage: s.spatial, measurementTechnique: s.method, variableMeasured: s.measures.map(([name, value, d]) => ({ '@type': 'PropertyValue', name, value, description: d })), distribution: [{ '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: `${SITE}${csv}` }] }];
+---
+<Site title={`${s.title} | Arcus research`} description={s.short} path={`/research/${s.slug}`} page="study" crumbs={crumbs} schema={schema} noindex={!s.published}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    {!s.published && <span class="tag t-o">[Pending client OK: not indexed until approved]</span>}
+    <h1 class="dh d96">{s.title}</h1>
+    <QuickAnswer q="What did the study find?" a={s.short} />
+  </header>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="tbl"><table><thead><tr><th scope="col">Measure</th><th scope="col">Value</th><th scope="col">Note</th></tr></thead><tbody>{s.measures.map(([a, b, c]) => <tr><th scope="row">{a}</th><td class="num"><b>{b}</b></td><td>{c}</td></tr>)}</tbody></table></div>
+    <div class="btnrow l" style="margin-top:16px"><a class="arrow" href={csv} download data-track="dataset_downloaded" data-props={JSON.stringify({ study: s.slug })}>Download the table (CSV) <Arrow /></a><a class="arrow" href={`/reports/${r.slug}`}>See the full answer <Arrow /></a></div>
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="honest">
+      <div><h2 class="h3">Method</h2><p class="muted">{s.method}</p></div>
+      <div><h2 class="h3">How to cite</h2><p class="muted">Arcus, “{s.title}” ({new Date().getFullYear()}), {SITE}/research/{s.slug}. Free to cite and reuse with credit (CC BY 4.0).</p></div>
+    </div>
+  </section>
+  <Close variant="or" lines={['Check your', 'own numbers.']} loc="study-close" />
+</Site>

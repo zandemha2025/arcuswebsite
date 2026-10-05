@@ -1,0 +1,28 @@
+---
+import Site from '../layouts/Site.astro';
+import Arrow from '../components/Arrow.astro';
+---
+<Site title="Page not found | Arcus" description="This page doesn’t exist." path="/404" page="404" noindex>
+  <section class="split-hero">
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <h1 class="dh d120">This page didn’t hold up either.</h1>
+      <p class="lead">The link may be old, or mistyped. Here’s where most people were headed:</p>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <a href="/" class="arrow">Home <Arrow /></a>
+        <a href="/free-report" class="arrow">Bring us one question <Arrow /></a>
+        <a href="/reports" class="arrow">Real answers <Arrow /></a>
+        <a href="/library" class="arrow">Library <Arrow /></a>
+      </div>
+    </div>
+    <div style="position:relative;display:grid;place-items:center" data-printer>
+      <div class="rc wide prn">
+        <div class="hd">Page lookup</div>
+        <div class="r"><span>Requested</span><span>1 page</span></div>
+        <div class="r x"><span>Claimed</span><span>1 page</span></div>
+        <div class="r tot"><span>Held up</span><span>0</span></div>
+        <div class="bar"></div>
+      </div>
+      <span class="stamp stp" style="right:10%;bottom:40px;rotate:-9deg">Item not found</span>
+    </div>
+  </section>
+</Site>

@@ -1,0 +1,99 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import PageFAQ from '../../components/PageFAQ.astro';
+import Arrow from '../../components/Arrow.astro';
+import { ENTITY, TEAM, SITE } from '../../data/site.js';
+const crumbs = [{ name: 'About', href: '/about' }];
+const schema = [{ '@type': 'AboutPage', name: 'About Arcus', url: `${SITE}/about`, mainEntity: { '@id': `${SITE}/#org` } }];
+---
+<Site title="About Arcus: the team and how we work | Arcus" description={ENTITY} path="/about" page="about" crumbs={crumbs} schema={schema}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d120">Professional skeptics.</h1>
+    <p class="lead">We check numbers for a living. Ours too.</p>
+    <QuickAnswer q="What is Arcus?" a={ENTITY} />
+  </header>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="rules-h">
+    <div class="sec-h"><h2 id="rules-h" class="dh d72">House rules.</h2><p class="lead muted">Six rules every Arcus answer follows.</p></div>
+    <ol class="tiles" style="--n:3;padding:0;list-style:none">
+      {[
+        ['The answer goes on top', 'The first slide says what we found. Everything after it is the evidence.'],
+        ['Every number has a source', 'Your own data, your accounts or a public page. If we can’t trace it, it isn’t in the answer.'],
+        ['Cause needs a test', 'We don’t say an ad caused a sale unless we tested it.'],
+        ['A person reads it first', 'Someone on our team reads every answer before you do.'],
+        ['Good news counts too', 'If your agency’s numbers hold up, we say so, plainly.'],
+        ['Names stay private', 'We never show a client’s name, logo or results without written permission.'],
+      ].map(([t, d], n) => <li class="tile"><span class="dh d56" style="color:var(--stamp-text)">{String(n + 1).padStart(2, '0')}</span><p class="h3">{t}</p><p class="muted">{d}</p></li>)}
+    </ol>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="team-h">
+    <div class="sec-h"><h2 id="team-h" class="dh d72">Meet the skeptics.</h2></div>
+    <div class="tiles" style="--n:4">
+      {TEAM.map((t) => (
+        <a class="tile" href={`/about/${t.slug}`}>
+          <span class="av">{t.initials}</span>
+          <span class="h3">{t.name}</span>
+          <span class="small faint">{t.title}</span>
+          <span class="muted small">{t.line}</span>
+          <span class="arrow">More <Arrow /></span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="slab s-ic" aria-label="What a client said">
+    <figure class="narrow" style="margin:0 auto;display:flex;flex-direction:column;gap:20px;text-align:center">
+      <blockquote class="quote" style="margin:0">“I like talking to you guys because you help me make sense of it.”</blockquote>
+      <figcaption class="small">A brand marketing lead we work with <span>[Needs their OK before launch]</span></figcaption>
+    </figure>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="story-h">
+    <div class="split">
+      <h2 id="story-h" class="dh d72">Why Arcus.</h2>
+      <div class="prose">
+        <p>At a big brand, every team holds a different piece of the data. Sales sit in one system, viewers or players in another, email and CRM with a third team. Agencies report from their own slice and grade their own homework. Add up every agency’s claimed sales and the total is often bigger than what the brand sold.</p>
+        <p>Nobody sees the whole picture, so nobody can check it. Big companies throw data teams at this. Most brand teams don’t have one. So we connect every piece into one layer the brand owns, inside its own setup, add what people say online, check every claim, and answer any question in a few slides. Catching an agency is usually the first question. The layer stays theirs.</p>
+        <p class="faint">[Origin story to add: how the team met and the moment that started Arcus.]</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="why2-h">
+    <div class="split">
+      <h2 id="why2-h" class="dh d72">Why entertainment and lifestyle.</h2>
+      <div class="prose">
+        <p>Most measurement tools were built by and for ecommerce performance marketers: people who live in dashboards and count clicks to checkout. That works when every sale happens on your website.</p>
+        <p>It doesn’t fit a studio selling tickets through theaters, a streamer counting sign-ups, a seltzer brand that sells through bars and grocery stores, or a game launching on three platforms at once. Their results are spread across partners, and their audience lives in comment sections, Discord servers and Twitch chat.</p>
+        <p>Those teams have the biggest budgets and the least help checking them. That’s who we built Arcus for: people who want the answer and the reason, explained like a person would explain it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="who2-h">
+    <div class="sec-h"><h2 id="who2-h" class="dh d56">Who you’ll work with.</h2></div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th scope="col">When</th><th scope="col">Who</th><th scope="col">What they do</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">First call and first question</th><td>Min</td><td>Learns what you need answered and walks you through the answer</td></tr>
+          <tr><th scope="row">Setup</th><td>Brendon</td><td>Connects your accounts, answers security and legal questions</td></tr>
+          <tr><th scope="row">The checks and the AI</th><td>Nazeem</td><td>Runs the checks on your data and the rules that limit what our AI can do</td></tr>
+          <tr><th scope="row">Every report</th><td>Devin</td><td>Decides what goes in each report and how it reads, so the answer is on top</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <PageFAQ id="about-faq" items={[
+    ['Where is Arcus based?', '[Confirm location before publishing.]'],
+    ['Is Arcus an agency?', 'No. We don’t make ads, buy media, run campaigns or take a cut of spend. We connect your data into one layer you own, add what people say online, check every claim against it, and tell you what to do next.'],
+    ['Who owns Arcus?', '[Confirm before publishing.]'],
+  ]} />
+  <Close variant="or" lines={['Put us', 'to the test.']} loc="about-close" />
+</Site>

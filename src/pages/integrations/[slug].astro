@@ -1,0 +1,40 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import PageFAQ from '../../components/PageFAQ.astro';
+import Logo from '../../components/Logo.astro';
+import Arrow from '../../components/Arrow.astro';
+import { INTEGRATIONS } from '../../data/all.js';
+export function getStaticPaths() { return INTEGRATIONS.map((i) => ({ params: { slug: i.slug }, props: { i } })); }
+const { i } = Astro.props;
+const pairs = (i.pairsWith || []).map((n) => INTEGRATIONS.find((x) => x.name === n)).filter(Boolean);
+const crumbs = [{ name: 'Integrations', href: '/integrations' }, { name: i.name, href: `/integrations/${i.slug}` }];
+---
+<Site md={`/integrations/${i.slug}.md`} title={`${i.h1} | Arcus`} description={i.lead} path={`/integrations/${i.slug}`} page="integration" crumbs={crumbs}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <span class="lg" style="font-size:20px"><Logo name={i.name} logo={i.logo} size={32} /></span>
+    <h1 class="dh d96">{i.h1}</h1>
+    <p class="lead">{i.lead}</p>
+    <QuickAnswer q={`What does Arcus do with ${i.name}?`} a={`${i.what} ${i.why}`} />
+  </header>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="split">
+      <div class="sec-h" style="margin:0">
+        <h2 class="dh d56">What it answers, connected.</h2>
+        <p class="muted">{i.name} is one piece. Once it sits in one layer with your own numbers, your other tools and what people say, these are the questions it helps answer.</p>
+        <p class="tiny faint">{i.confirm}</p>
+      </div>
+      <ol class="qa" style="padding:0;margin:0;list-style:none">{i.checks.map((c, n) => <li style="padding:16px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px"><span class="dh" style="font-size:26px;color:var(--stamp-text)">{n + 1}</span><span>{c}</span></li>)}</ol>
+    </div>
+  </section>
+  {pairs.length > 0 && (
+  <section class="wrap" style="padding-bottom:96px">
+    <h2 class="h2s" style="margin-bottom:16px">Often connected alongside</h2>
+    <div class="tiles" style={`--n:${pairs.length}`}>{pairs.map((p) => <a class="tile" href={`/integrations/${p.slug}`}><Logo name={p.name} logo={p.logo} size={20} /><span class="muted small">{p.lead}</span><span class="arrow">See how <Arrow /></span></a>)}</div>
+  </section>)}
+  <PageFAQ id="int-faq" items={i.faq} />
+  <Close variant="or" lines={['One piece.', 'The whole picture.']} loc="integration-close" />
+</Site>

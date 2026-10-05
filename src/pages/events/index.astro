@@ -1,0 +1,48 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import Close from '../../components/Close.astro';
+import { SERIES, EPISODES } from '../../data/events.js';
+import { TEAM, SITE } from '../../data/site.js';
+const crumbs = [{ name: 'Agency Report Teardown', href: '/events' }];
+const hosts = SERIES.hosts.map((s) => TEAM.find((t) => t.slug === s));
+const next = EPISODES.find((e) => e.date && new Date(e.date) >= new Date());
+const schema = EPISODES.filter((e) => e.date).map((e) => ({ '@type': 'Event', name: `${SERIES.name}: ${e.title}`, description: e.body, startDate: e.date, endDate: new Date(new Date(e.date).getTime() + 45 * 60000).toISOString(), eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode', eventStatus: 'https://schema.org/EventScheduled', location: { '@type': 'VirtualLocation', url: `${SITE}/events` }, organizer: { '@id': `${SITE}/#org` }, isAccessibleForFree: true, offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', url: `${SITE}/events`, availability: 'https://schema.org/InStock' }, performer: hosts.map((h) => ({ '@type': 'Person', name: h.name })) }));
+---
+<Site title="Agency Report Teardown: a monthly live session | Arcus" description="A monthly 45-minute live session. We take apart an example agency report and show you how to check yours. Free." path="/events" page="events" crumbs={crumbs} schema={schema}>
+  <section class="split-hero" style="align-items:start">
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <Crumbs items={crumbs} />
+      <h1 class="dh d96">Agency Report Teardown.</h1>
+      <p class="lead">{SERIES.lead}</p>
+      <QuickAnswer q="When is the next session?" a={next ? `${next.title}: ${new Date(next.date).toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'short', timeZone: 'America/New_York' })} ET. Free.` : 'Dates are being set. Save your seat and we’ll email you the date and the link.'} points={['How to break an agency report into claims you can check', 'Three reasons a claim may not hold up', 'Which questions to ask your agency, fairly', 'How a regions-on, regions-off test shows what a channel did']} />
+      <p class="small muted">Hosted by {hosts.map((h) => `${h.name} (${h.title})`).join(' and ')}. Every agency report in this series is a made-up example built by Arcus. We never show a real brand’s or a real agency’s report.</p>
+    </div>
+    <form class="form paper" data-lead="webinar" novalidate aria-labelledby="ev-h">
+      <div data-body style="display:flex;flex-direction:column;gap:16px">
+        <h2 id="ev-h" class="h3">Save my seat</h2>
+        <div class="row2">
+          <div class="fld"><label for="ev-name">Name</label><input id="ev-name" name="name" required autocomplete="name" /></div>
+          <div class="fld"><label for="ev-email">Work email</label><input id="ev-email" name="email" type="email" required autocomplete="email" data-work="1" /></div>
+        </div>
+        <div class="row2">
+          <div class="fld"><label for="ev-co">Company</label><input id="ev-co" name="company" required autocomplete="organization" data-from-email /></div>
+          <div class="fld"><label for="ev-role">Title <span class="hint">(optional)</span></label><input id="ev-role" name="role" autocomplete="organization-title" /></div>
+        </div>
+        <div class="fld"><label for="ev-agencies">How many agencies do you work with?</label><select id="ev-agencies" name="start_with"><option value="">Pick one</option><option value="1">1</option><option value="2-3">2 to 3</option><option value="4+">4 or more</option></select></div>
+        <div class="fld"><label for="ev-q">A question you’d like answered live <span class="hint">(optional)</span></label><textarea id="ev-q" name="notes"></textarea></div>
+        <label class="check"><input type="checkbox" name="newsletter" value="yes" /> <span>Also send me The Receipts, monthly.</span></label>
+        <span class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off" /></span>
+        <button type="submit" class="jb k" data-jelly data-loc="events-form"><span class="bg"></span><span class="lb">Save my seat</span></button>
+        <p data-status class="form-err" hidden tabindex="-1" role="alert"></p>
+      </div>
+      <p data-ok hidden tabindex="-1" role="status" class="ok"><b>You’re in.</b> We’ll email the date, the link and the example report.</p>
+    </form>
+  </section>
+  <section class="wrap" style="padding-bottom:120px">
+    <h2 class="dh d56" style="margin-bottom:20px">Episodes.</h2>
+    <div class="tiles" style="--n:3">{EPISODES.map((e) => <div class="tile"><span class="small faint">Episode {e.n}{e.date ? ` · ${new Date(e.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}` : ' · date to come'}</span><p class="h3">{e.title}</p><p class="muted">{e.body}</p><p class="small"><b>You leave with:</b> {e.take}</p></div>)}</div>
+  </section>
+  <Close variant="ink" title="Or we check yours." lines={['Or we check', 'yours.']} body="The teardown shows the method on an example. Bring us one real question and we answer it with your own numbers and what people say, then walk you through it in 30 minutes. Free, no card." loc="events-close" />
+</Site>

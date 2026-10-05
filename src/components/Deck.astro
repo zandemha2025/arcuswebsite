@@ -1,0 +1,40 @@
+---
+// Deck viewer. Without JS every slide is in the page, one after another (and that's what search engines read).
+// With JS the slides stack like a deck: flick, click or use arrow keys.
+import { SITE } from '../data/site.js';
+const { report, endCard = true } = Astro.props;
+const r = report;
+const total = r.slides.length + (endCard ? 1 : 0);
+const mail = `mailto:?subject=${encodeURIComponent(`Worth a look: an Arcus ${r.kind.toLowerCase()}`)}&body=${encodeURIComponent(`${r.example ? 'This is an example Arcus answer (made-up numbers).' : `This is a real answer Arcus gave ${r.who.toLowerCase()} (names removed).`} They answer one question about our marketing for free, with a 30-minute walkthrough.\n\n${SITE}/reports/${r.slug}\n`)}`;
+---
+<div class="deck" data-deck aria-roledescription="slide deck" aria-label={`${r.kind}: ${r.who}`}>
+  <ol class="deck-s">
+    {r.slides.map((s, i) => (
+      <li class="slide" aria-roledescription="slide" aria-label={`${i + 1} of ${total}`} data-slide>
+        <div class="meta"><span>{r.kind}{r.example ? ' · Example numbers' : ` · ${r.who}`}</span><span class="num">{String(i + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span></div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <p class="tiny faint" style="text-transform:uppercase;letter-spacing:.08em;font-weight:600">{s.label}</p>
+          {s.big && <p class="big">{s.big}</p>}
+          {s.list && <ul class="todo">{s.list.map(([k, v]) => <li><b>{k}</b><span>{v}</span></li>)}</ul>}
+        </div>
+        {s.body ? <p class="body">{s.body}</p> : <span></span>}
+      </li>
+    ))}
+    {endCard && (
+      <li class="slide end" aria-roledescription="slide" aria-label={`${total} of ${total}`} data-slide>
+        <div class="meta"><span>That’s the answer</span><span class="num">{String(total).padStart(2, '0')} / {String(total).padStart(2, '0')}</span></div>
+        <p class="big">What’s your question?</p>
+        <div class="btnrow l">
+          <a href={`/free-report?from=${r.slug}`} class="jb k" data-jelly data-loc="deck-end"><span class="bg"></span><span class="lb">Bring us one question</span></a>
+          <a href={mail} class="jb ln" data-track="report_shared" data-props={JSON.stringify({ report: r.slug, via: 'email' })}><span class="bg"></span><span class="lb">Send this to your boss</span></a>
+        </div>
+      </li>
+    )}
+  </ol>
+  <div class="deck-c" hidden data-deck-controls>
+    <button type="button" class="deck-b" data-prev aria-label="Previous slide"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg></button>
+    <p class="num small" aria-live="polite" data-count-label>1 of {total}</p>
+    <button type="button" class="deck-b" data-next aria-label="Next slide"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+    <p class="tiny faint deck-hint">Use the arrow keys, or swipe.</p>
+  </div>
+</div>

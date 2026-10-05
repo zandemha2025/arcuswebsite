@@ -1,0 +1,56 @@
+---
+import Site from '../layouts/Site.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Close from '../components/Close.astro';
+import QuickAnswer from '../components/QuickAnswer.astro';
+import { FAQ_ALL as FAQ } from '../data/all.js';
+import { SHORT } from '../data/site.js';
+const crumbs = [{ name: 'FAQ', href: '/faq' }];
+const cats = [...new Set(FAQ.map(([c]) => c))];
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const schema = [{ '@type': 'FAQPage', mainEntity: FAQ.filter(([, , a]) => !a.includes('[')).map(([, q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }];
+---
+<Site title="Arcus FAQ: the first question, pricing, data and more | Arcus" description="Answers about Arcus: what it is, who it’s for, the free first question, setup, pricing, listening, and how we handle your data." path="/faq" page="faq" crumbs={crumbs} schema={schema}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">Fair questions.</h1>
+    <QuickAnswer q="What does Arcus do, in one sentence?" a={SHORT} />
+  </header>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="side">
+      <div class="toc" style="gap:12px">
+        <div class="btnrow l" data-filter="#faq-list" data-live="#faq-live" role="group" aria-label="Filter questions">
+          <button class="chip" type="button" data-val="all" aria-pressed="true">All</button>
+          {cats.map((c) => <button class="chip" type="button" data-val={slug(c)} aria-pressed="false">{c}</button>)}
+        </div>
+        <p id="faq-live" class="tiny faint" aria-live="polite">Showing {FAQ.length}</p>
+      </div>
+      <div id="faq-list">
+        {cats.map((c) => (
+          <section aria-labelledby={`c-${slug(c)}`} data-cat-head={slug(c)} style="margin-bottom:40px">
+            <h2 id={`c-${slug(c)}`} class="h2s" style="margin-bottom:8px">{c}</h2>
+            <div class="qa">
+              {FAQ.filter(([x]) => x === c).map(([, q, a], i) => <details data-cat={slug(c)} data-q={`${slug(c)}-${i}`} id={slug(q)}><summary>{q}<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3v12M3 9h12"/></svg></summary><p class="a">{a}</p></details>)}
+            </div>
+          </section>
+        ))}
+        <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px">
+          <p class="h3">Didn’t see yours?</p>
+          <p class="muted">Ask us on a call, or get The Receipts, our monthly email.</p>
+          <form data-lead="newsletter" novalidate style="display:flex;gap:8px;flex-wrap:wrap" aria-label="Newsletter">
+            <div data-body style="display:flex;gap:8px;flex-wrap:wrap;width:100%">
+              <label class="sr-only" for="faq-news">Email</label>
+              <input id="faq-news" class="fld" name="email" type="email" required placeholder="you@yourbrand.com" style="flex:1;min-width:220px;min-height:48px;border:1.5px solid #8A8A8A;border-radius:10px;padding:0 14px;font:16px var(--text)" />
+              <span class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off" /></span>
+              <button class="jb k sm" type="submit" data-jelly data-loc="faq-news"><span class="bg"></span><span class="lb">Subscribe</span></button>
+              <a href="/book" class="jb ln sm" data-jelly data-loc="faq-book"><span class="bg"></span><span class="lb">Book a call</span></a>
+            </div>
+            <p data-status class="form-err" hidden tabindex="-1" role="alert"></p>
+            <p data-ok hidden tabindex="-1" role="status" class="small">You’re on the list.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <Close variant="or" lines={['Still curious?', 'Try it free.']} loc="faq-close" />
+</Site>

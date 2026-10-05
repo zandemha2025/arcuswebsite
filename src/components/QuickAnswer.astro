@@ -1,0 +1,9 @@
+---
+// The short answer, high on every page. Written to be quoted as-is by search and AI answers.
+const { q, a, points = [] } = Astro.props;
+---
+<aside class="qanswer" aria-labelledby="qa-q">
+  <h2 id="qa-q" class="h3"><span class="sr-only">The short answer: </span>{q}</h2>
+  <p class="qa-a">{a}</p>
+  {points.length > 0 && <ul class="dash">{points.map((p) => <li>{p}</li>)}</ul>}
+</aside>

@@ -1,0 +1,17 @@
+---
+// Still logo wall. The site's one moving banner is the tools marquee, so this one never moves.
+import { CLIENTS, CLIENT_SLOTS } from '../data/site.js';
+const preview = import.meta.env.PUBLIC_PREVIEW === 'true' || import.meta.env.DEV;
+const slots = CLIENTS.length ? CLIENTS : (preview ? Array.from({ length: CLIENT_SLOTS }, (_, i) => ({ name: `Client logo ${i + 1}`, logo: '' })) : []);
+const { title = 'Trusted by teams at' } = Astro.props;
+---
+{slots.length > 0 && (
+<section class="wrap clients" aria-labelledby="clients-h">
+  <h2 id="clients-h" class="tiny faint clients-h">{title}</h2>
+  <ul class="clients-w">
+    {slots.map((c) => (
+      <li>{c.logo ? <img src={`/logos/clients/${c.logo}`} alt={c.name} style={`height:${c.h || 32}px`} loading="lazy" /> : (CLIENTS.length ? <span class="cw">{c.name}</span> : <span class="slot-ph">[{c.name}]</span>)}</li>
+    ))}
+  </ul>
+</section>
+)}

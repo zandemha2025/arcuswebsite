@@ -1,0 +1,49 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import Arrow from '../../components/Arrow.astro';
+import { GLOSS as GLOSSARY, GLOSS_DEEP } from '../../data/all.js';
+import { articleBySlug as bySlug } from '../../data/all.js';
+import { SITE } from '../../data/site.js';
+export function getStaticPaths() { return GLOSSARY.map((g) => ({ params: { slug: g.slug }, props: { g } })); }
+const { g } = Astro.props;
+const art = bySlug[g.article];
+const d = GLOSS_DEEP[g.slug] || {};
+const rel = (d.related || []).map((x) => GLOSSARY.find((y) => y.slug === x)).filter(Boolean);
+const others = GLOSSARY.filter((x) => x.slug !== g.slug).slice(0, 8);
+const crumbs = [{ name: 'Glossary', href: '/glossary' }, { name: g.name, href: `/glossary/${g.slug}` }];
+const schema = [{ '@type': 'DefinedTerm', name: g.name, description: g.def, url: `${SITE}/glossary/${g.slug}`, inDefinedTermSet: { '@id': `${SITE}/glossary#set` } },
+  { '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: `What is ${g.name.toLowerCase()}?`, acceptedAnswer: { '@type': 'Answer', text: `${g.def} ${g.why}` } }] }];
+---
+<Site md={`/glossary/${g.slug}.md`} title={`What is ${g.name.toLowerCase()}? | Arcus glossary`} description={`${g.def} ${g.why}`.slice(0, 158)} path={`/glossary/${g.slug}`} page="term" crumbs={crumbs} schema={schema}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">What is {g.name.toLowerCase()}?</h1>
+  </header>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="split">
+      <div class="prose">
+        <p style="font-size:24px;font-weight:600;letter-spacing:-.03em;line-height:1.3">{g.def}</p>
+        {d.more && d.more.map((p) => <p>{p}</p>)}
+        <h2>Why it matters</h2>
+        <p>{g.why}</p>
+        {d.example && <><h2>An example</h2><p>{d.example}</p></>}
+        {d.mistake && <><h2>Where it misleads</h2><p>{d.mistake}</p></>}
+        {d.arcus && <><h2>How Arcus handles it</h2><p>{d.arcus}</p></>}
+        {art && <p>More in our guide: <a href={`/library/${art.slug}`}>{art.title}</a></p>}
+      </div>
+      <div class="rc wide">
+        <div class="hd">Ask your agency</div>
+        <p style="font-size:18px;line-height:1.45;font-weight:600">“{g.ask}”</p>
+        <div class="bar"></div>
+      </div>
+    </div>
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    {rel.length > 0 && <><h2 class="h2s" style="margin-bottom:16px">Related terms</h2><div class="tiles" style="--n:3;margin-bottom:40px">{rel.map((o) => <a class="tile" href={`/glossary/${o.slug}`}><span class="h3">{o.name}</span><span class="muted small">{o.def}</span></a>)}</div></>}
+    <h2 class="h2s" style="margin-bottom:16px">More terms</h2>
+    <div class="btnrow l">{others.map((o) => <a class="chip" href={`/glossary/${o.slug}`}>{o.name}</a>)}<a class="arrow" href="/glossary">All terms <Arrow /></a></div>
+  </section>
+  <Close variant="ink" lines={['We’ll check', 'it for you.']} body="Bring us one question, like whether an agency’s results held up. We answer it with your own numbers and what people say online, then walk you through it in 30 minutes. Free, no card." loc="term-close" />
+</Site>

@@ -1,0 +1,26 @@
+---
+import Print from '../../layouts/Print.astro';
+import { SHORT, ENTITY, TBD, TEAM } from '../../data/site.js';
+import { REPORTS } from '../../data/reports.js';
+const real = REPORTS.filter((r) => !r.example);
+---
+<Print title="Arcus one-pager">
+  <style is:global>.pp{gap:12px}.pp h1{font-size:34px}.pp h2{margin-top:2px}.pp ul{margin:6px 0 0;padding-left:18px}</style>
+  <div class="row"><span class="logo">arcus<i></i></span><span class="small faint">usearcus.ai</span></div>
+  <h1>The truth layer for marketing.</h1>
+  <p style="font-size:15px">{ENTITY}</p>
+  <div class="grid">
+    <div class="sl"><span class="lab">Connect</span><b>Every piece of your data, in one layer you own.</b><span>About three months, inside your own setup, and you approve each step. Answers land in Slack, email, Sheets or your dashboard.</span></div>
+    <div class="sl"><span class="lab">Check</span><b>Whether your marketing worked, against your own numbers.</b><span>Every claimed sale, ticket or sign-up checked once against your own numbers. A regions-on, regions-off test when you need proof.</span></div>
+    <div class="sl"><span class="lab">Listen</span><b>To your audience, everywhere they talk.</b><span>Reddit, TikTok, YouTube, Discord, Twitch, Kick, Goodreads, Fable and more, counted and lined up with your own data.</span></div>
+    <div class="sl"><span class="lab">Learn</span><b>What works, and what to make next.</b><span>A few slides with the answer on top, ending in what to keep, test and stop.</span></div>
+  </div>
+  <h2>Real questions, real answers (names removed)</h2>
+  <ul>{real.map((r) => <li><b>{r.headline.n}</b> {r.headline.label} ({r.kind.toLowerCase()}, {r.who.toLowerCase()}).</li>)}</ul>
+  <div class="grid">
+    <div><h2>What it costs</h2><ul><li>First question: $0, plus a 30-minute walkthrough</li><li>Setup, about three months: {TBD.setup}</li><li>Monthly answers, checks and listening: {TBD.monthly}</li></ul></div>
+    <div><h2>What we need to start</h2><ul><li>One question you want answered</li><li>Access to the accounts it touches, like your own sales, tickets or sign-ups and, for an agency question, the agency’s report</li></ul></div>
+  </div>
+  <p class="small faint"><b>Team:</b> {TEAM.map((t) => `${t.name}, ${t.title}`).join(' · ')}</p>
+  <div class="cta"><b>Bring us one question:</b> usearcus.ai/free-report · Book a call: usearcus.ai/book</div>
+</Print>

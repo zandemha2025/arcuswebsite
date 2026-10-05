@@ -1,0 +1,55 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import PageFAQ from '../../components/PageFAQ.astro';
+import Related from '../../components/Related.astro';
+import { COMPARE_ALL as COMPARE, COMPARE_DEEP_ALL as COMPARE_DEEP } from '../../data/all.js';
+export function getStaticPaths() { return COMPARE.map((c) => ({ params: { slug: c.slug }, props: { c } })); }
+const { c } = Astro.props;
+const crumbs = [{ name: 'Compare', href: '/compare' }, { name: `vs. ${c.name}`, href: `/compare/${c.slug}` }];
+const d = COMPARE_DEEP[c.slug] || {};
+const nm = c.name.replace(/^Your /, 'your ');
+const others = COMPARE.filter((x) => x.slug !== c.slug).slice(0, 3);
+---
+<Site md={`/compare/${c.slug}.md`} title={`${c.h1} | Arcus`} description={c.lead} path={`/compare/${c.slug}`} page="compare" crumbs={crumbs}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">{c.h1}</h1>
+    <p class="lead">{c.lead}</p>
+    <QuickAnswer q={`How is Arcus different from ${nm}?`} a={d.summary || c.better} />
+  </header>
+  <section class="wrap" style="padding-bottom:64px">
+    <div class="tbl" style="position:relative">
+      <table>
+        <thead><tr><th scope="col"></th><th scope="col">{c.name}</th><th scope="col" class="us">Arcus</th></tr></thead>
+        <tbody>{c.rows.map(([k, a, b]) => <tr><th scope="row">{k}</th><td>{a}</td><td class="us">{b}</td></tr>)}</tbody>
+      </table>
+    </div>
+    {c.checked && <p class="tiny faint" style="margin-top:12px">Facts about {c.name} come from its public website. {c.checked}</p>}
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="honest">
+      <div><p class="h3">When {c.name.replace(/^Your /, 'your ')} is the better pick</p><p class="muted">{c.better}</p></div>
+      <div><p class="h3">When Arcus is</p><p class="muted">When your data sits in pieces across teams, agencies and tools, and you want one layer that connects all of it, checks every claim against your own numbers, adds what people say, and answers whatever you ask next.</p></div>
+    </div>
+  </section>
+  {d.sections && (
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="prose" style="max-width:76ch">{d.sections.map(([h, b]) => <><h2>{h}</h2>{(Array.isArray(b) ? b : String(b).split('\n\n')).map((p) => <p>{p}</p>)}</>)}</div>
+  </section>)}
+  {d.decide && (
+  <section class="slab s-ic" aria-labelledby="dec-h">
+    <div class="split">
+      <h2 id="dec-h" class="dh d72">How to decide.</h2>
+      <div style="display:flex;flex-direction:column;gap:20px"><ul class="nolist yeslist">{d.decide.map((x) => <li>{x}</li>)}</ul>{d.both && <p class="lead"><b>Using both:</b> {d.both}</p>}</div>
+    </div>
+  </section>)}
+  <PageFAQ id="cmp-faq" items={[...(d.faq || []),
+    ['Can we use both?', 'Usually, yes. Arcus works alongside your agencies and tools. What they produce becomes one more piece of the picture, checked against your own numbers.'],
+    ['How do we test Arcus without switching anything?', 'Bring us one question. We answer it free with your own numbers and what people say. Nothing changes until you decide.'],
+  ]} />
+  <Related title="Other comparisons" items={others.map((o) => [`vs. ${o.name}`, o.lead, `/compare/${o.slug}`])} />
+  <Close variant="ink" lines={['Test us on', 'one question.']} loc="compare-close" />
+</Site>

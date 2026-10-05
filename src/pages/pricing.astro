@@ -1,0 +1,129 @@
+---
+import Site from '../layouts/Site.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Close from '../components/Close.astro';
+import QuickAnswer from '../components/QuickAnswer.astro';
+import PageFAQ from '../components/PageFAQ.astro';
+import Related from '../components/Related.astro';
+import Arrow from '../components/Arrow.astro';
+import { TBD } from '../data/site.js';
+const crumbs = [{ name: 'Pricing', href: '/pricing' }];
+---
+<Site title="Pricing: first question free, then setup and monthly | Arcus" description="Arcus pricing: your first question is answered free. After that, a one-time setup fee covers about three months of building, and a monthly fee covers answers, checks and listening." path="/pricing" active="pricing" page="pricing" crumbs={crumbs}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">Itemized, like everything else.</h1>
+    <p class="lead">Three lines. The first one is free.</p>
+    <QuickAnswer q="How much does Arcus cost?" a={`Your first question is answered free. If you want Arcus running for your brand, there’s a one-time setup fee of ${TBD.setup} and a monthly fee of ${TBD.monthly}. Setup takes about three months.`} />
+  </header>
+
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="split">
+      <div data-printer style="position:relative;display:grid;place-items:center;padding-top:20px">
+        <div class="rc wide prn price-rc">
+          <div class="hd">Arcus, itemized</div>
+          <div class="r"><span>First question, answered free</span><span>$0</span></div>
+          <div class="r"><span>Setup: about three months, done for you</span><span>{TBD.setup}</span></div>
+          <div class="r"><span>Monthly: answers, checks and listening</span><span>{TBD.monthly}/mo</span></div>
+          <div class="r"><span>New software to learn</span><span>$0</span></div>
+          <div class="r tot"><span>To start</span><span>$0</span></div>
+          <div class="bar"></div>
+        </div>
+        <span class="stamp stp" style="right:8%;bottom:48px;rotate:-8deg">Paid in full</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        {[
+          ['First question', '$0', 'One question, answered with your own numbers and what people say: an agency’s results, your posts or your audience. A few slides and a 30-minute walkthrough.', ['Your own numbers, lined up with what people say', 'Every claim checked', 'What to keep, test and stop'], ['Bring us one question', '/free-report']],
+          ['Setup', TBD.setup, 'One time. About three months to connect every system you run into one layer you own, inside your own setup. Answers arrive along the way, and the layer is yours to keep.', ['Sales, viewers or players, email and CRM, ads, social and agency reports, connected', 'Listening sources picked for your audience', 'Every number tested before it reaches an answer'], null],
+          ['Monthly', `${TBD.monthly}/mo`, 'Ask anything, any time, plus regular checks on your schedule.', ['Agency checks, content, audience and market reports', 'A person reads every answer before you do', 'The listening keeps running'], ['Book a call', '/book']],
+        ].map(([t, p, d, items, cta]) => (
+          <div class="tile">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><p class="h2s">{t}</p><p class="h3 num">{p}</p></div>
+            <p class="muted">{d}</p>
+            <ul class="dash">{(items as string[]).map((i) => <li>{i}</li>)}</ul>
+            {cta && <a href={cta[1]} class="arrow">{cta[0]} <Arrow /></a>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="inc-h">
+    <div class="sec-h"><h2 id="inc-h" class="dh d72">What the monthly fee covers.</h2></div>
+    <div class="tiles" style="--n:3">
+      <div class="tile"><p class="h3">Agency checks</p><p class="muted">Every agency claim checked against your own numbers, counted once, with a list of what didn’t hold up and why.</p></div>
+      <div class="tile"><p class="h3">Content reports</p><p class="muted">Which posts get watched, which get shared, and what to keep, test and stop. Like the <a class="ul" href="/reports/content-report">real one</a> we made for a hard seltzer brand.</p></div>
+      <div class="tile"><p class="h3">Audience reports</p><p class="muted">What your audience says across Reddit, TikTok, Discord, Twitch and more, counted and lined up with what they buy.</p></div>
+      <div class="tile"><p class="h3">Market reports</p><p class="muted">Before a big move, how brands like yours did it, with every number sourced. Like the <a class="ul" href="/reports/market-report">real one</a> for a skincare brand moving into retail.</p></div>
+      <div class="tile"><p class="h3">Tests</p><p class="muted">Regions-on, regions-off tests when you need to know what caused results before moving budget.</p></div>
+      <div class="tile"><p class="h3">Any question, any time</p><p class="muted">Ask whatever comes up, and the answer draws on everything we connected. Someone on our team reads every answer before you do and walks you through it.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="cost-h">
+    <div class="split">
+      <div class="sec-h" style="margin:0">
+        <h2 id="cost-h" class="dh d56">How to think about the cost.</h2>
+        <p class="muted">Compare it with the budget it checks. Example numbers, to show the math.</p>
+      </div>
+      <div class="rc wide">
+        <span class="ex">Example</span>
+        <div class="hd">The math</div>
+        <div class="r"><span>Agency spend in a year</span><span>$2,000,000</span></div>
+        <div class="r"><span>Claims that didn’t hold up, from the example agency check</span><span>2,820 of 4,200</span></div>
+        <div class="r"><span>Spend backed only by those claims</span><span>~$1,340,000</span></div>
+        <div class="r tot"><span>Worth knowing before renewal?</span><span>Yes</span></div>
+        <div class="bar"></div>
+        <p class="tiny" style="margin-top:10px;color:#6E6E68">Not every claim that doesn’t hold up is wasted money. It’s money you can’t prove, which is where a test comes in.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="not-h">
+    <div class="honest">
+      <div>
+        <h2 id="not-h" class="h3">What Arcus doesn’t do</h2>
+        <ul class="nolist">
+          <li>Run your ads or buy media</li>
+          <li>Make your content</li>
+          <li>Replace your agencies. We check their numbers</li>
+          <li>Take a cut of your media spend</li><li>Sell you software seats</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="h3">Still to confirm</h2>
+        <ul class="nolist yeslist">
+          <li>[Confirm: contract length and notice period]</li>
+          <li>[Confirm: whether price changes with number of agencies or brands]</li>
+          <li>[Confirm: billing schedule for setup]</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="cmp-h">
+    <h2 id="cmp-h" class="h2s" style="margin-bottom:20px">Compared with the other ways to get the answer</h2>
+    <div class="tbl">
+      <table>
+        <thead><tr><th scope="col"></th><th scope="col" class="us">Arcus</th><th scope="col">Hiring a data team</th><th scope="col">Analytics software</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Who does the work</th><td class="us">We do</td><td>Your hires</td><td>Your team</td></tr>
+          <tr><th scope="row">First answer</th><td class="us">The free first question</td><td>After hiring and building</td><td>After setup</td></tr>
+          <tr><th scope="row">Reads what your audience says</th><td class="us yes">Yes</td><td>If you hire for it</td><td>Usually not</td></tr>
+          <tr><th scope="row">People to manage</th><td class="us">None</td><td>The team</td><td>Whoever runs it</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-top:14px"><a class="ul" href="/compare">See every comparison</a></p>
+  </section>
+
+  <PageFAQ id="price-faq" items={[
+    ['Is the first question really free?', 'Yes. No card and no contract.'],
+    ['What does setup include?', 'About three months of connecting every system you run into one layer you own, adding what people say online, and testing every number. We do the work. You approve each step.'],
+    ['Are there contracts?', '[Confirm contract terms before publishing.]'],
+    ['Does price change with the number of agencies or platforms?', '[Confirm before publishing.]'],
+    ['Do we pay for software seats?', 'No. There’s nothing new to log into. Answers land in the tools you already use: Slack, email, Sheets or your dashboard.'],
+  ]} />
+  <Related items={[['Make the case', 'A one-pager and an email to send your boss.', '/make-the-case'], ['How it works', 'What happens during setup, step by step.', '/how-it-works'], ['Security', 'What we access, and how it’s handled.', '/security']]} />
+  <Close variant="ink" lines={['Line one', 'is free.']} loc="pricing-close" />
+</Site>

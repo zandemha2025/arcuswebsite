@@ -1,0 +1,45 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import Arrow from '../../components/Arrow.astro';
+import { ALL_ARTICLES as ARTICLES } from '../../data/all.js';
+import { TEAM, SITE } from '../../data/site.js';
+const crumbs = [{ name: 'Library', href: '/library' }];
+const topics = [...new Set(ARTICLES.map((a) => a.topic))];
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+const who = Object.fromEntries(TEAM.map((t) => [t.slug, t]));
+const schema = [{ '@type': 'Blog', name: 'The Arcus Library', url: `${SITE}/library`, blogPost: ARTICLES.map((a) => ({ '@type': 'BlogPosting', headline: a.title, url: `${SITE}/library/${a.slug}`, datePublished: a.date })) }];
+---
+<Site title="Library: how to know what your marketing actually did | Arcus" description="Short guides for marketing leaders at entertainment and lifestyle brands: check agency claims against your own numbers, see which posts work, and count what your audience says." path="/library" active="library" page="library" crumbs={crumbs} schema={schema}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">How to check the numbers yourself.</h1>
+    <p class="lead">Short guides for brand marketers. Each starts with the answer. No jargon, and when we have to use a term, we link to what it means.</p>
+    <QuickAnswer q="Where should I start?" a="If you work with more than one agency, start with “Is your agency double counting your sales?” It shows how to check in an afternoon, with nothing but the reports you already have." />
+  </header>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="btnrow l" data-filter="#lib-list" data-live="#lib-live" role="group" aria-label="Filter by topic" style="margin-bottom:12px">
+      <button class="chip" type="button" data-val="all" aria-pressed="true">All</button>
+      {topics.map((t) => <button class="chip" type="button" data-val={slug(t)} aria-pressed="false">{t}</button>)}
+    </div>
+    <p id="lib-live" class="tiny faint" aria-live="polite" style="margin-bottom:12px">Showing {ARTICLES.length}</p>
+    <div id="lib-list">
+      {ARTICLES.map((a) => (
+        <a href={`/library/${a.slug}`} class="listrow" data-cat={slug(a.topic)}>
+          <span class="tag t-k">{a.topic}</span>
+          <span style="display:flex;flex-direction:column;gap:6px"><span class="h3">{a.title}</span><span class="muted small">{a.dek}</span><span class="tiny faint">By {who[a.author]?.name}</span></span>
+          <span class="go"><Arrow /></span>
+        </a>
+      ))}
+    </div>
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="tiles" style="--n:2">
+      <a class="tile" href="/glossary"><span class="h3">The glossary</span><span class="muted small">Attribution, incrementality, ROAS and the rest, in a sentence each.</span><span class="arrow">Look up a term <Arrow /></span></a>
+      <a class="tile" href="/tools/agency-math"><span class="h3">Agency math calculator</span><span class="muted small">Do your agencies’ claims add up to more than you got? Find out in a minute.</span><span class="arrow">Try it <Arrow /></span></a>
+    </div>
+  </section>
+  <Close variant="ink" lines={['Or we check', 'it for you.']} loc="library-close" />
+</Site>

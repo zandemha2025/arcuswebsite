@@ -1,0 +1,189 @@
+---
+import Pic from '../components/Pic.astro';
+import Site from '../layouts/Site.astro';
+import ClientWall from '../components/ClientWall.astro';
+import ToolsMarquee from '../components/ToolsMarquee.astro';
+import Close from '../components/Close.astro';
+import Logo from '../components/Logo.astro';
+import Arrow from '../components/Arrow.astro';
+import { ENTITY, SHORT, LISTEN_SOURCES, OWN, SITE } from '../data/site.js';
+import { REPORTS } from '../data/reports.js';
+const real = REPORTS.filter((r) => !r.example);
+const featured = LISTEN_SOURCES.filter((s) => ['Reddit','TikTok','YouTube','Discord','Twitch','Kick','Facebook groups','Google Search','Goodreads','Fable','Letterboxd','Steam'].includes(s.name));
+const schema = [{ '@type': 'Service', '@id': `${SITE}/#service`, name: 'Arcus', serviceType: 'Marketing intelligence', provider: { '@id': `${SITE}/#org` }, areaServed: 'US', description: ENTITY,
+  offers: { '@type': 'Offer', name: 'First question, answered free', price: '0', priceCurrency: 'USD', url: `${SITE}/free-report` } }];
+---
+<Site title="Arcus | Catch your agency lying. Then see the whole picture." description={SHORT} path="/" page="home" schema={schema}>
+  <link slot="head" rel="preload" as="image" type="image/avif" imagesrcset="/img/concert-800.avif 800w, /img/concert-1600.avif 1600w" imagesizes="100vw" fetchpriority="high" />
+  <section class="hero2" aria-labelledby="h1">
+    <div class="hero-p" data-hero>
+      <Pic name="concert" class="hero-img" eager />
+      <div class="shade" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
+      <div class="hero-in">
+        <p class="tag fade f1" style="background:#FFFFFF24;color:#FFFFFF;margin:0 auto 18px">The truth layer for marketing</p>
+        <h1 id="h1" class="dh d144"><span class="m"><span>Catch your</span></span><span class="m"><span>agency</span></span><span class="m"><span><span class="caught">lying.<span class="stamp" aria-hidden="true">Caught</span></span></span></span></h1>
+        <p class="fade f1">Every agency grades its own homework, and every team holds a different piece of the truth. Arcus connects all of it into one layer you own, checks every claim, and answers any question with the whole picture.</p>
+        <div class="btnrow fade f2">
+          <a href="/free-report" class="jb wt" data-jelly data-loc="hero" data-exp="hero_cta:check" data-exp-text="Ask us one question"><span class="bg"></span><span class="lb">Bring us one question</span></a>
+          <a href="/book" class="jb gh" data-jelly data-loc="hero-2"><span class="bg"></span><span class="lb">Book a call</span></a>
+        </div>
+      </div>
+      <span class="cue" aria-hidden="true"></span>
+      <button class="playb" type="button" data-hero-toggle aria-label="Pause background motion" aria-pressed="false">
+        <svg data-i="pause" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3.5 2v8M8.5 2v8"/></svg>
+        <svg data-i="play" hidden width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z"/></svg>
+      </button>
+    </div>
+    <p class="small muted center" style="margin-top:18px">For CMOs, marketing leads, founders and execs at studios, streamers, drinks, games, music, fashion and beauty brands.</p>
+  </section>
+
+  <ClientWall />
+
+  <section class="wrap sec" aria-labelledby="half-h">
+    <div class="sec-h">
+      <h2 id="half-h" class="dh d72 wipe" data-reveal><span class="ln">They get away with it because</span><span class="ln">your data is in pieces.</span></h2>
+      <p class="lead muted">Agencies report from their own slice. Sales sits in one system, players or viewers in another, email and CRM with a third team, and what people say online somewhere else. Nobody can see the whole thing, so nobody can check it. And every big decision gets made on a fraction of what you know.</p>
+    </div>
+    <div class="jobs">
+      <div class="job s-or rise" data-reveal>
+        <p class="k">What you have</p>
+        <ul class="dash"><li>Sales, tickets or streams in one system</li><li>Players, viewers or app usage in another</li><li>Email, CRM and customer data with a third team</li><li>Social, agency recaps and listening tools everywhere else</li><li><b>Every team, its own version of the truth.</b></li></ul>
+      </div>
+      <div class="job s-ic rise" data-reveal>
+        <p class="k">What you can’t answer</p>
+        <ul class="dash"><li>Did the 4,200 sales our agencies claimed actually happen? (Example)</li><li>Who is this launch really for?</li><li>Which spend moved buyers, not just clicks?</li><li>Are our loudest fans also our best customers?</li><li><b>Questions that need every piece at once.</b></li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slab s-ic" aria-labelledby="layer-h">
+    <div class="sec-h c">
+      <h2 id="layer-h" class="dh d72 wipe" data-reveal><span class="ln">Every piece.</span><span class="ln">One picture.</span></h2>
+      <p class="lead">Arcus connects every system you run into one layer, inside your own setup, and adds what people say online. Once it’s all in one place, made-up numbers have nowhere to hide. Catching an agency is just the first question. After that, any leader can ask anything and get an answer that sees the whole picture.</p>
+    </div>
+    <div class="join" style="grid-template-columns:minmax(0,1fr) 300px minmax(0,1fr)">
+      <div>
+        <p class="colh">Everything your teams know</p>
+        <ul class="own">{OWN.map((o) => <li><i></i>{o}</li>)}</ul>
+      </div>
+      <div class="join-mid">
+        <div class="rc" style="width:300px" aria-label="Example of an answer">
+          <div class="hd">What’s true</div>
+          <div class="r"><span>Sales, week 3</span><span>Up 18%</span></div>
+          <div class="r"><span>Agencies taking credit</span><span>3</span></div>
+          <div class="r"><span>Posts about one unpaid creator</span><span>1,240</span></div>
+          <div class="r tot"><span>What drove it</span><span>The creator</span></div>
+        </div>
+        <p class="small">Example. Sales went up, three agencies took credit, and the comments showed it was a creator nobody paid.</p>
+      </div>
+      <div>
+        <p class="colh">Everything people say</p>
+        <ul class="lw sm">{featured.map((s) => <li><Logo name={s.name} logo={s.logo} size={18} /></li>)}</ul>
+        <p class="small" style="margin-top:12px"><a class="ul" href="/listening">And {LISTEN_SOURCES.length - featured.length} more</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="jobs-h">
+    <div class="sec-h">
+      <h2 id="jobs-h" class="dh d72 wipe" data-reveal><span class="ln">Ask the usual questions.</span><span class="ln">Then the ones you couldn’t.</span></h2>
+      <p class="lead muted">Start with the questions every marketer asks. Once everything is connected, ask the ones nobody could answer before. We don’t make ads or buy media, so no answer is graded on a curve.</p>
+    </div>
+    <div class="jobs">
+      <a href="/how-it-works#check" class="job s-or rise" data-reveal>
+        <p class="k">Did it work?</p>
+        <p class="h2s">Every claimed result, against your own numbers.</p>
+        <ul class="dash"><li>Every result your agencies, platforms and creators claim, lined up with your sales, tickets, sign-ups or streams</li><li>Each result counted once, however many agencies claim it</li><li>A regions-on, regions-off test when you need proof</li></ul>
+      </a>
+      <a href="/listening" class="job s-ic rise" data-reveal>
+        <p class="k">What are people saying?</p>
+        <p class="h2s">What they say, next to what they did.</p>
+        <ul class="dash"><li>Reddit, TikTok, YouTube, Discord, Twitch, reviews, and the listening tool you already have</li><li>Counted, not summarized: the words, topics and jokes that come up</li><li>Lined up with what they actually bought, watched or played</li></ul>
+      </a>
+      <a href="/reports" class="job s-gr rise" data-reveal>
+        <p class="k">What should we do next?</p>
+        <p class="h2s">What to keep, what to test, what to stop.</p>
+        <ul class="dash"><li>Which posts, creators and channels move people</li><li>Who your best customers are</li><li>Where next quarter’s budget should go</li></ul>
+      </a>
+      <a href="/how-it-works#build" class="job s-ink on-dark rise" data-reveal>
+        <p class="k">What else do you want to know?</p>
+        <p class="h2s">Ask anything. The answer sees the whole picture.</p>
+        <ul class="dash"><li>“Which fans should hear about the sequel first?”</li><li>“If we cut one channel, which one hurts least?”</li><li>Any team can ask, because everything is connected in one layer you own</li></ul>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap sec" style="padding-top:0" aria-labelledby="proof-h">
+    <div class="sec-h">
+      <h2 id="proof-h" class="dh d72 wipe" data-reveal><span class="ln">Real questions.</span><span class="ln">Real answers.</span></h2>
+      <p class="lead muted">Three questions real brands brought us, with the names taken out. Each answer came back as a few slides with the answer on top.</p>
+    </div>
+    <div class="proofrow">
+      {real.map((r) => (
+        <a href={`/reports/${r.slug}`} class="pcard rise" data-reveal>
+          <span class="who">{r.who}</span>
+          <p class="h3">{r.question}</p>
+          <span class="n num">{r.headline.n}</span>
+          <p class="small" style="font-weight:500">{r.headline.label}</p>
+          <span class="arrow">See the answer <Arrow /></span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <ToolsMarquee />
+
+  <section class="wrap sec" aria-labelledby="how-h">
+    <div class="sec-h">
+      <h2 id="how-h" class="dh d72 wipe" data-reveal><span class="ln">Start with one question.</span><span class="ln">Then we connect everything.</span></h2>
+    </div>
+    <ol class="steps" style="--n:3;padding:0;list-style:none">
+      <li class="step rise" data-reveal><span class="n">01</span><p class="h3">Bring us one question</p><p class="muted">Did an agency’s results hold up? Which posts work? What does your audience say about you? Or anything else. We answer it with your own numbers and what people say online, and walk you through it in 30 minutes. Free, no card.</p></li>
+      <li class="step rise" data-reveal><span class="n">02</span><p class="h3">We connect everything</p><p class="muted">About three months to connect every system you run into one layer you own, plus what people say online. You approve each step. Answers arrive along the way.</p></li>
+      <li class="step rise" data-reveal><span class="n">03</span><p class="h3">Ask anything</p><p class="muted">Planning a launch for a new audience? Ask. Because everything is connected, the answer covers the whole picture, not one team’s piece. It lands in Slack, email, Sheets or your dashboard.</p></li>
+    </ol>
+    <p style="margin-top:24px"><a href="/how-it-works" class="arrow">How it works <Arrow /></a></p>
+  </section>
+
+  <section class="wrap sec" style="padding-top:0" aria-labelledby="obj-h">
+    <div class="sec-h"><h2 id="obj-h" class="dh d72">Fair questions.</h2></div>
+    <div class="qa objs">
+      {[
+        ['Is Arcus a reporting company?', 'No. Arcus connects your data into one layer you own and answers questions with it: what worked, why, and what to do next. A few slides is just how an answer arrives.'],
+        ['Do we have to fire our agency?', 'No. Arcus works alongside your agencies. Sometimes the check shows an agency is doing great work, and you’ll know that too.'],
+        ['Is this just attribution software?', 'No. Attribution software hands out credit. Arcus checks whether the credit is real: each result counted once against your own numbers, and a test for anything you’d move budget on.'],
+        ['What does the first question cost us?', 'Nothing. Bring the question and access to the accounts it touches. We answer it and walk you through it.'],
+      ].map(([q, a], i) => (
+        <details data-q={`home-${i}`}><summary>{q}<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3v12M3 9h12"/></svg></summary><p class="a">{a}</p></details>
+      ))}
+    </div>
+    <p style="margin-top:24px"><a href="/faq" class="arrow">All questions <Arrow /></a></p>
+  </section>
+
+  <section class="wrap sec" style="padding-top:0" aria-labelledby="honest-h">
+    <div class="sec-h"><h2 id="honest-h" class="dh d72">What we won’t say. Who it’s not for.</h2></div>
+    <div class="honest">
+      <div>
+        <p class="h3">What we won’t claim</p>
+        <ul class="nolist">
+          <li>That an ad caused a sale, unless we tested it</li>
+          <li>Numbers we can’t trace back to a source</li>
+          <li>Logos, quotes or results we don’t have permission to show</li>
+          <li>That your agency is wrong before we’ve checked</li>
+        </ul>
+      </div>
+      <div>
+        <p class="h3">Who it’s not for</p>
+        <ul class="nolist">
+          <li>Teams with analysts who already check every claim and read every comment</li>
+          <li>Teams that can’t share any of their own numbers with us</li>
+          <li>Anyone looking for a dashboard to manage themselves</li>
+        </ul>
+        <a href="/compare" class="arrow" style="margin-top:auto">How Arcus compares <Arrow /></a>
+      </div>
+    </div>
+  </section>
+
+  <Close variant="ink" lines={['If it can’t be checked,', 'it doesn’t count.']} primary={['Bring us one question', '/free-report']} loc="home-close" />
+</Site>

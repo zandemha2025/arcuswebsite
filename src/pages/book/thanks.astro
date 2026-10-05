@@ -1,0 +1,26 @@
+---
+import Site from '../../layouts/Site.astro';
+import Arrow from '../../components/Arrow.astro';
+import { TBD } from '../../data/site.js';
+---
+<Site title="Pick a time | Arcus" description="Pick a time for your call with Arcus." path="/book/thanks" page="thanks" noindex>
+  <section class="split-hero" data-prefill style="align-items:start">
+    <div style="display:flex;flex-direction:column;gap:24px;position:relative">
+      <h1 class="dh d96">Almost booked, <span data-lead-name>thanks</span>.</h1>
+      <p class="lead">Pick a time and you’ll get an invite right away. Add anyone you want on the call.</p>
+      <div class="rc wide" style="position:relative">
+        <div class="hd">Call with Arcus</div>
+        <div class="r"><span>Length</span><span>30 minutes</span></div>
+        <div class="r"><span>Pitch deck</span><span>None</span></div>
+        <div class="r"><span>Your questions</span><span>All of them</span></div>
+        <div class="bar"></div>
+      </div>
+      <div class="card" style="padding:24px;display:flex;flex-direction:column;gap:10px">
+        <p class="h3">While you wait</p>
+        <a href="/reports" class="arrow">Flip through real answers <Arrow /></a>
+        <a href="/tools/agency-math" class="arrow">Try the agency math calculator <Arrow /></a>
+      </div>
+    </div>
+    <div data-cal={TBD.calLink} class="card ph" style="min-height:560px;padding:24px">[Cal.com booking embed: set the booking link in site.js]</div>
+  </section>
+</Site>

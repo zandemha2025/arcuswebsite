@@ -1,0 +1,14 @@
+---
+import Site from '../layouts/Site.astro';
+import Crumbs from './Crumbs.astro';
+const { title, h1, description, path, updated = 'October 2, 2026' } = Astro.props;
+const crumbs = [{ name: h1, href: path }];
+---
+<Site title={`${title} | Arcus`} description={description} path={path} page="legal" crumbs={crumbs}>
+  <header class="phero l" style="padding-bottom:32px">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">{h1}</h1>
+    <p class="small faint">Last updated {updated}. <b>Draft: needs review by counsel before launch.</b></p>
+  </header>
+  <section class="wrap" style="padding-bottom:120px"><div class="prose"><slot /></div></section>
+</Site>

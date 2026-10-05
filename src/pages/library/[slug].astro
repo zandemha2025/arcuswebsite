@@ -1,0 +1,67 @@
+---
+import Video from '../../components/Video.astro';
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import PageFAQ from '../../components/PageFAQ.astro';
+import Arrow from '../../components/Arrow.astro';
+import { ALL_ARTICLES as ARTICLES } from '../../data/all.js';
+import { TEAM, SITE } from '../../data/site.js';
+export function getStaticPaths() { return ARTICLES.map((a) => ({ params: { slug: a.slug }, props: { a } })); }
+const { a } = Astro.props;
+const t = TEAM.find((x) => x.slug === a.author);
+const toc = [...a.body.matchAll(/<h2 id="([^"]+)">([^<]+)<\/h2>/g)].map((m) => [m[1], m[2]]);
+const related = ARTICLES.filter((x) => x.slug !== a.slug && x.topic === a.topic).concat(ARTICLES.filter((x) => x.slug !== a.slug && x.topic !== a.topic)).slice(0, 3);
+const crumbs = [{ name: 'Library', href: '/library' }, { name: a.title, href: `/library/${a.slug}` }];
+const fmt = new Date(a.date + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const schema = [{ '@type': 'Article', '@id': `${SITE}/library/${a.slug}#article`, headline: a.title, description: a.dek, datePublished: a.date, dateModified: a.date, inLanguage: 'en-US', author: { '@id': `${SITE}/about/${a.author}#person`, '@type': 'Person', name: t?.name, url: `${SITE}/about/${a.author}` }, publisher: { '@id': `${SITE}/#org` }, mainEntityOfPage: `${SITE}/library/${a.slug}`, abstract: a.short }];
+---
+<Site md={`/library/${a.slug}.md`} title={`${a.title} | Arcus`} description={a.dek} path={`/library/${a.slug}`} active="library" page="article" crumbs={crumbs} schema={schema} article={{ published: a.date, modified: a.date, author: a.author, section: a.topic }}>
+  <div class="progress" data-progress aria-hidden="true"></div>
+  <header class="phero l" style="padding-bottom:40px">
+    <Crumbs items={crumbs} />
+    <span class="tag t-k">{a.topic}</span>
+    <h1 class="dh d96" style="max-width:1100px">{a.title}</h1>
+    <p class="lead">{a.dek}</p>
+    <a class="person" href={`/about/${a.author}`}><span class="av">{t?.initials}</span><span><b>{t?.name}</b>, {t?.title}<br/><span class="small faint"><time datetime={a.date}>{fmt}</time></span></span></a>
+  </header>
+  <Video page={`/library/${a.slug}`} />
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="side">
+      <nav class="toc" data-toc aria-label="In this article">
+        {toc.map(([id, name]) => <a href={`#${id}`}>{name}</a>)}
+        <a href="/free-report" class="jb k sm" data-jelly data-loc="article-toc" style="margin-top:16px;color:#FFFFFF"><span class="bg"></span><span class="lb">Bring us one question</span></a>
+      </nav>
+      <div style="display:flex;flex-direction:column;gap:32px">
+        <div class="rc wide answer" style="width:100%;max-width:720px">
+          <div class="hd">The short answer</div>
+          <p style="font-size:17px;line-height:1.55">{a.short}</p>
+        </div>
+        <article class="prose" data-article={a.slug} set:html={a.body} />
+        <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px;max-width:720px">
+          <p class="h3">Want this answered on your own numbers?</p>
+          <p class="muted">Arcus is the truth layer for marketing. It connects every piece of your data into one layer you own, adds what people say online, and checks every claim. Bring us one question and we’ll answer it free, with a 30-minute walkthrough. No card.</p>
+          <a href="/free-report" class="arrow">Bring us one question <Arrow /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  {a.faq?.length > 0 && <PageFAQ id="art-faq" items={a.faq} link={false} />}
+  <section class="wrap" style="padding-bottom:96px">
+    <h2 class="h2s" style="margin-bottom:20px">Read next</h2>
+    <div class="tiles" style="--n:3">{related.map((r) => <a class="tile" href={`/library/${r.slug}`}><span class="small faint">{r.topic}</span><span class="h3">{r.title}</span><span class="arrow">Read <Arrow /></span></a>)}</div>
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <form class="card" data-lead="newsletter" novalidate style="padding:28px;display:flex;flex-direction:column;gap:12px" aria-labelledby="art-news-h">
+      <h2 id="art-news-h" class="h3">Get The Receipts</h2>
+      <p class="muted small">One number marketing gets wrong each month, and how to check it.</p>
+      <div data-body class="row2" style="align-items:end">
+        <div class="fld"><label for="art-email">Work email</label><input id="art-email" name="email" type="email" required autocomplete="email" placeholder="you@yourbrand.com" /></div>
+        <span class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off" /></span>
+        <button class="jb k" type="submit" data-jelly data-loc="article-news"><span class="bg"></span><span class="lb">Subscribe</span></button>
+      </div>
+      <p data-status class="form-err" hidden tabindex="-1" role="alert"></p>
+      <p data-ok hidden tabindex="-1" role="status" class="small">You’re on the list.</p>
+    </form>
+  </section>
+</Site>

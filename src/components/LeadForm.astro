@@ -1,0 +1,67 @@
+---
+// The first-question form. Posts to /api/lead with hidden first/last touch fields (added by site.js).
+import { TBD } from '../data/site.js';
+const { id = 'fr', loc = 'free-report', compact = false } = Astro.props;
+---
+<form class="form paper" data-lead="free_report" data-next="/free-report/thanks" novalidate aria-labelledby={`${id}-h`} enctype="multipart/form-data">
+  <div data-body style="display:flex;flex-direction:column;gap:18px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+      <h2 id={`${id}-h`} class="h3">Your first question</h2>
+      <span class="tiny faint">Free. No card.</span>
+    </div>
+    <div class="row2">
+      <div class="fld"><label for={`${id}-name`}>Your name</label><input id={`${id}-name`} name="name" required autocomplete="name" data-req="Tell us your name." /></div>
+      <div class="fld"><label for={`${id}-email`}>Work email</label><input id={`${id}-email`} name="email" type="email" required autocomplete="email" data-work="1" placeholder="you@yourbrand.com" data-req="We need an email to send the answer." /></div>
+    </div>
+    <div class="row2" data-exp-hide="free_report_form_length:short">
+      <div class="fld"><label for={`${id}-company`}>Brand</label><input id={`${id}-company`} name="company" required autocomplete="organization" data-req="Which brand is this for?" data-from-email /></div>
+      <div class="fld"><label for={`${id}-role`}>Your role <span class="hint">(optional)</span></label><input id={`${id}-role`} name="role" autocomplete="organization-title" placeholder="Brand marketing lead" /></div>
+    </div>
+    {!compact && <>
+    <div class="fld">
+      <label for={`${id}-start`}>Your question</label>
+      <select id={`${id}-start`} name="start_with" required data-req="Pick the question you want answered first.">
+        <option value="">Pick one</option>
+        <option value="agency_check">Did our agencies’ results actually happen?</option>
+        <option value="content_report">Which of our posts work, and what should we make next?</option>
+        <option value="audience_report">What is our audience saying about us?</option>
+        <option value="not_sure">Something else. We’ll talk it through</option>
+      </select>
+    </div>
+    <div class="fld">
+      <label for={`${id}-file`}>The agency report <span class="hint">(optional, PDF, deck or spreadsheet)</span></label>
+      <input id={`${id}-file`} name="report_file" type="file" accept=".pdf,.ppt,.pptx,.key,.xls,.xlsx,.csv" />
+      <span class="hint">No file handy? Skip it. We’ll ask on the call.</span>
+    </div>
+    </>}
+    <div class="fld" data-exp-hide="free_report_form_length:short">
+      <label for={`${id}-heard`}>How did you hear about us? <span class="hint">(optional)</span></label>
+      <select id={`${id}-heard`} name="heard">
+        <option value="">Pick one</option>
+        <option value="ai_assistant">ChatGPT, Claude, Perplexity or another AI</option>
+        <option value="google">Google or another search engine</option>
+        <option value="linkedin">LinkedIn</option>
+        <option value="colleague">A colleague or friend</option>
+        <option value="agency_or_partner">An agency, consultant or partner</option>
+        <option value="podcast_or_event">A podcast, event or webinar</option>
+        <option value="newsletter_or_press">A newsletter or article</option>
+        <option value="reddit_or_social">Reddit, TikTok or other social</option>
+        <option value="other">Something else</option>
+      </select>
+    </div>
+    <div class="need">
+      <p class="small" style="font-weight:600">What we’ll need from you</p>
+      <ul class="dash">
+        <li>The agency report you want checked, if your question is about an agency</li>
+        <li>Access to the numbers your question needs, like sales, tickets, sign-ups or viewing, plus the ad accounts for an agency question. We walk you through it</li>
+        <li>About 30 minutes for the walkthrough call</li>
+      </ul>
+    </div>
+    <span class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off" /></label></span>
+    <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITEKEY || ''} data-size="flexible"></div>
+    <label class="check"><input type="checkbox" name="newsletter" value="yes" /> <span>Also send me The Receipts, our monthly email. One thing marketing gets wrong, and how to check it.</span></label>
+    <button type="submit" class="jb k" data-jelly data-loc={loc}><span class="bg"></span><span class="lb">Send my question</span></button>
+    <p data-status class="form-err" hidden tabindex="-1" role="alert"></p>
+    <p class="tiny faint">We use this to answer your question and nothing else. <a class="ul" href="/free-report-terms">Terms for the free question</a> · <a class="ul" href="/privacy">Privacy</a></p>
+  </div>
+</form>

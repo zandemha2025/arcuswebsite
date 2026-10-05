@@ -1,0 +1,37 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Close from '../../components/Close.astro';
+import Arrow from '../../components/Arrow.astro';
+import { REPORTS } from '../../data/reports.js';
+import { SITE } from '../../data/site.js';
+const crumbs = [{ name: 'Real answers', href: '/reports' }];
+const schema = [{ '@type': 'CollectionPage', name: 'Real Arcus reports', url: `${SITE}/reports`, hasPart: REPORTS.map((r) => ({ '@type': 'CreativeWork', name: `${r.kind}: ${r.title}`, url: `${SITE}/reports/${r.slug}` })) }];
+---
+<Site title="Real questions, real answers, names removed | Arcus" description="Real questions Arcus answered for a hard seltzer brand, a streaming service and a skincare brand, with names removed. Flip through the slides and the numbers behind them." path="/reports" active="reports" page="reports" crumbs={crumbs} schema={schema}>
+  <header class="phero l">
+    <Crumbs items={crumbs} />
+    <h1 class="dh d96">Real questions. Real answers.</h1>
+    <p class="lead">Three real brands brought us these questions, and we took their names out. Each answer is built from the brand’s own numbers, what people say in public, and the public record. It comes back as a few slides: the answer on top, the numbers behind it, and what to keep, test and stop. The fourth, the agency check, uses example numbers and says so.</p>
+  </header>
+  <section class="wrap" style="padding-bottom:96px">
+    {REPORTS.map((r) => (
+      <a href={`/reports/${r.slug}`} class="listrow">
+        <span class={`tag t-${r.color === 'or' ? 'o' : r.color === 'gr' ? 'g' : 'i'}`}>{r.kind}</span>
+        <span style="display:flex;flex-direction:column;gap:6px">
+          <span class="h3">{r.question}</span>
+          <span class="muted small">{r.example ? 'Shown with example numbers. ' : `${r.who}. `}{r.short}</span>
+        </span>
+        <span class="go"><Arrow /></span>
+      </a>
+    ))}
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="tiles" style="--n:3">
+      <div class="tile"><p class="h3">Answer on top</p><p class="muted">The first slide says what we found. Everything after it is the evidence.</p></div>
+      <div class="tile"><p class="h3">Every number has a source</p><p class="muted">Your own data, your accounts or a public page. If we can’t trace it, it isn’t in the report.</p></div>
+      <div class="tile"><p class="h3">Ends with what to do</p><p class="muted">What to keep, test and stop. A short list your team can act on Monday.</p></div>
+    </div>
+  </section>
+  <Close variant="or" lines={['What’s your', 'question?']} loc="reports-close" />
+</Site>

@@ -1,0 +1,81 @@
+---
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import PageFAQ from '../../components/PageFAQ.astro';
+import Arrow from '../../components/Arrow.astro';
+import { TEAM } from '../../data/site.js';
+const crumbs = [{ name: 'Book a call', href: '/book' }];
+---
+<Site title="Book a call with Arcus | Arcus" description="Book 30 minutes with the Arcus team. No pitch. Bring your questions about agency reports, your audience or your data, and we’ll answer them." path="/book" page="book" crumbs={crumbs}>
+  <section class="split-hero" style="align-items:start">
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <Crumbs items={crumbs} />
+      <h1 class="dh d96">No pitch. Bring your questions.</h1>
+      <p class="lead">30 minutes with the people who build Arcus. Ask about your agencies, your audience, your data or how we work. If we’re not a fit, we’ll tell you.</p>
+      <ul class="nolist yeslist">
+        <li>Bring an agency report and we’ll tell you what we’d check first</li>
+        <li>Bring your security or legal questions. Brendon can join</li>
+        <li>Leave with a next step, even if it isn’t us</li>
+      </ul>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <p class="small faint">Who you’ll talk to</p>
+        <div style="display:flex;gap:20px;flex-wrap:wrap">
+          {TEAM.filter((t) => ['min-kwak','brendon-ghaderi'].includes(t.slug)).map((t) => <a class="person" href={`/about/${t.slug}`}><span class="av">{t.initials}</span><span><b>{t.name}</b><br/><span class="small muted">{t.title}</span></span></a>)}
+        </div>
+      </div>
+    </div>
+    <form class="form paper" data-lead="book" data-next="/book/thanks" novalidate aria-labelledby="bk-h">
+      <div data-body style="display:flex;flex-direction:column;gap:18px">
+        <h2 id="bk-h" class="h3">Book a call</h2>
+        <div class="row2">
+          <div class="fld"><label for="bk-name">Your name</label><input id="bk-name" name="name" required autocomplete="name" /></div>
+          <div class="fld"><label for="bk-email">Work email</label><input id="bk-email" name="email" type="email" required data-work="1" autocomplete="email" placeholder="you@yourbrand.com" /></div>
+        </div>
+        <div class="fld"><label for="bk-co">Brand</label><input id="bk-co" name="company" required autocomplete="organization" data-from-email /></div>
+        <div class="fld">
+          <label for="bk-topic">What do you want to talk about?</label>
+          <select id="bk-topic" name="topic" required data-req="Pick a topic so we bring the right person.">
+            <option value="">Pick one</option>
+            <option value="agency">Checking our agencies</option>
+            <option value="audience">What our audience says</option>
+            <option value="pricing">Pricing and setup</option>
+            <option value="security">Security and legal</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+        <div class="fld"><label for="bk-notes">Anything we should know? <span class="hint">(optional)</span></label><textarea id="bk-notes" name="notes" placeholder="Our renewal is in March and we have three agencies."></textarea></div>
+        <div class="fld">
+          <label for="bk-heard">How did you hear about us? <span class="hint">(optional)</span></label>
+          <select id="bk-heard" name="heard">
+            <option value="">Pick one</option>
+            <option value="ai_assistant">ChatGPT, Claude, Perplexity or another AI</option>
+            <option value="google">Google or another search engine</option>
+            <option value="linkedin">LinkedIn</option>
+            <option value="colleague">A colleague or friend</option>
+            <option value="agency_or_partner">An agency, consultant or partner</option>
+            <option value="podcast_or_event">A podcast, event or webinar</option>
+            <option value="newsletter_or_press">A newsletter or article</option>
+            <option value="reddit_or_social">Reddit, TikTok or other social</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+        <label class="check"><input type="checkbox" name="bring_brendon" value="yes" /> <span>Bring Brendon, our CTO, for technical, security or legal questions</span></label>
+        <span class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off" /></label></span>
+        <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITEKEY || ''}></div>
+        <button type="submit" class="jb k" data-jelly data-loc="book-form"><span class="bg"></span><span class="lb">Pick a time</span></button>
+        <p data-status class="form-err" hidden tabindex="-1" role="alert"></p>
+        <p class="tiny faint">Next you’ll pick a time. <a class="ul" href="/privacy">Privacy</a></p>
+      </div>
+    </form>
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <QuickAnswer q="What happens on an Arcus call?" a="You talk to someone who builds Arcus for 30 minutes. You ask questions about your agencies, audience or data. We tell you what we’d check first and whether we’re a fit. There’s no pitch deck." />
+  </section>
+  <PageFAQ id="book-faq" items={[
+    ['Do I need to prepare anything?', 'No. If you have an agency report you’re unsure about, bring it. It makes the call more useful.'],
+    ['Can my boss or legal join?', 'Yes. Add them to the invite after you book. If legal is joining, check the box to bring Brendon.'],
+    ['Would sending a question be faster?', 'If you already know what you want answered, yes. Send it and we’ll walk you through the answer.'],
+  ]} />
+  <section class="wrap" style="padding-bottom:96px"><a href="/free-report" class="arrow">Skip the call and bring us one question <Arrow /></a></section>
+</Site>

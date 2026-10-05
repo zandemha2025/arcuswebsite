@@ -1,0 +1,125 @@
+---
+import Video from '../../components/Video.astro';
+import Site from '../../layouts/Site.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Deck from '../../components/Deck.astro';
+import Close from '../../components/Close.astro';
+import Arrow from '../../components/Arrow.astro';
+import { REPORTS } from '../../data/reports.js';
+import { DEEP } from '../../data/reports-deep.js';
+import PageFAQ from '../../components/PageFAQ.astro';
+import QuickAnswer from '../../components/QuickAnswer.astro';
+import { SITE } from '../../data/site.js';
+export function getStaticPaths() { return REPORTS.map((r) => ({ params: { slug: r.slug }, props: { r: r } })); }
+const { r } = Astro.props;
+const d = DEEP[r.slug] || {};
+const others = REPORTS.filter((x) => x.slug !== r.slug);
+const crumbs = [{ name: 'Real answers', href: '/reports' }, { name: r.kind, href: `/reports/${r.slug}` }];
+const schema = [{ '@type': 'Report', name: `${r.kind}: ${r.title}`, url: `${SITE}/reports/${r.slug}`, author: { '@id': `${SITE}/#org` }, about: r.short, inLanguage: 'en-US' }];
+const tone = r.color === 'or' ? 'o' : r.color === 'gr' ? 'g' : 'i';
+---
+<Site md={`/reports/${r.slug}.md`} title={`${r.kind}${r.example ? ' (example)' : `: ${r.who}`} | Arcus`} description={`${r.short} ${r.example ? 'Shown with example numbers.' : 'A real Arcus report with names removed.'}`} path={`/reports/${r.slug}`} active="reports" page="report" crumbs={crumbs} schema={schema}>
+  <header class="phero l" style="padding-bottom:40px">
+    <Crumbs items={crumbs} />
+    <div class="btnrow l"><span class={`tag t-${tone}`}>{r.kind}</span><span class="tag t-k">{r.example ? 'Example numbers' : r.who}</span></div>
+    <h1 class="dh d96" style="max-width:1200px">{r.question}</h1>
+    <p class="lead">{r.title} {r.short}</p>
+  </header>
+  <Video page={`/reports/${r.slug}`} />
+
+  <section class="wrap" style="padding-bottom:64px">
+    <QuickAnswer q={d.question || r.title} a={`${r.headline.n}: ${r.headline.label}. ${r.short}`} />
+  </section>
+  <section class="wrap" aria-label="The report">
+    <Deck report={r} />
+  </section>
+
+
+  {d.context && (
+  <section class="wrap sec" aria-labelledby="ctx-h">
+    <div class="split">
+      <h2 id="ctx-h" class="dh d72">{r.example ? 'Why check at all.' : 'Why they asked.'}</h2>
+      <div class="prose">{d.context.map((p) => <p>{p}</p>)}</div>
+    </div>
+  </section>)}
+
+  {d.method && (
+  <section class="slab s-ic" aria-labelledby="meth-h">
+    <div class="sec-h"><h2 id="meth-h" class="dh d72">How we answered it.</h2></div>
+    {r.sides && <div class="honest" style="margin-bottom:40px"><div><p class="h3">Their own data</p><p class="muted">{r.sides.own}</p></div><div><p class="h3">What people say and do</p><p class="muted">{r.sides.out}</p></div></div>}
+    <ol class="steps" style={`--n:${Math.min(d.method.length, 3)};padding:0;list-style:none`}>
+      {d.method.map(([t, x], i) => <li class="step"><span class="n">{String(i + 1).padStart(2, '0')}</span><p class="h3">{t}</p><p class="muted">{x}</p></li>)}
+    </ol>
+  </section>)}
+
+  {d.findings && (
+  <section class="wrap sec" aria-labelledby="find-h">
+    <div class="sec-h"><h2 id="find-h" class="dh d72">Everything we found.</h2>{r.example && <p class="lead muted">Example numbers throughout.</p>}</div>
+    <div class="tiles" style="--n:2">
+      {d.findings.map((f) => <div class="tile">{f.n && <p class="dh" style="font-size:56px">{f.n}</p>}<p class="h3">{f.h}</p><p class="muted">{f.body}</p></div>)}
+    </div>
+  </section>)}
+
+  {d.rules && (
+  <section class="slab s-gr" aria-labelledby="rules-h">
+    <div class="split">
+      <h2 id="rules-h" class="dh d72">What we told them to do.</h2>
+      <ul class="todo">{d.rules.map(([k, v]) => <li><b>{k}</b><span style="font-weight:500">{v}</span></li>)}</ul>
+    </div>
+  </section>)}
+
+  {d.lessons && (
+  <section class="wrap sec" aria-labelledby="les-h">
+    <div class="sec-h"><h2 id="les-h" class="dh d72">What any brand can take from this.</h2></div>
+    <div class="tiles" style={`--n:${Math.min(d.lessons.length, 3)}`}>{d.lessons.map(([t, x]) => <div class="tile"><p class="h3">{t}</p><p class="muted">{x}</p></div>)}</div>
+  </section>)}
+
+  {d.applyToYou && (
+  <section class="slab s-ink on-dark" aria-labelledby="you-h">
+    <div class="split">
+      <div class="sec-h" style="margin:0">
+        <h2 id="you-h" class="dh d72">What this looks like for your brand.</h2>
+        <a href={`/free-report?from=${r.slug}`} class="jb st" data-jelly data-loc="report-you" style="align-self:flex-start"><span class="bg"></span><span class="lb">Bring us one question</span></a>
+      </div>
+      <div class="qa" style="border-color:#F4F4F433">{d.applyToYou.map(([q, a]) => <details style="border-color:#F4F4F433"><summary>{q}<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3v12M3 9h12"/></svg></summary><p class="a" style="color:#F4F4F4CC">{a}</p></details>)}</div>
+    </div>
+  </section>)}
+
+  <section class="wrap sec" aria-labelledby="nums-h">
+    <div class="split">
+      <div class="sec-h" style="margin:0">
+        <h2 id="nums-h" class="h2s">The numbers behind it</h2>
+        <p class="muted">{r.scope}</p>
+        <p class="small"><b>Sources:</b> {r.sources.join(', ')}</p>
+      </div>
+      <div class="rc wide" aria-label="Key numbers">
+        {r.example && <span class="ex">Example</span>}
+        <div class="hd">{r.kind}</div>
+        <div class="r tot" style="border:0;margin:0;padding:0 0 8px"><span>{r.headline.n}</span><span></span></div>
+        <p style="margin-bottom:10px">{r.headline.label}</p>
+        {r.stats.map((s) => <div class="r" style="border-top:1px dashed #A8A8A0;padding-top:8px;margin-top:8px"><span style="font-weight:700;white-space:nowrap">{s.n}</span><span style="text-align:right">{s.label}</span></div>)}
+        <div class="bar"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="rec-h">
+    <div class="card" style="padding:32px;display:flex;flex-direction:column;gap:12px">
+      <h2 id="rec-h" class="h3">How we checked, and what this doesn’t prove</h2>
+      <p class="muted">{r.receipts}</p>
+      {d.limits && <ul class="dash">{d.limits.map((l) => <li>{l}</li>)}</ul>}
+      <p class="small muted">{r.example ? 'Every number on this page is an example, made up to show the method.' : 'Names of the brand, its campaigns and its titles are removed. The numbers are exactly as delivered.'}</p>
+      <a class="arrow" href={`/pdf/arcus-${r.slug}.pdf`} download data-track="report_pdf_downloaded" data-props={JSON.stringify({ report: r.slug })}>Download this report as a PDF <Arrow /></a>
+    </div>
+  </section>
+
+  {d.faq && <PageFAQ id="rep-faq" items={d.faq} />}
+  <section class="wrap" style="padding-bottom:96px" aria-labelledby="more-h">
+    <h2 id="more-h" class="h2s" style="margin-bottom:20px">More real answers</h2>
+    <div class="tiles" style="--n:3">
+      {others.map((o) => <a class="tile" href={`/reports/${o.slug}`}><span class="small faint">{o.kind} · {o.example ? 'Example' : o.who}</span><span class="h3">{o.title}</span><span class="arrow">See the answer <Arrow /></span></a>)}
+    </div>
+  </section>
+
+  <Close variant="ink" lines={['Your question', 'is next.']} body="We answer your first question with your own numbers and what people say, and walk you through it in 30 minutes. Free, no card. Once everything is connected, answers like this one keep coming." loc="report-close" />
+</Site>
