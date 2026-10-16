@@ -10,12 +10,13 @@ const { SHORT } = site;
 const { BOOK_URL } = site;
 const crumbs = [{ name: 'FAQ', href: '/faq' }];
 // These two answers are shown as the lists in #honest below (moved here from the homepage), so the accordion skips
-// them. They stay in FAQ_ALL, which also feeds the FAQPage data, llms-full.txt and Ask Arcus.
+// them. They stay in FAQ_ALL, which also feeds llms-full.txt and Ask Arcus. The FAQPage data carries only the questions
+// this page shows as questions (search engines require the marked-up Q&A to be visible), so it uses FAQ, not FAQ_ALL.
 const HONEST = ['Who isn’t Arcus for?', 'What won’t Arcus claim?'];
 const FAQ = FAQ_ALL.filter(([, q]) => !HONEST.includes(q));
 const cats = [...new Set(FAQ.map(([c]) => c))];
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-const schema = [{ '@type': 'FAQPage', mainEntity: FAQ_ALL.filter(([, , a]) => !a.includes('[')).map(([, q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }];
+const schema = [{ '@type': 'FAQPage', mainEntity: FAQ.filter(([, , a]) => !a.includes('[')).map(([, q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }];
 ---
 <Site title="Arcus FAQ: trying it free, pricing, data and more | Arcus" description="Answers about Arcus: what it is, who it’s for, trying it free, setup, pricing, listening, and how we handle your data." path="/faq" page="faq" crumbs={crumbs} schema={schema}>
   <header class="phero l">

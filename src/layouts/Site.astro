@@ -24,11 +24,26 @@ interface Props {
   heroCta?: boolean; // the hero has its own primary, so the header's CTA stays unlit until it scrolls away
   heroSurface?: 'photo' | 'light'; // what the header floats over at the top: the homepage photo, or paper
 }
-const { title, description: rawDescription, path, active = 'none', page = 'page', schema = [], crumbs = [], noindex = false, og, article, footer = true, md, ogTitle, navCta = true, heroCta = path === '/', heroSurface = path === '/' ? 'photo' : 'light' } = Astro.props;
+const { title: rawTitle, description: rawDescription, path, active = 'none', page = 'page', schema = [], crumbs = [], noindex = false, og, article, footer = true, md, ogTitle, navCta = true, heroCta = path === '/', heroSurface = path === '/' ? 'photo' : 'light' } = Astro.props;
+// Search shows about 60 characters of a title. The brand suffix ("| Arcus", "| Arcus glossary", "| The Receipts by
+// Arcus") stays only when the whole title fits; otherwise the page's own words win and the suffix drops.
+const SUFFIX = / \| (?:Arcus(?: glossary| research)?|The Receipts by Arcus)$/;
+const title = rawTitle.length > 60 && SUFFIX.test(rawTitle) ? rawTitle.replace(SUFFIX, '') : rawTitle;
 // Placeholders stay on the page ([Check on their site], [Confirm: …]) but never in a search or share snippet.
-const description = String(rawDescription || '').replace(/\s*\[[^\]]*\]/g, '').replace(/\s{2,}/g, ' ').trim();
-// Share cards lead with the page's own line where it has one (the homepage: its H1); otherwise the title, without "| Arcus".
-const shareTitle = ogTitle || title.replace(/ \| Arcus$/, '');
+// Search shows about 160 characters of a description: a longer one keeps the whole sentences that fit, or, when that
+// would leave too little, is cut at a word with an ellipsis. Pages whose lead runs long pass a shorter `description`.
+const clip = (s: string, max = 160) => {
+  if (s.length <= max) return s;
+  let out = '';
+  for (const x of s.match(/[^.!?]+[.!?]+[’”"]?(?:\s+|$)/g) || []) { if ((out + x).trim().length > max) break; out += x; }
+  out = out.trim();
+  if (out.length >= 90) return out;
+  const cut = s.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:]$/, '')}…`;
+};
+const description = clip(String(rawDescription || '').replace(/\s*\[[^\]]*\]/g, '').replace(/\s{2,}/g, ' ').trim());
+// Share cards lead with the page's own line where it has one (the homepage: its H1); otherwise the title, without its suffix.
+const shareTitle = ogTitle || title.replace(SUFFIX, '');
 const canonical = new URL(path, SITE).href.replace(/\/$/, path === '/' ? '/' : '');
 // Each page's share image comes from `npm run og`. Pages it skips (noindex: thanks pages, 404, research drafts) or that
 // are new since the last run fall back to the homepage image instead of pointing at a missing file.
@@ -44,7 +59,7 @@ const org = {
   knowsAbout: ['marketing measurement', 'marketing data', 'double counting', 'incrementality', 'holdout testing', 'first-party data', 'social listening', 'audience research', 'creator marketing'],
   areaServed: 'US',
   employee: TEAM.map((t) => ({ '@id': `${SITE}/about/${t.slug}#person` })),
-  contactPoint: { '@type': 'ContactPoint', contactType: 'sales', url: `${SITE}/book` },
+  contactPoint: { '@type': 'ContactPoint', contactType: 'sales', url: BOOK_URL.startsWith('/') ? `${SITE}${BOOK_URL}` : BOOK_URL },
   ...(SAME_AS.length ? { sameAs: SAME_AS } : {}),
 };
 const site = { '@type': 'WebSite', '@id': `${SITE}/#site`, url: `${SITE}/`, name: 'Arcus', publisher: { '@id': `${SITE}/#org` }, inLanguage: 'en-US' };

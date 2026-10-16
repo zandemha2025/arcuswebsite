@@ -20,9 +20,19 @@ const related = ARTICLES.filter((x) => x.slug !== a.slug && x.topic === a.topic)
 const crumbs = [{ name: 'Library', href: '/library' }, { name: a.title, href: `/library/${a.slug}` }];
 const fmt = new Date(a.date + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 const tryHref = /-what-worked$/.test(a.slug) ? '/free-report?start=what_worked' : '/free-report';
-const schema = [{ '@type': 'Article', '@id': `${SITE}/library/${a.slug}#article`, headline: a.title, description: a.dek, datePublished: a.date, dateModified: a.date, inLanguage: 'en-US', author: { '@id': `${SITE}/about/${a.author}#person`, '@type': 'Person', name: t?.name, url: `${SITE}/about/${a.author}` }, publisher: { '@id': `${SITE}/#org` }, mainEntityOfPage: `${SITE}/library/${a.slug}`, abstract: a.short }];
+const schema = [{ '@type': 'Article', '@id': `${SITE}/library/${a.slug}#article`, headline: a.title, description: a.dek, image: `${SITE}/og/library-${a.slug}.png`, datePublished: a.date, dateModified: a.date, inLanguage: 'en-US', author: { '@id': `${SITE}/about/${a.author}#person`, '@type': 'Person', name: t?.name, url: `${SITE}/about/${a.author}` }, publisher: { '@id': `${SITE}/#org` }, mainEntityOfPage: `${SITE}/library/${a.slug}`, abstract: a.short }];
+// Search shows about 60 characters of a title and 160 of a description. These guides' H1 or dek run longer, so
+// search gets a shorter version (same claim, same facts); the page itself keeps its own words.
+const SEO_TITLE: Record<string, string> = {
+  'does-retail-eat-online-sales': 'Does retail eat online sales? Five brands that went retail',
+  'watched-vs-shared-share-rate': 'Watched or shared? The hosting hack and share-rate math',
+};
+const SEO_DESC: Record<string, string> = {
+  'google-search-what-worked': 'Search sits right before the purchase, so it collects credit. How to tell if your Google Search ads are working, or just catching people already looking.',
+  'meta-what-worked': 'Meta counts a sale as its own if the buyer saw or clicked its ad within a set number of days. How to tell if your Meta ads work, each result counted once.',
+};
 ---
-<Site md={`/library/${a.slug}.md`} title={`${a.title} | Arcus`} description={a.dek} path={`/library/${a.slug}`} active="library" page="article" crumbs={crumbs} schema={schema} article={{ published: a.date, modified: a.date, author: a.author, section: a.topic }}>
+<Site md={`/library/${a.slug}.md`} title={`${SEO_TITLE[a.slug] || a.title} | Arcus`} description={SEO_DESC[a.slug] || a.dek} path={`/library/${a.slug}`} active="library" page="article" crumbs={crumbs} schema={schema} article={{ published: a.date, modified: a.date, author: a.author, section: a.topic }}>
   <header class="phero l art-h">
     <Crumbs items={crumbs} />
     <h1 class="dh d96">{a.title}</h1>

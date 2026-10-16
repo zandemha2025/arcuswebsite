@@ -16,7 +16,7 @@ const crumbs = [{ name: 'What people say', href: '/listening' }];
 const SHOW = ['Reddit', 'TikTok', 'YouTube', 'Discord', 'Twitch', 'Google Search'].map((n) => LISTEN_SOURCES.find((s) => s.name === n)).filter(Boolean);
 const schema = [{ '@type': 'WebPage', name: 'What people say, next to what they did', url: `${SITE}/listening`, about: ['third-party data', 'first-party data', 'social listening'] }];
 ---
-<Site title="What people say, next to what they did | Arcus" description="Arcus reads what your audience says on Reddit, TikTok, YouTube, Discord, Twitch, Kick, Facebook groups, Google, Goodreads, Fable and more, and lines it up with your own sales and customer data." path="/listening" page="listening" crumbs={crumbs} schema={schema} heroCta>
+<Site title="What people say, next to what they did | Arcus" description="Arcus reads what your audience says on Reddit, TikTok, YouTube, Discord, Twitch, Goodreads and more, and lines it up with your own sales and customer data." path="/listening" page="listening" crumbs={crumbs} schema={schema} heroCta>
   <header class="phero l">
     <Crumbs items={crumbs} />
     <h1 class="dh d96">What people say, next to what they did.</h1>

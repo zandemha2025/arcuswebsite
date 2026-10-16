@@ -10,7 +10,7 @@ const crumbs = [{ name: 'Real answers', href: '/reports' }];
 const ordered = [...REPORTS].sort((a, b) => Number(!!a.example) - Number(!!b.example));
 const schema = [{ '@type': 'CollectionPage', name: 'Real Arcus reports', url: `${SITE}/reports`, hasPart: REPORTS.map((r) => ({ '@type': 'CreativeWork', name: `${r.kind}: ${r.title}`, url: `${SITE}/reports/${r.slug}` })) }];
 ---
-<Site title="Real questions, real answers, names removed | Arcus" description="Real questions Arcus answered for a hard seltzer brand, a streaming service and a skincare brand, with names removed. Flip through the slides and the numbers behind them." path="/reports" active="reports" page="reports" crumbs={crumbs} schema={schema}>
+<Site title="Real questions, real answers, names removed | Arcus" description="Real questions Arcus answered for a hard seltzer brand, a streaming service and a skincare brand, names removed. See the slides and the numbers behind them." path="/reports" active="reports" page="reports" crumbs={crumbs} schema={schema}>
   <header class="phero l rep-h">
     <Crumbs items={crumbs} />
     <h1 class="dh d96">Real questions. Real answers.</h1>

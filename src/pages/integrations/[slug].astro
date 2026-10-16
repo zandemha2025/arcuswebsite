@@ -16,15 +16,23 @@ const TITLE: Record<string, string> = {
   snowflake: 'Read your Snowflake data where it already lives',
   databricks: 'Read your Databricks data where it already lives',
   slack: 'Get every answer in Slack, where your team already talks',
-  'microsoft-teams': 'Get every answer in Microsoft Teams, where your team already talks',
-  klaviyo: 'See what your Klaviyo emails did, counted with everything else',
+  'microsoft-teams': 'Get every answer in Microsoft Teams, where your team talks',
+  klaviyo: 'See what your Klaviyo emails did, next to everything else',
   'google-sheets': 'Keep your Google Sheets. We’ll connect them',
   'google-drive': 'Point us at the Google Drive folder where reports land',
   hootsuite: 'Line up your Hootsuite posts with what they did for results',
+  // Shorter than the H1, so the title fits in search (about 60 characters).
+  'google-ads': 'How much of your Google Ads credit was already yours?',
+  hubspot: 'See HubSpot contacts next to the campaigns that reached them',
+  mailchimp: 'Count Mailchimp results the same way as every other channel',
+  shopify: 'Start from Shopify sales, the most reliable number you have',
+  steam: 'Connect Steam sales and wishlists to what moved them',
 };
 const title = TITLE[i.slug] || i.h1.replace(/\.$/, '');
+// The listening tools share one lead that runs past 160 characters; the snippet says the same thing in fewer words.
+const meta = i.lead.length <= 160 ? i.lead : i.lead.replace('line the conversation up with', 'line it up with');
 ---
-<Site md={`/integrations/${i.slug}.md`} title={`${title} | Arcus`} description={i.lead} path={`/integrations/${i.slug}`} page="integration" crumbs={crumbs}>
+<Site md={`/integrations/${i.slug}.md`} title={`${title} | Arcus`} description={meta} path={`/integrations/${i.slug}`} page="integration" crumbs={crumbs}>
   <header class="phero l">
     <Crumbs items={crumbs} />
     <h1 class="dh d96">{i.h1}</h1>

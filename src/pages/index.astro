@@ -8,7 +8,7 @@ import Logo from '../components/Logo.astro';
 import Arrow from '../components/Arrow.astro';
 import InsightCard from '../components/InsightCard.astro';
 import RealSlide from '../components/RealSlide.astro';
-import { ENTITY, SHORT, LISTEN_SOURCES, SITE, BOOK_URL } from '../data/site.js';
+import { ENTITY, LISTEN_SOURCES, SITE, BOOK_URL } from '../data/site.js';
 import { REPORTS } from '../data/reports.js';
 
 // The real reports only. Their numbers are never changed or counted up; the home slides only use shorter labels.
@@ -46,9 +46,11 @@ const schema = [{ '@type': 'Service', '@id': `${SITE}/#service`, name: 'Arcus', 
 const plus = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>';
 const up = '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8.5v-7M2 4.5l3-3 3 3"/></svg>';
 const arrowL = '<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg>';
+// The search and share snippet is the hero, word for word: the line under the H1, then what Arcus is (157 characters).
+const HOME_META = 'Find out what worked, what flopped, and what deserves another dollar. Arcus connects your sales, ads, CRM and what people say online into one place you own.';
 const arrowR = '<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
 ---
-<Site title="Arcus: marketing intelligence for entertainment brands" ogTitle="Dead data. Dead spend." description={SHORT} path="/" page="home" schema={schema}>
+<Site title="Arcus: marketing intelligence for entertainment brands" ogTitle="Dead data. Dead spend." description={HOME_META} path="/" page="home" schema={schema}>
   <link slot="head" rel="preload" as="image" type="image/avif" imagesrcset="/img/concert-duo-800.avif 800w, /img/concert-duo-1200.avif 1200w, /img/concert-duo-1600.avif 1600w" imagesizes="(max-width:900px) 100vw, 1416px" fetchpriority="high" />
 
   {/* Hero: the graded photo is the field; the copy sits bottom-left; the product stage (a report slide, a "what people
@@ -68,6 +70,8 @@ const arrowR = '<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stro
           <a href={BOOK_URL} class="jb gh" data-jelly data-loc="hero-2"><span class="bg"></span><span class="lb">Book a call</span></a>
         </div>
         <p class="hero-micro">Free, no card. Pick a question and we answer it with your own numbers.</p>
+        {/* Founder decision: the first screen says what Arcus is, under the buttons and the note. */}
+        <p class="hero-what">Arcus connects your sales, ads, CRM and what people say online into one place you own.</p>
       </div>
       <div class="hero-stage">
         <div class="hs-sat ring rp" aria-hidden="true">
@@ -92,7 +96,7 @@ const arrowR = '<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stro
       </div>
     </div>
     <div class="hero-foot">
-      <p class="hero-aud">Arcus connects your sales, ads, CRM and what people say online into one place you own. For CMOs, marketing leads, founders and execs at studios, streamers, drinks, games, music, fashion and beauty brands.</p>
+      <p class="hero-aud">For CMOs, marketing leads, founders and execs at studios, streamers, drinks, games, music, fashion and beauty brands.</p>
     </div>
   </section>
 

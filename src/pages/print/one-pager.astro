@@ -7,7 +7,7 @@ const book = BOOK_URL.startsWith('/') ? `${DOMAIN}${BOOK_URL}` : BOOK_URL.replac
 import { REPORTS } from '../../data/reports.js';
 const real = REPORTS.filter((r) => !r.example);
 ---
-<Print title="Arcus one-pager">
+<Print title="Arcus one-pager" description="Arcus on one page, to print or forward: what it does, who it’s for, and how to try it free." canonical="/make-the-case">
   <style is:global>.pp{gap:12px}.pp h1{font-size:34px}.pp h2{margin-top:2px}.pp ul{margin:6px 0 0;padding-left:18px}</style>
   <div class="row"><span class="logo">arcus<i></i></span><span class="small faint">usearcus.ai</span></div>
   <h1>See which spend is paying off, and where the next dollar should go.</h1>

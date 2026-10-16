@@ -8,7 +8,7 @@ const d = DEEP[r.slug] || {};
 // Keep, Test and Stop speak the triad: worked (teal), the next dollar (amber), flopped (coral).
 const VERB = { keep: 'v-keep', test: 'v-test', stop: 'v-stop' };
 ---
-<Print title={`Arcus ${r.kind}`}>
+<Print title={`Arcus ${r.kind}`} description={`The Arcus ${r.kind.toLowerCase()}, laid out to print: ${r.question}`} canonical={`/reports/${r.slug}`}>
   <div class="row"><span class="logo">arcus<i></i></span><span class="small faint">{r.kind} · {r.example ? 'Example numbers' : `${r.who}, names removed`}</span></div>
   <h1>{r.question}</h1>
   <p style="font-size:14px">{r.title} {r.short}</p>

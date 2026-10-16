@@ -2,11 +2,12 @@
 import Site from '../../layouts/Site.astro';
 import Arrow from '../../components/Arrow.astro';
 import HeardAsk from '../../components/HeardAsk.astro';
-import { TBD } from '../../data/site.js';
+import { TBD, CAL_URL } from '../../data/site.js';
 // The walkthrough is booked right here, never through a second form. With a scheduling link set in site.js
-// (TBD.calLink), initPrefill puts the calendar in [data-cal], with the lead's name and email filled in. Until then the
-// card says what happens instead: we email to set a time.
-const calLive = !TBD.calLink.startsWith('[');
+// (TBD.calLink, read through CAL_URL), initPrefill puts the calendar in [data-cal], with the lead's name and email
+// filled in; without JavaScript the calendar is a plain link. Until then the card says what happens instead: we email
+// to set a time.
+const calLive = Boolean(CAL_URL);
 ---
 <Site title="Got it. Your question is in | Arcus" description="Your question is in. Next: a time for your walkthrough." path="/free-report/thanks" page="thanks" noindex navCta={false}>
   <section class="split-hero frt" data-prefill>
@@ -30,9 +31,15 @@ const calLive = !TBD.calLink.startsWith('[');
       <div class="card frt-card frt-main" data-ask-away>
         <h2 class="h2s">{calLive ? 'Pick a time for your walkthrough' : 'Your walkthrough'}</h2>
         <p class="muted">30 minutes. We go through the answer, where every number came from, and what to keep, test and stop.</p>
-        <div class="frt-cal" data-cal={TBD.calLink}>
-          <p class="small">We’ll email you to set a time. In a hurry? Email <a class="ul" href="mailto:hello@usearcus.ai">hello@usearcus.ai</a> and we’ll send times.</p>
-        </div>
+        {calLive ? (
+          <div class="frt-cal" data-cal={CAL_URL}>
+            <p class="small"><a class="ul" href={CAL_URL} rel="noopener">Pick a time on our calendar</a>, or email <a class="ul" href="mailto:hello@usearcus.ai">hello@usearcus.ai</a> and we’ll send times.</p>
+          </div>
+        ) : (
+          <div class="frt-cal">
+            <p class="small">We’ll email you to set a time. In a hurry? Email <a class="ul" href="mailto:hello@usearcus.ai">hello@usearcus.ai</a> and we’ll send times.</p>
+          </div>
+        )}
       </div>
       <div class="card frt-card">
         <p class="h3">Bring someone along</p>

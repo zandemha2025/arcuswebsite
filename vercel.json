@@ -343,6 +343,15 @@
       ]
     },
     {
+      "source": "/logos/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
       "source": "/_astro/(.*)",
       "headers": [
         {
@@ -439,6 +448,24 @@
         {
           "key": "Link",
           "value": "<https://usearcus.ai/research/:slug>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
+      "source": "/pdf/arcus-:slug(audience-report|content-report|market-report).pdf",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://usearcus.ai/reports/:slug>; rel=\"canonical\""
+        }
+      ]
+    },
+    {
+      "source": "/print/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
         }
       ]
     }

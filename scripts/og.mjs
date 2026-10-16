@@ -16,11 +16,13 @@ const b = await chromium.launch();
 const pg = await b.newPage({ viewport: { width: 1200, height: 630 } });
 for (const file of pages) {
   const html = fs.readFileSync(file, 'utf8');
-  if (/noindex/.test(html.match(/<meta name="robots"[^>]*>/)?.[0] || '')) continue;
-  // Line spans sit flush ("<span>Dead data.</span><span>Dead spend.</span>"), so a space goes between them before the tags come off.
-  const h1 = (html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] || 'Arcus').replace(/<\/(span|div|p)>\s*<(span|div|p|br)\b/gi, '</$1> <$2').replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/&#39;|&#x27;/g, '’').replace(/&quot;/g, '"').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
   const rel = path.relative(dist, path.dirname(file)).replace(/\\/g, '/');
   const name = rel ? rel.replace(/\//g, '-') : 'home';
+  // Noindex pages get no image (they fall back to home.png), except archived newsletter issues: they stay live at their
+  // URL and still get shared from the archive, so their card should match the rest of the site.
+  if (/noindex/.test(html.match(/<meta name="robots"[^>]*>/)?.[0] || '') && !name.startsWith('newsletter-')) continue;
+  // Line spans sit flush ("<span>Dead data.</span><span>Dead spend.</span>"), so a space goes between them before the tags come off.
+  const h1 = (html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] || 'Arcus').replace(/<\/(span|div|p)>\s*<(span|div|p|br)\b/gi, '</$1> <$2').replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/&#39;|&#x27;/g, '’').replace(/&quot;/g, '"').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
   if (only.length && !only.some((o) => name.startsWith(o))) continue;
   const len = h1.length, size = len < 28 ? 120 : len < 50 ? 96 : len < 80 ? 76 : 62;
   // Arcus palette v2: navy ink on warm paper, the periwinkle logo dot and the periwinkle primary (white label 5.34),

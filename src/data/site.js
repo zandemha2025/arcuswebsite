@@ -1,10 +1,12 @@
 // One source of truth for facts the whole site repeats. Change a fact here, not in a page.
 export const SITE = 'https://usearcus.ai';
 export const DOMAIN = 'usearcus.ai';
-// Where every "Book a call" goes. Our own /book page for now; swap in the scheduling link here once it is chosen.
+// Where every "Book a call" goes (nav, Close, footer, FAQ, Ask Arcus, print, schema): our /book form, whose thanks page
+// shows the calendar once TBD.calLink is set. Point this straight at the scheduling link only to skip the form.
 export const BOOK_URL = '/book';
 
-// The entity sentence: used word for word in About, FAQ, Organization schema, llms.txt and the meta of Home.
+// The entity sentence: used word for word in About, FAQ, Organization schema and llms.txt. (The homepage's meta
+// description is its own hero lines, word for word: index.astro HOME_META.)
 export const ENTITY =
   'Arcus shows CMOs, founders and executives at entertainment and lifestyle brands where their marketing money is working. It connects what their teams know, from sales, CRM and fan data to ads and agency reports, with what people say online, in one place the brand owns, and answers any question with the whole picture. Arcus doesn’t make ads or buy media.';
 
@@ -12,6 +14,7 @@ export const ENTITY =
 export const SHORT = 'Arcus connects every piece of your data, plus what people say online, into one place you own, and shows which spend works. If it can’t be checked, it doesn’t count.';
 
 // Placeholders the team still has to confirm. Anything in brackets stays out of structured data.
+// To go live, replace the bracketed value, brackets and all: calLink takes the cal.com scheduling link (both thanks pages then show its calendar), turnaround the plain time from access to answer.
 export const TBD = {
   setup: '[$X]',
   monthly: '[$Y]',
@@ -20,6 +23,9 @@ export const TBD = {
   securityEmail: '[security@usearcus.ai]',
   calLink: '[cal.com/arcus/walkthrough]',
 };
+// The calendar, once TBD.calLink holds a real link ("cal.com/x/y" or "https://cal.com/x/y"); empty until then, and every
+// booking surface falls back to "we'll email you to set a time". Only cal.com embeds: the CSP's frame-src allows it alone.
+export const CAL_URL = TBD.calLink && !TBD.calLink.startsWith('[') ? `https://cal.com/${TBD.calLink.trim().replace(/^(?:https?:\/\/)?(?:www\.)?cal\.com\//, '')}` : '';
 
 // Company profiles for structured data (sameAs). Add each URL once the profile is live (gtm/entity-kit.md).
 export const SAME_AS = [

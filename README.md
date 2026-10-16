@@ -13,7 +13,7 @@ npm install
 npm run dev        # http://localhost:4321
 npm run build      # static output in dist/
 npm run preview
-npm run check      # schema, keywords, and axe on every page at desktop and phone width (after a build)
+npm run check      # schema, SEO (titles, canonicals, sitemap, links), keywords, CSP, and axe at desktop and phone width (after a build)
 ```
 
 `npm run check` launches the Playwright browser from `node_modules`. If that

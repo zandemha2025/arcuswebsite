@@ -10,7 +10,13 @@ const hidden = ['/print/', ...STUDIES.filter((s) => !s.published).map((s) => `/r
 export default defineConfig({
   site: 'https://usearcus.ai',
   trailingSlash: 'ignore',
-  integrations: [sitemap({ filter: (page) => !noindex.some((p) => page.replace(/\/$/, '').endsWith(p)) && !hidden.some((h) => page.includes(h)), changefreq: 'weekly', lastmod: new Date('2026-10-15') })],
+  // Sitemap URLs match each page's canonical: no trailing slash (vercel.json trailingSlash:false 308s /about/ to /about),
+  // so a crawler never meets a redirect from the sitemap. The homepage keeps its single slash.
+  integrations: [sitemap({
+    filter: (page) => !noindex.some((p) => page.replace(/\/$/, '').endsWith(p)) && !hidden.some((h) => page.includes(h)),
+    serialize: (item) => ({ ...item, url: new URL(item.url).pathname === '/' ? item.url : item.url.replace(/\/$/, '') }),
+    changefreq: 'weekly', lastmod: new Date('2026-10-15'),
+  })],
   // Page redirects mirror vercel.json (permanent there). The .md twins and the PDF redirect live in vercel.json only.
   redirects: {
     '/who-its-for': '/for',

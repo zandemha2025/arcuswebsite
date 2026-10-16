@@ -51,7 +51,7 @@ export const REPORTS = [
       { label: 'What gets watched', big: 'A bit gets 42 times the views of a sincere post.', body: 'Median 91,850 views for an acted-out sketch, 2,171 for a sincere post, 1,675 for a brand post. Per viewer, both get liked at the same rate. The sincere post just reaches 42 times fewer people.' },
       { label: 'What they reward', big: 'Half of the top comments are jokes.', body: 'Of the 360 most-liked comments, 49% are a joke of some kind. One in ten is sincere. Sarcasm is rare, and when it lands it is the second most-liked kind.' },
       { label: 'Their words, counted', big: 'They don’t use the glossary.', body: 'The two most searched slang terms of 2025 appear in one comment and in none, out of 6,622. The words they do use are verdicts on the work, not decoration.' },
-      { label: 'What they talk about', big: 'They talk about the shows, not the service.', body: '78,682 comments under four trailers. The service only comes up when it gets in the way: ads, the app, a cancelled show.' },
+      { label: 'What they talk about', big: 'They talk about the shows, not the service.', body: '78,682 comments under four trailers. The service only comes up when it gets in the way: ads, the app, a canceled show.' },
       { label: 'What to do', list: [['Play along', 'Reply to the bit. Don’t start one.'], ['Tell, don’t ask', 'State a time. Never ask the room a question.'], ['Hand over the mic', 'Let a fan’s line be the caption.'], ['No glossary', 'No slang in the caption.']] },
     ],
     receipts: 'Every comment and post was pulled from public pages and every label is filed. Counts use the same script on the audience and on the brand.',

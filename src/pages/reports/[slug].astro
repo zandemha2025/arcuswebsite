@@ -21,8 +21,15 @@ const tone = toneOf(r);
 const VERB = { keep: 'v-keep', test: 'v-test', stop: 'v-stop' };
 // The same note the deck's end card sends (Deck.astro), so "Send this to your boss" reads the same from either place.
 const mail = `mailto:?subject=${encodeURIComponent(`Worth a look: an Arcus ${r.kind.toLowerCase()}`)}&body=${encodeURIComponent(`${r.example ? 'This is an example Arcus answer (made-up numbers).' : `This is a real answer Arcus gave ${r.who.toLowerCase()} (names removed).`} We can try it free: we pick a question about our marketing, they answer it with our own numbers, then walk us through it in 30 minutes.\n\n${SITE}/reports/${r.slug}\n`)}`;
+// The search snippet: the report's short line, plus where it came from when that still fits in 160 characters.
+// A short line that runs long on its own gets a shorter one here (same facts, no numbers changed).
+const META: Record<string, string> = {
+  'market-report': 'Five direct-to-consumer brands that scaled into retail, traced through the public record and set against the brand’s own public numbers. Every number sourced.',
+};
+const tail = r.example ? 'Shown with example numbers.' : 'A real Arcus report with names removed.';
+const meta = META[r.slug] || (`${r.short} ${tail}`.length <= 160 ? `${r.short} ${tail}` : r.short);
 ---
-<Site md={`/reports/${r.slug}.md`} title={`${r.kind}${r.example ? ' (example)' : `: ${r.who}`} | Arcus`} description={`${r.short} ${r.example ? 'Shown with example numbers.' : 'A real Arcus report with names removed.'}`} path={`/reports/${r.slug}`} active="reports" page="report" crumbs={crumbs} schema={schema} heroCta>
+<Site md={`/reports/${r.slug}.md`} title={`${r.kind}${r.example ? ' (example)' : `: ${r.who}`} | Arcus`} description={meta} path={`/reports/${r.slug}`} active="reports" page="report" crumbs={crumbs} schema={schema} heroCta>
   <header class="phero l art-h">
     <Crumbs items={crumbs} />
     <h1 class="dh d96 h1-wide">{r.question}</h1>

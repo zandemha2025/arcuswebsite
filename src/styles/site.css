@@ -106,6 +106,9 @@ img{max-width:100%;height:auto;display:block}
 :is(.on-dark,.s-ink,.foot,.slide.end) :focus-visible{outline-color:var(--ring-on-dark)}
 .on-peri :focus-visible{outline-color:#FFFFFF} /* 5.34 on the stage; never #BEC4E9 there (3.12) */
 :is(.on-dark,.s-ink,.foot,.slide.end,.on-peri) :is(article,.card,.form,.tile,.pcard,.qanswer,[data-surface=light]) :focus-visible{outline-color:var(--peri)}
+/* Windows high contrast (forced colors) drops box-shadow, and the buttons, header and fields draw their ring with
+   one; give every focus a system-colored outline there instead. No effect anywhere else. */
+@media (forced-colors: active){:focus-visible,:is(.foot-news,.qopt):focus-within{outline:2px solid Highlight!important;outline-offset:2px!important}}
 /* Text links: ink text, a periwinkle underline; hover turns the text periwinkle. On a tint the hover is --peri-ink;
    on navy the text stays light, the underline is --on-navy-muted and hover is white. */
 .tx a,a.ul,.prose a{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px;text-decoration-color:var(--peri);transition:color 150ms ease}
@@ -712,7 +715,7 @@ mark.ring::after{inset:-3px -2px;border-radius:6px}
 .frt-book{margin-top:6px}
 .frt-cal{align-self:stretch}
 .heard-l{display:flex;flex-wrap:wrap;gap:8px}
-.bk-cal{min-height:560px;padding:24px;gap:8px;align-content:center}
+.bk-cal{display:grid;place-items:center;min-height:560px;padding:24px;gap:8px;align-content:center;text-align:center} /* /book/thanks, once TBD.calLink is set: the calendar's slot */
 .frt-main{box-shadow:0 0 0 8px var(--peri-wash),var(--z3);border-radius:20px} /* the page's one action, raised in the form's bezel */
 @media (max-width:640px){.frt-main{box-shadow:0 0 0 6px var(--peri-wash),var(--z3)}}
 @media (max-width:1000px){
@@ -720,6 +723,7 @@ mark.ring::after{inset:-3px -2px;border-radius:6px}
   .frh-form{margin-top:28px;max-width:640px}
   .frh-get{margin-top:48px}
   .fr-ex{grid-template-columns:minmax(0,1fr);gap:28px}
+  .ex-card{justify-self:center;width:100%;max-width:560px} /* stacked, the sample answer keeps a message's width */
 }
 @media (max-width:900px){
   .frh{padding:100px 16px 72px}
@@ -882,7 +886,7 @@ details[open] .a{animation:fadeonly 150ms ease-out}
 .tl .lg{font-size:15px}
 .tl .lg-i{width:20px;height:20px}
 .tools-f{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:18px}
-.tools-f a.ul{display:inline-block;padding:10px 0;margin:-10px 0}
+.tools-f a.ul{display:inline-block;padding:12px 0;margin:-12px 0} /* 44px tall to a finger, no taller to the eye */
 
 /* Client wall: a still hairline wall. Six cells in one row on wide screens, 3 x 2 below 1101px; silver hairlines
    between the cells. Each mark is a mask filled with --muted (ClientWall.astro sets its source, aspect ratio and
@@ -997,7 +1001,8 @@ details[open] .a{animation:fadeonly 150ms ease-out}
    navy/periwinkle duotone (scripts/grade-photos.py): no filter, blend or push runs on it, and nothing here loops.
    --hx is the .wrap content edge (1376px max, 32px gutter) minus the panel's 12px inset, never under 40px; its 100% is
    the panel's width wherever it resolves (the copy's left, the stage's right, the foot's padding). The panel's height
-   follows the screen between 660 and 780px, so both hero buttons sit above the fold at 1280×720 and up. */
+   follows the screen between 660 and 780px, so both hero buttons sit above the fold at 1280×720 and up, with the line
+   that says what Arcus is under them. */
 .hero2{--hx:max(40px,calc((100% + 24px - 1376px) / 2 + 20px));--stage-w:600px;padding:12px 12px 0}
 .hero-p{position:relative;isolation:isolate;height:clamp(660px,calc(100svh - 24px),780px);border-radius:28px;background:var(--navy-deep);color:#FFFFFF} /* the field color under everything, so white type never sits on paper */
 .hero-bg{position:absolute;inset:0;border-radius:inherit;overflow:hidden;background:var(--navy-deep)}
@@ -1006,7 +1011,7 @@ details[open] .a{animation:fadeonly 150ms ease-out}
 .shade::before{content:"";position:absolute;left:0;right:0;top:0;height:200px;background:linear-gradient(180deg,#0E1224CC 0%,#0E122400 100%)} /* holds the floating header's edge over any photo */
 /* The copy column: as wide as the room left of the stage, at most 640px. It is a size container, so the H1 can be
    capped by its own width ("Dead spend." is about 4.86 × the font size wide). */
-.hero-in{position:absolute;left:var(--hx);bottom:84px;z-index:2;width:min(640px,calc(100% - 2 * var(--hx) - var(--stage-w) - 40px));display:flex;flex-direction:column;align-items:flex-start;container-type:inline-size}
+.hero-in{position:absolute;left:var(--hx);bottom:60px;z-index:2;width:min(640px,calc(100% - 2 * var(--hx) - var(--stage-w) - 40px));display:flex;flex-direction:column;align-items:flex-start;container-type:inline-size}
 /* Founder decision: the hero keeps its eyebrow, as a small solid navy pill with the lit top edge every navy surface
    carries (white 15.4:1). */
 .eyebrow{display:inline-flex;align-items:center;min-height:32px;margin-bottom:22px;padding:0 14px;border-radius:999px;background:var(--navy);color:#FFFFFF;font:600 13.5px/1 var(--text);letter-spacing:0;box-shadow:var(--lit-navy),0 0 0 1px #FFFFFF1A}
@@ -1019,7 +1024,10 @@ details[open] .a{animation:fadeonly 150ms ease-out}
 .hero-sub{margin-top:22px;font-size:22px;line-height:1.45;letter-spacing:-.015em;color:#FFFFFFE6;max-width:34ch;text-wrap:balance}
 .hero-btns{margin-top:30px}
 .hero-in .jb{min-height:52px}
-.hero-micro{margin-top:16px;font-size:14px;letter-spacing:0;color:#FFFFFFBF}
+.hero-micro{margin-top:16px;font-size:14px;letter-spacing:0;color:#FFFFFFBF;text-wrap:pretty}
+/* Founder decision: the first screen says what Arcus is. A calm line closing the column, set off from the offer note by
+   space alone, a step brighter and larger than the note so it reads as the statement and the note as the terms. */
+.hero-what{margin-top:26px;max-width:46ch;font-size:16px;line-height:1.5;letter-spacing:-.005em;color:#FFFFFFD9;text-wrap:pretty}
 /* The stage. Its slide keeps a 58px empty foot: the card overlaps only that, so all three bars and their labels stay
    readable. */
 .hero-stage{position:absolute;right:var(--hx);bottom:-96px;z-index:3;width:var(--stage-w);height:646px}
@@ -1049,8 +1057,8 @@ details[open] .a{animation:fadeonly 150ms ease-out}
   .hero-stage:has(.hm-b:hover) :is(.hm-b,.hs-sat,.hc-b)::after{opacity:1}
   .hero-stage mark.ring{cursor:default}
 }
-/* Under the hero: the audience line beside the card's overhang. The client logos start below it, so no illustrative
-   number ever sits next to or under a client logo. */
+/* Under the hero: the audience line (who it is for; what Arcus is moved up into the copy) beside the card's overhang.
+   The client logos start below it, so no illustrative number ever sits next to or under a client logo. */
 .hero-foot{display:grid;grid-template-columns:minmax(0,1fr) calc(var(--stage-w) + 20px);gap:48px;min-height:132px;padding:36px var(--hx) 0}
 .hero-aud{font-size:16px;line-height:1.5;color:var(--muted);max-width:58ch;text-wrap:pretty}
 .hero2+.clients{padding-top:56px}
@@ -1060,8 +1068,8 @@ details[open] .a{animation:fadeonly 150ms ease-out}
   .hero-card{width:392px}
 }
 /* 1001-1100px (iPad landscape, small laptops): the desktop overlay at a smaller scale, so the slide and the card's
-   top are in the first viewport beside the copy. */
-@media (min-width:1001px) and (max-width:1100px){
+   top are in the first viewport beside the copy. 601-700px (a phone on its side) stacks the same scale. */
+@media (min-width:1001px) and (max-width:1100px),(min-width:601px) and (max-width:700px){
   .hero2{--stage-w:440px}
   .hero-p{height:clamp(660px,calc(100svh - 24px),760px)}
   .hero-stage{height:560px}
@@ -1079,21 +1087,35 @@ details[open] .a{animation:fadeonly 150ms ease-out}
   .hero-p{height:auto;padding:150px var(--hx) 0;display:flow-root} /* flow-root: the stage's negative margin must not collapse through */
   .hero-in{position:relative;left:auto;bottom:auto;width:auto;max-width:640px}
   .hero-stage{position:relative;right:auto;bottom:auto;margin:48px 0 -96px auto}
-  .hero-foot{grid-template-columns:minmax(0,1fr);padding-top:132px}
+  .hero-foot{grid-template-columns:minmax(0,1fr);padding-top:160px} /* the card hangs about 125px past the field: the line under it clears the card and its drop */
   .shade{background:linear-gradient(0deg,#0E1224CC 0%,#0E122400 55%),linear-gradient(90deg,#0E1224E6 0%,#0E1224B3 60%,#0E122480 100%)}
 }
-/* 601-900px: the stacked hero's buttons keep a button's width instead of spanning a tablet. */
-@media (min-width:601px) and (max-width:900px){.hero-btns{max-width:420px}}
-/* Phones: the card is the object; only the slide's chart peeks above it (its title would repeat the card). */
+/* Up to 900px: the field's scrims run top to bottom, and the copy sets at its phone steps. */
 @media (max-width:900px){
   .hero2{padding:8px 8px 0}
-  .hero-p{border-radius:24px;padding:124px 20px 0}
+  .hero-p{border-radius:24px}
   .hero-img{object-position:50% 30%}
   .shade{background:linear-gradient(180deg,#0E122480 0%,#0E1224BF 40%,#0E1224E6 100%)}
   .eyebrow{margin-bottom:18px}
   .hero-sub{margin-top:16px;font-size:18px}
-  .hero-btns{display:grid;grid-template-columns:minmax(0,1fr);align-self:stretch;gap:10px;margin-top:24px}
+  .hero-btns{margin-top:24px}
   .hero-micro{margin-top:14px}
+  .hero-what{margin-top:20px;font-size:15px}
+  .hero2+.clients{padding-top:44px}
+}
+/* 601-900px (tablets upright, phones on their side): the stacked hero of 901-1000px, not a stretched phone. The copy
+   on top with its two buttons in a row, then the stage at its desktop composition (the slide with its title, the tilted
+   tile behind it, the card crossing the field's foot), right-aligned. */
+@media (min-width:601px) and (max-width:900px){
+  .hero2{--hx:32px}
+  .hero-p{padding:132px var(--hx) 0}
+  .hero-sub{font-size:20px}
+  .hero-what{font-size:16px}
+}
+/* Phones: the card is the object; only the slide's chart peeks above it (its title would repeat the card). */
+@media (max-width:600px){
+  .hero-p{padding:124px 20px 0}
+  .hero-btns{display:grid;grid-template-columns:minmax(0,1fr);align-self:stretch;gap:10px}
   .hero-stage{width:auto;height:auto;margin:34px 0 -56px;padding-top:212px}
   .hs-win{top:0;right:-6px;width:calc(100% - 40px);padding:14px 16px 44px;border-radius:18px}
   .hs-t{display:none}
@@ -1104,7 +1126,16 @@ details[open] .a{animation:fadeonly 150ms ease-out}
   .hero-card{position:relative;left:auto;top:auto;width:auto;max-width:440px}
   .hero-foot{display:block;min-height:0;padding:100px 4px 0} /* clear of the card's long drop */
   .hero-aud{margin:0;font-size:15px;text-align:left;text-wrap:pretty} /* on the hero column's left edge, like the copy above */
-  .hero2+.clients{padding-top:44px}
+}
+/* A phone on its side (500px tall or less): the H1 sizes to the screen's height, so the first screen holds the eyebrow,
+   both lines, the lead and the buttons, not the H1 alone. */
+@media (max-width:900px) and (max-height:500px){
+  .hero-p{padding-top:80px}
+  .eyebrow{margin-bottom:12px}
+  .hero2 h1{font-size:clamp(36px,15svh,64px)}
+  .hero-sub{margin-top:12px;font-size:18px}
+  .hero-btns{margin-top:18px}
+  .hero-in .jb{min-height:48px}
 }
 
 /* Section rhythm: quiet chapters 128px apart (96px on phones), loud stages 144-160px. A static Anton H2 with at most
@@ -1277,7 +1308,12 @@ details[open] .a{animation:fadeonly 150ms ease-out}
    (/for/*). Narrow screens stack it under the photo, overlapping its foot. */
 .split-hero>.insight{justify-self:end;width:min(100%,480px)}
 .hero-pic{position:relative}
+.hero-pic img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px}
 .hero-pic .insight{position:absolute;left:-24px;bottom:-36px;width:min(86%,440px)}
+/* 901-1240px the photo's column is narrow, so a 4:3 crop leaves the card covering most of it: square, the photo
+   still reads above the card. 601-900px it spans the page, so a 16:9 crop keeps it from filling the first screen. */
+@media (min-width:901px) and (max-width:1240px){.hero-pic img{aspect-ratio:1/1}}
+@media (min-width:601px) and (max-width:900px){.hero-pic img{aspect-ratio:16/9}}
 /* The answer stage (AnswerStage.astro): the inner landing heroes' one periwinkle stage. Two source tiles stand on it
    (z2-peri; the "what people say" one tilted 3°, decorative), and the sample answer crosses its foot by 64px (z4), so
    the hero has three planes and the product leaves its field. Phones: the same three, stacked in flow. */
@@ -1391,6 +1427,14 @@ details[open] .a{animation:fadeonly 150ms ease-out}
   .sl-t{margin-top:10px;font-size:26px}
   .sl-qq{font-size:17px}
 }
+/* 601-900px: each slide keeps its two halves (the figure beside the answer) at a tablet's width, with the next one
+   peeking, and the ask keeps a button's width instead of spanning the chapter. */
+@media (min-width:601px) and (max-width:900px){
+  .ans-cta{flex-direction:row;align-items:center}
+  .aslide-w{flex-basis:min(680px,calc(100% - 64px))}
+  .aslide{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px;padding:12px 24px 12px 12px}
+  .sl-tx{padding:12px 0 8px}
+}
 
 /* /reports: the same slides, stacked in the same navy chapter; each also says who asked (no client logos there). The
    hero is short, so the chapter and its first slide start in the first screen. */
@@ -1408,6 +1452,7 @@ details[open] .a{animation:fadeonly 150ms ease-out}
   .ans-stack{gap:12px;padding:0 4px}
   .ans-stack .aslide{grid-template-columns:minmax(0,1fr);padding:12px 12px 18px}
 }
+@media (min-width:601px) and (max-width:900px){.ans-stack .aslide{grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:12px 24px 12px 12px}}
 
 /* How (DEPTH §B.6): one chain of numbered periwinkle discs, and one answer landing three ways on a peri-wash stage
    (Email, Sheets, Slack: the words of the line under it, as text labels; no product chrome or logos). The windows'
@@ -1445,8 +1490,18 @@ details[open] .a{animation:fadeonly 150ms ease-out}
 .dw-body{margin-top:10px;font-size:16px;line-height:1.5;letter-spacing:-.015em}
 .dv-f{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-top:18px;font-size:17px}
 .dv-f b{font-weight:650}
-@media (max-width:1100px){
-  .how-g{grid-template-columns:minmax(0,1fr);gap:56px}
+/* 901-1100px: the chain and the stage stay side by side (stacked, the chain left half a screen empty). The stage is
+   too narrow for two windows abreast, so they cascade down it as they do on phones: the email, the sheet clear of its
+   lines, the chat in front at the foot. */
+@media (min-width:901px) and (max-width:1100px){
+  .how-g{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:40px}
+  .dv-stage{height:560px}
+  .dw-mail{left:20px;top:22px;width:calc(100% - 64px);--fx:60px;--fy:100px}
+  .dw-sheet{right:18px;top:212px;width:calc(100% - 56px);--fx:-60px;--fy:56px}
+  .dw-chat{left:16px;right:16px;bottom:20px;width:auto}
+}
+@media (max-width:900px){
+  .how-g{grid-template-columns:minmax(0,1fr)}
   .deliv{width:100%;max-width:680px}
 }
 @media (max-width:900px){
@@ -1528,14 +1583,15 @@ details[open] .qrow-b{animation:fadeonly 150ms ease-out}
    scroll story (it maps 1:1 to the scroll). */
 @media (prefers-reduced-motion:no-preference){
   /* 1. The hero, once on load (CSS only; settled by about 1.42s): the H1 lines rise from their masks; the lead, the
-        buttons and the note follow; the slide and the tile arrive; the card posts; the bars grow to their ratio; the
-        chip lands; the card's highlighter sweeps; the lead's three underlines draw. */
+        buttons, the note and the line on what Arcus is follow; the slide and the tile arrive; the card posts; the bars
+        grow to their ratio; the chip lands; the card's highlighter sweeps; the lead's three underlines draw. */
   .js:not(.still) .hero2 h1 .m>span{animation:lineup 700ms var(--ease-out) both}
   .js:not(.still) .hero2 h1 .m:nth-child(1)>span{animation-delay:60ms}
   .js:not(.still) .hero2 h1 .m:nth-child(2)>span{animation-delay:130ms}
   .js:not(.still) .eyebrow{animation:heroup 500ms var(--ease-out) both}
   .js:not(.still) .hero-sub{animation:heroup 500ms var(--ease-out) 240ms both}
   .js:not(.still) :is(.hero-btns,.hero-micro){animation:heroup 500ms var(--ease-out) 300ms both}
+  .js:not(.still) .hero-what{animation:heroup 500ms var(--ease-out) 350ms both}
   .js:not(.still) .hero-sub .tri::after{animation:hdraw var(--dur-draw) var(--ease-in-out) both}
   .js:not(.still) .hero-sub .tw::after{animation-delay:860ms}
   .js:not(.still) .hero-sub .tf::after{animation-delay:940ms}
@@ -1755,7 +1811,8 @@ details[open] .qrow-b{animation:fadeonly 150ms ease-out}
 /* pages */
 .toc{position:sticky;top:110px;display:flex;flex-direction:column;gap:4px;font-size:15px}
 .toc-l{display:flex;flex-direction:column;gap:4px}
-.toc-l a{padding:8px 12px;border-radius:8px;color:var(--muted);transition:background-color 200ms ease,color 200ms ease}
+.toc-l a{position:relative;padding:8px 12px;border-radius:8px;color:var(--muted);transition:background-color 200ms ease,color 200ms ease}
+.toc-l a::before{content:"";position:absolute;inset:-3px 0} /* a 39px row, a 45px target for a finger (a tablet keeps the side list) */
 .toc-l a.on{background:#FFFFFF;color:var(--ink)}
 @media (hover:hover) and (pointer:fine){.toc-l a:hover{background:#FFFFFF;color:var(--ink)}}
 .toc-d>summary{display:none}
@@ -1896,6 +1953,8 @@ a.tile{position:relative;transition:transform var(--dur-ui) var(--ease-out)} /* 
      thing to act on: no ring or drop, a periwinkle underline; the frost stays once scrolled, for legibility. */
   .nav-r .pill{padding:0 14px;font-size:14px;box-shadow:none;background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;text-decoration:underline;text-decoration-color:var(--peri);text-decoration-thickness:1.5px;text-underline-offset:4px}
   .nav.on .nav-r .pill{box-shadow:none}
+  /* ...but a keyboard focus still shows the header's ring (the two rules above would otherwise erase it). */
+  .nav .nav-r .pill:focus-visible{box-shadow:0 0 0 3px var(--ground),0 0 0 5px var(--navy)}
   .burger{display:grid;width:48px;height:48px;background:#F7F6F2E6;box-shadow:inset 0 0 0 1px #FFFFFF99,0 8px 24px -8px #1B20361f}
   .nav-r .mini-cta{display:inline-flex;min-height:48px;padding:0 16px;font-size:14px} /* beats .jb.sm: as tall as the burger */
   .wrap{padding-left:16px;padding-right:16px}
@@ -1922,6 +1981,17 @@ a.tile{position:relative;transition:transform var(--dur-ui) var(--ease-out)} /* 
   /* the menu sheet grows from the burger: anchored right, as wide as a phone at most */
   .sheet{left:auto;right:calc(12px + env(safe-area-inset-right,0px));width:min(400px,calc(100% - 24px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px)))}
 }
+/* 601-900px (tablets upright, phones on their side): not a phone stretched to 800px. Cards go two to a row, and an odd
+   last card takes the whole row, so none sits beside a hole; the two-field form rows pair up again; a form that is
+   its page's object keeps the Try it free form's width; the footer's five link columns sit three to a row. */
+@media (min-width:601px) and (max-width:900px){
+  .honest,.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tiles>:last-child:nth-child(odd){grid-column:1/-1}
+  .row2{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .split-hero>.form{width:100%;max-width:640px}
+  .fmap{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .sec-h>p{max-width:52ch} /* a split stacks here, so a heading's line would run the page's width */
+}
 /* Phones: the five link columns as three compact ones, so the footer ends without a long scroll. Rows stay 44px
    tall to a finger. */
 @media (max-width:600px){
@@ -1932,7 +2002,10 @@ a.tile{position:relative;transition:transform var(--dur-ui) var(--ease-out)} /* 
   .foot-ai-l{justify-content:flex-start}
 }
 /* Short screens (a phone on its side): the sheet's rows go two to a line so all of them fit. */
-@media (max-width:900px) and (max-height:480px){.sheet{display:grid;grid-template-columns:1fr 1fr;column-gap:12px;align-content:start}.sheet .jb{grid-column:1/-1}.sheet a:not(.jb),.sheet-ask{min-height:48px;padding:12px;font-size:18px}}
+@media (max-width:900px) and (max-height:480px){.sheet{display:grid;grid-template-columns:1fr 1fr;column-gap:12px;align-content:start}.sheet .jb{grid-column:1/-1}.sheet a:not(.jb),.sheet-ask{min-height:48px;padding:10px 12px;font-size:18px}}
+/* Inner page heroes on a phone on its side: less head room under the header, so the H1 and its lead share the first
+   screen. */
+@media (max-width:900px) and (max-height:500px){.phero,.split-hero{padding-top:96px}.frh{padding-top:88px}}
 /* Under 260px (a 390px phone at 200% text zoom): let the tight rows wrap instead of overflowing. The header keeps the
    logo and the burger (a Try-it-free page's "Book a call" pill moves into the menu, which has it); the client logos go
    two to a row and shrink to fit; the newsletter's button drops under its field; the question rows lose their indent. */

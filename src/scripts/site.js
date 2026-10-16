@@ -758,13 +758,14 @@ function initPrefill() {
   const words = String(lead.name || '').trim().split(/\s+/);
   const first = (words.find((w) => !/^(dr|mr|mrs|ms|mx|prof)\.?$/i.test(w)) || '').replace(/[.,;:]+$/, '');
   document.querySelectorAll('[data-lead-name]').forEach((n) => { if (first) n.textContent = first; });
+  // [data-cal] carries CAL_URL (src/data/site.js), and only once TBD.calLink is set; until then there is nothing to embed.
   const cal = document.querySelector('[data-cal]');
-  if (cal && cal.dataset.cal && !cal.dataset.cal.startsWith('[')) {
-    const u = new URL(`https://cal.com/${cal.dataset.cal.replace(/^https?:\/\/cal\.com\//, '')}`);
+  if (cal && /^https:\/\/cal\.com\/./.test(cal.dataset.cal || '')) {
+    const u = new URL(cal.dataset.cal);
     u.searchParams.set('embed', 'true');
     if (lead.name) u.searchParams.set('name', String(lead.name).trim());
     if (lead.email) u.searchParams.set('email', lead.email);
-    const f = document.createElement('iframe'); f.src = u.href; f.title = 'Pick a time for your walkthrough'; f.loading = 'lazy'; f.style.cssText = 'width:100%;min-height:640px;border:0;border-radius:12px;background:#FFFFFF';
+    const f = document.createElement('iframe'); f.src = u.href; f.title = 'Pick a time on the Arcus calendar'; f.loading = 'lazy'; f.style.cssText = 'width:100%;min-height:640px;border:0;border-radius:12px;background:#FFFFFF';
     cal.replaceChildren(f);
   }
   const boss = document.querySelector('[data-boss]');
@@ -1129,8 +1130,10 @@ function initPageHelpers() {
 /* ---------- Ask Arcus ---------- */
 function esc(t) { return t.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 function mdLite(t) {
-  // Escape first, then allow only links to this site and **bold**.
-  return esc(t).replace(/\[([^\]]+)\]\((\/(?!\/)[^)\s]*)\)/g, '<a href="$2">$1</a>').replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+  // Escape first, then allow only links to this site, plus BOOK_URL wherever it points (/api/ask links "Book a call"
+  // to it), and **bold**.
+  const book = esc(BOOK);
+  return esc(t).replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, label, href) => (/^\/(?!\/)/.test(href) || href === book ? `<a href="${href}">${label}</a>` : m)).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
 }
 function initAsk() {
   const root = document.querySelector('[data-ask]');

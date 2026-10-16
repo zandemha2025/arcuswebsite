@@ -1,6 +1,7 @@
 import { SITE, ENTITY, TEAM, LISTEN, BOOK_URL } from '../data/site.js';
 import { REPORTS } from '../data/reports.js';
 import { INDUSTRIES } from '../data/content.js';
+import { SERIES } from '../data/events.js';
 import { GLOSS as GLOSSARY } from '../data/all.js';
 import { ALL_ARTICLES as ARTICLES, COMPARE_ALL } from '../data/all.js';
 
@@ -10,6 +11,8 @@ export function GET() {
   const body = `# Arcus
 
 > ${ENTITY}
+
+The truth layer for marketing: Arcus helps a brand find out what worked, what flopped, and what deserves another dollar. It connects the brand’s sales, ads, CRM and what people say online into one place the brand owns. House rule: if it can’t be checked, it doesn’t count.
 
 Arcus (${SITE.replace('https://', '')}) is for in-house marketing teams at studios, streamers, spirits and beverage, games, music, fashion and beauty brands, especially teams without their own data department. Brands’ data is usually in pieces: sales in one system, players or viewers in another, email and CRM with a third team, plus retail data, ad accounts, social accounts, agency reports and listening tools. So nobody can tell which marketing dollars are working. Arcus connects all of it into one place inside the brand’s own setup (about three months, starting with a free try), and the brand owns it. It also adds what people say about the brand online. After that, any leader can ask any question and get an answer that sees the whole picture: which spend is paying off, what isn’t, and where the next dollar should go. Each answer is a few slides with the answer on top, ending on what to keep, test and stop. It is not an agency, a listening tool or a survey.
 
@@ -42,6 +45,19 @@ ${ARTICLES.map((a) => l(a.title, `/library/${a.slug}`, a.short)).join('\n')}
 ## Glossary
 ${GLOSSARY.map((g) => l(g.name, `/glossary/${g.slug}`, g.def)).join('\n')}
 
+## More to read
+${l('Who it’s for', '/for', 'CMOs, marketing leads, founders and execs at studios, streamers, drinks, games, music, fashion and beauty brands whose data sits in pieces')}
+${l('Real answers', '/reports', 'real questions Arcus answered, names removed, with the slides and the numbers behind them')}
+${l('Integrations', '/integrations', 'the tools Arcus connects: ad accounts, sales and ticketing, streaming and apps, CRM and email, analytics, spreadsheets and listening tools')}
+${l('How Arcus compares', '/compare', 'Arcus next to analytics software, hiring a data team and testing tools, and when each is the better pick')}
+${l('Library', '/library', 'guides to telling what your marketing actually did')}
+${l('Glossary', '/glossary', 'marketing measurement terms, one sentence each')}
+${l('Make the case', '/make-the-case', 'a one-pager and a copy-ready email for getting budget, plus answers for legal and finance')}
+${l('The Receipts', '/newsletter', 'a free monthly email: one number marketing gets wrong, and how to check it yourself')}
+${l(SERIES.name, '/events', 'a free monthly live session that takes an example campaign apart')}
+${l('Partners', '/partners', 'for fractional CMOs, advisors and consultants who introduce brands')}
+${l('Press', '/press', 'boilerplate, team, logo files and a press contact')}
+
 ## Company
 ${l('About', '/about')}
 ${l('Security', '/security')}
@@ -50,6 +66,11 @@ ${TEAM.map((t) => l(`${t.name}, ${t.title}`, `/about/${t.slug}`)).join('\n')}
 
 ## Optional
 ${l('Full text for AI assistants', '/llms-full.txt')}
+${l('Privacy', '/privacy')}
+${l('Cookies', '/cookies')}
+${l('Terms', '/terms')}
+${l('Free report terms', '/free-report-terms')}
+${l('Accessibility', '/accessibility')}
 `;
   return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 }

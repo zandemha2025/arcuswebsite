@@ -4,8 +4,11 @@ import Crumbs from '../../components/Crumbs.astro';
 import QuickAnswer from '../../components/QuickAnswer.astro';
 import PageFAQ from '../../components/PageFAQ.astro';
 import Arrow from '../../components/Arrow.astro';
-import { TEAM } from '../../data/site.js';
+import { TEAM, CAL_URL } from '../../data/site.js';
 const crumbs = [{ name: 'Book a call', href: '/book' }];
+// What happens after the form follows TBD.calLink (site.js): the calendar on /book/thanks once it is set, an email with
+// times until then. The button and the note under it say which.
+const calLive = Boolean(CAL_URL);
 ---
 <Site title="Book a call with Arcus | Arcus" description="Book 30 minutes with the Arcus team. No pitch. Bring your questions about your spend, your audience or your data, and we’ll answer them." path="/book" page="book" crumbs={crumbs} heroCta>
   {/* Grid areas, not order: wide screens put the form beside the copy; phones read the H1 and lead, then the form,
@@ -42,9 +45,9 @@ const crumbs = [{ name: 'Book a call', href: '/book' }];
         <label class="check"><input type="checkbox" name="bring_brendon" value="yes" /> <span>Bring Brendon, our CTO, for technical, security or legal questions</span></label>
         <span class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off" /></label></span>
         <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITEKEY || ''}></div>
-        <button type="submit" class="jb k" data-jelly data-loc="book-form"><span class="bg"></span><span class="lb">Pick a time</span></button>
+        <button type="submit" class="jb k" data-jelly data-loc="book-form"><span class="bg"></span><span class="lb">{calLive ? 'Pick a time' : 'Request a call'}</span></button>
         <p data-status class="form-err" hidden tabindex="-1" role="alert"></p>
-        <p class="tiny faint">Next you’ll pick a time. <a class="ul" href="/privacy">Privacy</a></p>
+        <p class="tiny faint">{calLive ? 'Next you’ll pick a time.' : 'Next, we’ll email you times.'} <a class="ul" href="/privacy">Privacy</a></p>
       </div>
     </form>
     <div class="bk-more stack-24">
