@@ -25,6 +25,251 @@
       "source": "/trust",
       "destination": "/security",
       "permanent": true
+    },
+    {
+      "source": "/library/agency-double-counting-sales",
+      "destination": "/glossary/double-counting",
+      "permanent": true
+    },
+    {
+      "source": "/library/agency-double-counting-sales.md",
+      "destination": "/glossary/double-counting.md",
+      "permanent": true
+    },
+    {
+      "source": "/library/read-an-agency-report",
+      "destination": "/glossary",
+      "permanent": true
+    },
+    {
+      "source": "/library/read-an-agency-report.md",
+      "destination": "/glossary",
+      "permanent": true
+    },
+    {
+      "source": "/library/questions-before-you-renew",
+      "destination": "/library/incrementality-without-the-math",
+      "permanent": true
+    },
+    {
+      "source": "/library/questions-before-you-renew.md",
+      "destination": "/library/incrementality-without-the-math.md",
+      "permanent": true
+    },
+    {
+      "source": "/tools/agency-math",
+      "destination": "/glossary/double-counting",
+      "permanent": true
+    },
+    {
+      "source": "/compare/agency-reports",
+      "destination": "/compare",
+      "permanent": true
+    },
+    {
+      "source": "/compare/agency-reports.md",
+      "destination": "/compare",
+      "permanent": true
+    },
+    {
+      "source": "/compare/agency-audit-firms",
+      "destination": "/compare",
+      "permanent": true
+    },
+    {
+      "source": "/compare/agency-audit-firms.md",
+      "destination": "/compare",
+      "permanent": true
+    },
+    {
+      "source": "/reports/agency-check",
+      "destination": "/reports",
+      "permanent": true
+    },
+    {
+      "source": "/reports/agency-check.md",
+      "destination": "/reports",
+      "permanent": true
+    },
+    {
+      "source": "/print/reports/agency-check",
+      "destination": "/reports",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-meta-agency",
+      "destination": "/library/meta-what-worked",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-meta-agency.md",
+      "destination": "/library/meta-what-worked.md",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-tiktok-agency",
+      "destination": "/library/tiktok-what-worked",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-tiktok-agency.md",
+      "destination": "/library/tiktok-what-worked.md",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-google-search-agency",
+      "destination": "/library/google-search-what-worked",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-google-search-agency.md",
+      "destination": "/library/google-search-what-worked.md",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-youtube-agency",
+      "destination": "/library/youtube-what-worked",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-youtube-agency.md",
+      "destination": "/library/youtube-what-worked.md",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-snapchat-agency",
+      "destination": "/library/snapchat-what-worked",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-snapchat-agency.md",
+      "destination": "/library/snapchat-what-worked.md",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-reddit-agency",
+      "destination": "/library/reddit-what-worked",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-reddit-agency.md",
+      "destination": "/library/reddit-what-worked.md",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-pinterest-agency",
+      "destination": "/library/pinterest-what-worked",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-pinterest-agency.md",
+      "destination": "/library/pinterest-what-worked.md",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-linkedin-agency",
+      "destination": "/library/linkedin-what-worked",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-linkedin-agency.md",
+      "destination": "/library/linkedin-what-worked.md",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-creator-agency",
+      "destination": "/library/creators-what-worked",
+      "permanent": true
+    },
+    {
+      "source": "/library/check-your-creator-agency.md",
+      "destination": "/library/creators-what-worked.md",
+      "permanent": true
+    },
+    {
+      "source": "/pdf/arcus-agency-check.pdf",
+      "destination": "/reports",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-check-your-creator-agency.png",
+      "destination": "/og/library-creators-what-worked.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-check-your-google-search-agency.png",
+      "destination": "/og/library-google-search-what-worked.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-check-your-linkedin-agency.png",
+      "destination": "/og/library-linkedin-what-worked.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-check-your-meta-agency.png",
+      "destination": "/og/library-meta-what-worked.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-check-your-pinterest-agency.png",
+      "destination": "/og/library-pinterest-what-worked.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-check-your-reddit-agency.png",
+      "destination": "/og/library-reddit-what-worked.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-check-your-snapchat-agency.png",
+      "destination": "/og/library-snapchat-what-worked.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-check-your-tiktok-agency.png",
+      "destination": "/og/library-tiktok-what-worked.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-check-your-youtube-agency.png",
+      "destination": "/og/library-youtube-what-worked.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-agency-double-counting-sales.png",
+      "destination": "/og/glossary-double-counting.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/tools-agency-math.png",
+      "destination": "/og/glossary-double-counting.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-read-an-agency-report.png",
+      "destination": "/og/glossary.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/library-questions-before-you-renew.png",
+      "destination": "/og/library-incrementality-without-the-math.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/compare-agency-reports.png",
+      "destination": "/og/compare.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/compare-agency-audit-firms.png",
+      "destination": "/og/compare.png",
+      "permanent": true
+    },
+    {
+      "source": "/og/reports-agency-check.png",
+      "destination": "/og/reports.png",
+      "permanent": true
     }
   ],
   "headers": [
@@ -49,7 +294,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' https://us-assets.i.posthog.com https://eu-assets.i.posthog.com https://connect.facebook.net https://snap.licdn.com https://www.googletagmanager.com https://www.redditstatic.com https://challenges.cloudflare.com https://js.sentry-cdn.com https://browser.sentry-cdn.com https://cdn.snitcher.com https://ddwl4m2hdecbv.cloudfront.net https://b2bjsstore.s3.us-west-2.amazonaws.com; connect-src 'self' https://us.i.posthog.com https://eu.i.posthog.com https://us-assets.i.posthog.com https://www.facebook.com https://px.ads.linkedin.com https://www.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google-analytics.com https://alb.reddit.com https://pixel-config.reddit.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://challenges.cloudflare.com https://*.snitcher.com https://*.rb2b.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src https://www.youtube-nocookie.com https://cal.com https://app.cal.com https://challenges.cloudflare.com https://td.doubleclick.net https://www.googletagmanager.com; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'sha256-T/GIAC34B9Im2T0iV1uz0iw8/039WIMJ/q0zucoxs1I=' https://us-assets.i.posthog.com https://eu-assets.i.posthog.com https://connect.facebook.net https://snap.licdn.com https://www.googletagmanager.com https://www.redditstatic.com https://challenges.cloudflare.com https://js.sentry-cdn.com https://browser.sentry-cdn.com https://cdn.snitcher.com https://ddwl4m2hdecbv.cloudfront.net https://b2bjsstore.s3.us-west-2.amazonaws.com; connect-src 'self' https://us.i.posthog.com https://eu.i.posthog.com https://us-assets.i.posthog.com https://www.facebook.com https://px.ads.linkedin.com https://www.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google-analytics.com https://alb.reddit.com https://pixel-config.reddit.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://challenges.cloudflare.com https://*.snitcher.com https://*.rb2b.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src https://www.youtube-nocookie.com https://cal.com https://app.cal.com https://challenges.cloudflare.com https://td.doubleclick.net https://www.googletagmanager.com; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
         },
         {
           "key": "X-Frame-Options",

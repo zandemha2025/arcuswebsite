@@ -5,7 +5,7 @@ import Crumbs from '../../components/Crumbs.astro';
 import Deck from '../../components/Deck.astro';
 import Close from '../../components/Close.astro';
 import Arrow from '../../components/Arrow.astro';
-import { REPORTS } from '../../data/reports.js';
+import { REPORTS, toneOf } from '../../data/reports.js';
 import { DEEP } from '../../data/reports-deep.js';
 import PageFAQ from '../../components/PageFAQ.astro';
 import QuickAnswer from '../../components/QuickAnswer.astro';
@@ -16,18 +16,27 @@ const d = DEEP[r.slug] || {};
 const others = REPORTS.filter((x) => x.slug !== r.slug);
 const crumbs = [{ name: 'Real answers', href: '/reports' }, { name: r.kind, href: `/reports/${r.slug}` }];
 const schema = [{ '@type': 'Report', name: `${r.kind}: ${r.title}`, url: `${SITE}/reports/${r.slug}`, author: { '@id': `${SITE}/#org` }, about: r.short, inLanguage: 'en-US' }];
-const tone = r.color === 'or' ? 'o' : r.color === 'gr' ? 'g' : 'i';
+const tone = toneOf(r);
+// Keep, Test and Stop speak the triad: worked (teal), the next dollar (amber), flopped (coral). site.css .todo.
+const VERB = { keep: 'v-keep', test: 'v-test', stop: 'v-stop' };
+// The same note the deck's end card sends (Deck.astro), so "Send this to your boss" reads the same from either place.
+const mail = `mailto:?subject=${encodeURIComponent(`Worth a look: an Arcus ${r.kind.toLowerCase()}`)}&body=${encodeURIComponent(`${r.example ? 'This is an example Arcus answer (made-up numbers).' : `This is a real answer Arcus gave ${r.who.toLowerCase()} (names removed).`} We can try it free: we pick a question about our marketing, they answer it with our own numbers, then walk us through it in 30 minutes.\n\n${SITE}/reports/${r.slug}\n`)}`;
 ---
-<Site md={`/reports/${r.slug}.md`} title={`${r.kind}${r.example ? ' (example)' : `: ${r.who}`} | Arcus`} description={`${r.short} ${r.example ? 'Shown with example numbers.' : 'A real Arcus report with names removed.'}`} path={`/reports/${r.slug}`} active="reports" page="report" crumbs={crumbs} schema={schema}>
-  <header class="phero l" style="padding-bottom:40px">
+<Site md={`/reports/${r.slug}.md`} title={`${r.kind}${r.example ? ' (example)' : `: ${r.who}`} | Arcus`} description={`${r.short} ${r.example ? 'Shown with example numbers.' : 'A real Arcus report with names removed.'}`} path={`/reports/${r.slug}`} active="reports" page="report" crumbs={crumbs} schema={schema} heroCta>
+  <header class="phero l art-h">
     <Crumbs items={crumbs} />
-    <div class="btnrow l"><span class={`tag t-${tone}`}>{r.kind}</span><span class="tag t-k">{r.example ? 'Example numbers' : r.who}</span></div>
-    <h1 class="dh d96" style="max-width:1200px">{r.question}</h1>
+    <h1 class="dh d96 h1-wide">{r.question}</h1>
     <p class="lead">{r.title} {r.short}</p>
+    <div class="byline"><span class={`tag t-${tone}`}>{r.kind}</span><span class="tag t-k">{r.example ? 'Example numbers' : r.who}</span></div>
+    {/* A returning visitor's next step, right beside the proof: the deck end card's pair, as a slim row. */}
+    <div class="btnrow l rep-ask">
+      <a href={`/free-report?from=${r.slug}`} class="jb k sm" data-jelly data-loc="report-hero"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
+      <a href={mail} class="jb ln sm" data-track="report_shared" data-props={JSON.stringify({ report: r.slug, via: 'email-hero' })}><span class="bg"></span><span class="lb">Send this to your boss</span></a>
+    </div>
   </header>
   <Video page={`/reports/${r.slug}`} />
 
-  <section class="wrap" style="padding-bottom:64px">
+  <section class="wrap blk-s">
     <QuickAnswer q={d.question || r.title} a={`${r.headline.n}: ${r.headline.label}. ${r.short}`} />
   </section>
   <section class="wrap" aria-label="The report">
@@ -38,17 +47,17 @@ const tone = r.color === 'or' ? 'o' : r.color === 'gr' ? 'g' : 'i';
   {d.context && (
   <section class="wrap sec" aria-labelledby="ctx-h">
     <div class="split">
-      <h2 id="ctx-h" class="dh d72">{r.example ? 'Why check at all.' : 'Why they asked.'}</h2>
+      <h2 id="ctx-h" class="dh d72">{r.example ? 'Why it matters.' : 'Why they asked.'}</h2>
       <div class="prose">{d.context.map((p) => <p>{p}</p>)}</div>
     </div>
   </section>)}
 
   {d.method && (
-  <section class="slab s-ic" aria-labelledby="meth-h">
+  <section class="slab s-paper" aria-labelledby="meth-h">
     <div class="sec-h"><h2 id="meth-h" class="dh d72">How we answered it.</h2></div>
-    {r.sides && <div class="honest" style="margin-bottom:40px"><div><p class="h3">Their own data</p><p class="muted">{r.sides.own}</p></div><div><p class="h3">What people say and do</p><p class="muted">{r.sides.out}</p></div></div>}
-    <ol class="steps" style={`--n:${Math.min(d.method.length, 3)};padding:0;list-style:none`}>
-      {d.method.map(([t, x], i) => <li class="step"><span class="n">{String(i + 1).padStart(2, '0')}</span><p class="h3">{t}</p><p class="muted">{x}</p></li>)}
+    {r.sides && <div class="honest sides"><div><p class="h3 pk-h"><i class="dot p1" aria-hidden="true"></i>Their own data</p><p class="muted">{r.sides.own}</p></div><div><p class="h3 pk-h"><i class="dot p3" aria-hidden="true"></i>What people say and do</p><p class="muted">{r.sides.out}</p></div></div>}
+    <ol class:list={['steps', d.method.length <= 4 ? 'chain' : 'discs']} style={`--n:${Math.min(d.method.length, 3)};padding:0;list-style:none`} data-once={d.method.length <= 4 ? '' : undefined}>
+      {d.method.map(([t, x], i) => <li class="step"><span class="n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><p class="h3">{t}</p><p class="muted">{x}</p></li>)}
     </ol>
   </section>)}
 
@@ -56,15 +65,16 @@ const tone = r.color === 'or' ? 'o' : r.color === 'gr' ? 'g' : 'i';
   <section class="wrap sec" aria-labelledby="find-h">
     <div class="sec-h"><h2 id="find-h" class="dh d72">Everything we found.</h2>{r.example && <p class="lead muted">Example numbers throughout.</p>}</div>
     <div class="tiles" style="--n:2">
-      {d.findings.map((f) => <div class="tile">{f.n && <p class="dh" style="font-size:56px">{f.n}</p>}<p class="h3">{f.h}</p><p class="muted">{f.body}</p></div>)}
+      {d.findings.map((f) => <div class="tile">{f.n && <p class="dh fig-56"><span class="fig-hl">{f.n}</span></p>}<p class="h3">{f.h}</p><p class="muted">{f.body}</p></div>)}
     </div>
   </section>)}
 
+  {/* The report's last slide, as a white chapter: Keep, Test and Stop wear the triad in full (teal, amber, coral). */}
   {d.rules && (
-  <section class="slab s-gr" aria-labelledby="rules-h">
+  <section class="slab s-paper" aria-labelledby="rules-h">
     <div class="split">
       <h2 id="rules-h" class="dh d72">What we told them to do.</h2>
-      <ul class="todo">{d.rules.map(([k, v]) => <li><b>{k}</b><span style="font-weight:500">{v}</span></li>)}</ul>
+      <ul class="todo">{d.rules.map(([k, v]) => <li><b class={VERB[k.split(':')[0].trim().toLowerCase()]}>{k}</b><span>{v}</span></li>)}</ul>
     </div>
   </section>)}
 
@@ -77,33 +87,32 @@ const tone = r.color === 'or' ? 'o' : r.color === 'gr' ? 'g' : 'i';
   {d.applyToYou && (
   <section class="slab s-ink on-dark" aria-labelledby="you-h">
     <div class="split">
-      <div class="sec-h" style="margin:0">
+      <div class="sec-h m0">
         <h2 id="you-h" class="dh d72">What this looks like for your brand.</h2>
-        <a href={`/free-report?from=${r.slug}`} class="jb st" data-jelly data-loc="report-you" style="align-self:flex-start"><span class="bg"></span><span class="lb">Bring us one question</span></a>
+        <a href={`/free-report?from=${r.slug}`} class="jb k as" data-jelly data-loc="report-you"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
       </div>
-      <div class="qa" style="border-color:#F4F4F433">{d.applyToYou.map(([q, a]) => <details style="border-color:#F4F4F433"><summary>{q}<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3v12M3 9h12"/></svg></summary><p class="a" style="color:#F4F4F4CC">{a}</p></details>)}</div>
+      <div class="qa">{d.applyToYou.map(([q, a]) => <details><summary>{q}<svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3v12M3 9h12"/></svg></summary><p class="a">{a}</p></details>)}</div>
     </div>
   </section>)}
 
   <section class="wrap sec" aria-labelledby="nums-h">
     <div class="split">
-      <div class="sec-h" style="margin:0">
+      <div class="sec-h m0">
         <h2 id="nums-h" class="h2s">The numbers behind it</h2>
         <p class="muted">{r.scope}</p>
         <p class="small"><b>Sources:</b> {r.sources.join(', ')}</p>
       </div>
       <div class="rc wide" aria-label="Key numbers">
-        {r.example && <span class="ex">Example</span>}
         <div class="hd">{r.kind}</div>
-        <div class="r tot" style="border:0;margin:0;padding:0 0 8px"><span>{r.headline.n}</span><span></span></div>
+        <div class="r tot" style="border:0;margin:0;padding:0 0 8px"><span class="fig-hl">{r.headline.n}</span><span></span></div>
         <p style="margin-bottom:10px">{r.headline.label}</p>
-        {r.stats.map((s) => <div class="r" style="border-top:1px dashed #A8A8A0;padding-top:8px;margin-top:8px"><span style="font-weight:700;white-space:nowrap">{s.n}</span><span style="text-align:right">{s.label}</span></div>)}
+        {r.stats.map((s) => <div class="r" style="border-top:1px dashed var(--silver,#D9D9D9);padding-top:8px;margin-top:8px"><span style="font-weight:700;white-space:nowrap">{s.n}</span><span style="text-align:right">{s.label}</span></div>)}
         <div class="bar"></div>
       </div>
     </div>
   </section>
 
-  <section class="wrap" style="padding-bottom:96px" aria-labelledby="rec-h">
+  <section class="wrap blk" aria-labelledby="rec-h">
     <div class="card" style="padding:32px;display:flex;flex-direction:column;gap:12px">
       <h2 id="rec-h" class="h3">How we checked, and what this doesn’t prove</h2>
       <p class="muted">{r.receipts}</p>
@@ -114,12 +123,12 @@ const tone = r.color === 'or' ? 'o' : r.color === 'gr' ? 'g' : 'i';
   </section>
 
   {d.faq && <PageFAQ id="rep-faq" items={d.faq} />}
-  <section class="wrap" style="padding-bottom:96px" aria-labelledby="more-h">
+  <section class="wrap blk" aria-labelledby="more-h">
     <h2 id="more-h" class="h2s" style="margin-bottom:20px">More real answers</h2>
     <div class="tiles" style="--n:3">
       {others.map((o) => <a class="tile" href={`/reports/${o.slug}`}><span class="small faint">{o.kind} · {o.example ? 'Example' : o.who}</span><span class="h3">{o.title}</span><span class="arrow">See the answer <Arrow /></span></a>)}
     </div>
   </section>
 
-  <Close variant="ink" lines={['Your question', 'is next.']} body="We answer your first question with your own numbers and what people say, and walk you through it in 30 minutes. Free, no card. Once everything is connected, answers like this one keep coming." loc="report-close" />
+  <Close variant="navy" lines={['Your question', 'is next.']} body="Pick the question you’re least sure about. We answer it with your own numbers and what people say online, then walk you through it in 30 minutes. Free, no card. Once everything is connected, answers like this one keep coming." loc="report-close" />
 </Site>

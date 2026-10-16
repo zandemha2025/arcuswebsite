@@ -2,44 +2,50 @@
 import Pic from '../../components/Pic.astro';
 import Site from '../../layouts/Site.astro';
 import Crumbs from '../../components/Crumbs.astro';
+import Arrow from '../../components/Arrow.astro';
 import Close from '../../components/Close.astro';
 import QuickAnswer from '../../components/QuickAnswer.astro';
 import PageFAQ from '../../components/PageFAQ.astro';
 import { INDUSTRIES } from '../../data/content.js';
+import { BOOK_URL } from '../../data/site.js';
 const crumbs = [{ name: 'Who it’s for', href: '/for' }];
 const checks = [
-  ['agencies', 'Two or more agencies report sales to you', 'More than one agency'],
-  ['total', 'Their claims add up to more than your own numbers', 'Claims add up too high'],
-  ['renewal', 'An agency renewal or budget review is coming up', 'Renewal coming up'],
+  ['agencies', 'Your channels’ reported results add up to more than you sold', 'Reports add up too high'],
+  ['total', 'Two teams give different numbers for the same campaign', 'Numbers don’t match'],
+  ['renewal', 'A budget review is coming up', 'Budget review soon'],
   ['nodata', 'Sales, customer and social data sit with different teams', 'Data in pieces'],
   ['audience', 'You’re not sure what your audience says about you', 'Audience unclear'],
   ['posts', 'You can’t tell which posts, creators or spend sold anything', 'Can’t tell what works'],
 ];
 ---
-<Site title="Who Arcus is for: entertainment and lifestyle brand teams | Arcus" description="Arcus is for CMOs, marketing leads, founders and execs at studios, streamers, drinks, games, music, fashion and beauty brands whose data sits in pieces across teams, agencies and tools." path="/for" active="for" page="for" crumbs={crumbs}>
+<Site title="Who Arcus is for: entertainment and lifestyle brand teams | Arcus" description="Arcus is for CMOs, marketing leads, founders and execs at studios, streamers, drinks, games, music, fashion and beauty brands whose data sits in pieces across teams, partners and tools." path="/for" active="for" page="for" crumbs={crumbs} heroCta>
   <header class="phero l">
     <Crumbs items={crumbs} />
     <h1 class="dh d96">For leaders with plenty of data and no clear answer.</h1>
-    <QuickAnswer q="Who is Arcus for?" a="CMOs, marketing leads, founders and executives at entertainment and lifestyle brands who have agencies and plenty of data, but can’t make sense of it or decide what to do next: studios and streamers, spirits and beverage, games and music, fashion and beauty. Usually their sales, audience, CRM and agency data sit with different teams, and nobody has the time to put it together. Pick your industry to see which pieces we connect and the questions you can finally answer." />
-  </header>
-
-  <section class="wrap" style="padding-bottom:96px" aria-labelledby="ind-h">
-    <h2 id="ind-h" class="sr-only">Industries</h2>
-    <div class="tiles" style="--n:2">
+    <div class="btnrow l">
+      <a href="/free-report" class="jb k" data-jelly data-loc="for-hero"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
+      <a href={BOOK_URL} class="jb ln" data-jelly data-loc="for-hero-2"><span class="bg"></span><span class="lb">Book a call</span></a>
+    </div>
+    <p class="small muted">Free, no card. Pick a question and we answer it with your own numbers.</p>
+    <nav class="ph-obj for-obj" aria-label="Industries">
       {INDUSTRIES.map((i) => (
         <a class="imgcard" href={`/for/${i.slug}`}>
-          <Pic name={i.img} sizes="(max-width:900px) 100vw, 50vw" />
-          <div><span class="dh">{i.name}</span><span class="small">{i.h1}</span></div>
+          <Pic name={i.img} widths={[800, 1200, 1600]} sizes="(max-width:1100px) 50vw, 260px" eager />
+          <div><span class="dh">{i.name}</span></div>
         </a>
       ))}
-    </div>
+    </nav>
+  </header>
+
+  <section class="wrap blk">
+    <QuickAnswer q="Who is Arcus for?" a="CMOs, marketing leads, founders and executives at entertainment and lifestyle brands who have plenty of data but can’t make sense of it or decide what to do next: studios and streamers, spirits and beverage, games and music, fashion and beauty. Usually their sales, audience, CRM and ad data sit with different teams, and nobody has the time to put it together. Pick your industry to see which pieces we connect and the questions you can finally answer." />
   </section>
 
-  <section class="wrap" style="padding-bottom:120px" aria-labelledby="cl-h" data-checklist>
+  <section class="wrap blk-l" aria-labelledby="cl-h" data-checklist>
     <div class="split">
-      <div class="sec-h" style="margin:0">
+      <div class="sec-h m0">
         <h2 id="cl-h" class="dh d72">Is this you?</h2>
-        <p class="muted">Check what sounds familiar. Two or more, and your first question is worth bringing to us.</p>
+        <p class="muted">Check what sounds familiar. Two or more, and it’s worth trying free.</p>
         <fieldset class="qa" style="border:0;padding:0;margin:0">
           <legend class="sr-only">Check what sounds familiar</legend>
           {checks.map(([k, t, s]) => <label class="check" style="padding:14px 0;border-bottom:1px solid var(--line);font-size:17px"><input type="checkbox" name={k} data-short={s} /> <span>{t}</span></label>)}
@@ -51,17 +57,17 @@ const checks = [
           <div data-cl-lines></div>
           <div class="r tot"><span>Checked</span><span data-cl-total>0 of 6</span></div>
           <div class="bar"></div>
-          <span class="stamp stp" data-cl-stamp hidden style="right:12px;bottom:48px;rotate:-8deg">Worth a check</span>
+          <span class="stamp ink-nx stp" data-cl-stamp hidden style="right:12px;bottom:48px;rotate:-8deg">Worth a try</span>
         </div>
-        <a href="/free-report?start=agency_check" class="jb k" data-jelly data-loc="for-checklist"><span class="bg"></span><span class="lb">Bring us one question</span></a>
+        <a href="/free-report?start=what_worked" class="jb k" data-jelly data-loc="for-checklist"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
       </div>
     </div>
   </section>
 
   <PageFAQ id="for-faq" items={[
     ['We’re not in entertainment or lifestyle. Can Arcus still help?', 'Maybe. We’re built for brands where culture and audience drive sales. Book a call and we’ll tell you honestly.'],
-    ['We have a data team. Do we need Arcus?', 'Possibly not. If your analysts already connect every system, check every agency claim and read your audience, you’re covered. Some teams use us so their analysts can focus elsewhere.'],
-    ['How big does our brand need to be?', 'Big enough that your data sits in more than one place: sales in one system, customers or viewers in another, agencies reporting on top. Below that, there isn’t much to connect yet.'],
+    ['We have a data team. Do we need Arcus?', 'Possibly not. If your analysts already connect every system, count each result once and read your audience, you’re covered. Some teams use us so their analysts can focus elsewhere.'],
+    ['How big does our brand need to be?', 'Big enough that your data sits in more than one place: sales in one system, customers or viewers in another, ad accounts and partners reporting on top. Below that, there isn’t much to connect yet.'],
   ]} />
-  <Close variant="or" lines={['Sound familiar?']} loc="for-close" />
+  <Close variant="paper" lines={['Sound familiar?']} loc="for-close" />
 </Site>

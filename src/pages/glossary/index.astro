@@ -13,12 +13,12 @@ const schema = [{ '@type': 'DefinedTermSet', '@id': `${SITE}/glossary#set`, name
   <header class="phero l">
     <Crumbs items={crumbs} />
     <h1 class="dh d96">What the words in your marketing reports mean.</h1>
-    <QuickAnswer q="Why does this glossary exist?" a="Agency reports are full of terms that make numbers sound more certain than they are. Each entry says what the term means in one sentence, why it matters, and the question to ask your agency." />
+    <QuickAnswer q="Why does this glossary exist?" a="Campaign recaps are full of terms that make numbers sound more certain than they are. Each entry says what the term means in one sentence, why it matters, and the question to ask about it." />
   </header>
-  <section class="wrap" style="padding-bottom:96px">
+  <section class="wrap blk">
     <div>
       {sorted.map((g) => (
-        <a href={`/glossary/${g.slug}`} class="listrow" style="grid-template-columns:260px minmax(0,1fr) 48px">
+        <a href={`/glossary/${g.slug}`} class="listrow gl">
           <span class="h3">{g.name}</span>
           <span class="muted">{g.def}</span>
           <span class="go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
@@ -26,5 +26,5 @@ const schema = [{ '@type': 'DefinedTermSet', '@id': `${SITE}/glossary#set`, name
       ))}
     </div>
   </section>
-  <Close variant="or" lines={['Rather we check', 'it for you?']} loc="glossary-close" />
+  <Close variant="paper" lines={['Rather we answer', 'it for you?']} loc="glossary-close" />
 </Site>

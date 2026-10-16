@@ -1,5 +1,8 @@
 // Generated from gtm/target-accounts.csv. Do not edit by hand; rebuild from the CSV.
-// Domain -> target account. segment is the /for/ industry slug, or "client" for existing clients.
+// Domain -> prospect account. segment is the /for/ industry slug.
+// Prospects only. This file ships in the public mirror, so it never lists current clients or the accounts that
+// compete with them: skip CSV rows with segment=client and rows whose notes flag a conflict when you rebuild.
+// Those two lists live in server env vars instead (ARCUS_CLIENT_DOMAINS, ARCUS_CONFLICT_DOMAINS), read by api/_lib/score.js.
 export const TARGET_DOMAINS = {
   "lionsgate.com": { company: "Lionsgate", segment: "studios-and-streaming", priority: "A" },
   "a24films.com": { company: "A24", segment: "studios-and-streaming", priority: "A" },
@@ -72,9 +75,7 @@ export const TARGET_DOMAINS = {
   "deschutesbrewery.com": { company: "Deschutes Brewery", segment: "spirits-and-beverage", priority: "C" },
   "brooklynbrewery.com": { company: "Brooklyn Brewery", segment: "spirits-and-beverage", priority: "C" },
   "guinness.com": { company: "Guinness (Diageo)", segment: "spirits-and-beverage", priority: "C" },
-  "whiteclaw.com": { company: "Mark Anthony Brands (White Claw)", segment: "spirits-and-beverage", priority: "A" },
   "mikeshardlemonade.com": { company: "Mike's Hard Lemonade Co.", segment: "spirits-and-beverage", priority: "A" },
-  "highnoonsunsips.com": { company: "High Noon", segment: "spirits-and-beverage", priority: "A" },
   "buzzballz.com": { company: "BuzzBallz", segment: "spirits-and-beverage", priority: "B" },
   "cutwaterspirits.com": { company: "Cutwater Spirits", segment: "spirits-and-beverage", priority: "B" },
   "drinksurfside.com": { company: "Surfside", segment: "spirits-and-beverage", priority: "B" },
@@ -191,11 +192,8 @@ export const TARGET_DOMAINS = {
   "glowrecipe.com": { company: "Glow Recipe", segment: "fashion-and-beauty", priority: "A" },
   "olaplex.com": { company: "Olaplex", segment: "fashion-and-beauty", priority: "A" },
   "tower28beauty.com": { company: "Tower 28 Beauty", segment: "fashion-and-beauty", priority: "A" },
-  "hellobubble.com": { company: "Bubble Skincare", segment: "fashion-and-beauty", priority: "A" },
   "soldejaneiro.com": { company: "Sol de Janeiro", segment: "fashion-and-beauty", priority: "A" },
   "supergoop.com": { company: "Supergoop!", segment: "fashion-and-beauty", priority: "A" },
-  "herocosmetics.us": { company: "Hero Cosmetics", segment: "fashion-and-beauty", priority: "B" },
-  "peaceoutskincare.com": { company: "Peace Out Skincare", segment: "fashion-and-beauty", priority: "B" },
   "mytopicals.com": { company: "Topicals", segment: "fashion-and-beauty", priority: "B" },
   "drunkelephant.com": { company: "Drunk Elephant", segment: "fashion-and-beauty", priority: "B" },
   "deciem.com": { company: "DECIEM (The Ordinary)", segment: "fashion-and-beauty", priority: "B" },
@@ -215,14 +213,7 @@ export const TARGET_DOMAINS = {
   "hudabeauty.com": { company: "Huda Beauty", segment: "fashion-and-beauty", priority: "C" },
   "morphe.com": { company: "Morphe", segment: "fashion-and-beauty", priority: "C" },
   "florencebymills.com": { company: "Florence by Mills", segment: "fashion-and-beauty", priority: "C" },
-  "starface.world": { company: "Starface", segment: "client", priority: "" },
-  "paramount.com": { company: "Paramount", segment: "client", priority: "" },
-  "bostonbeer.com": { company: "Boston Beer Company (Truly)", segment: "client", priority: "" },
-  "amazon.com": { company: "Amazon", segment: "client", priority: "" },
-  "hardees.com": { company: "CKE Restaurants (Hardee's)", segment: "client", priority: "" },
 };
 
-// Accounts that compete with a current client. Never prospect without the team's OK.
-export const CONFLICTS = new Set(['whiteclaw.com', 'highnoonsunsips.com', 'hellobubble.com', 'herocosmetics.us', 'peaceoutskincare.com']);
-// Prospects only: no clients, no conflicts.
-export const PROSPECTS = Object.fromEntries(Object.entries(TARGET_DOMAINS).filter(([d, t]) => t.segment !== 'client' && !CONFLICTS.has(d)));
+// Same object under the name the importers use (api/visitor.js, api/_lib/score.js, scripts/signals.mjs).
+export const PROSPECTS = TARGET_DOMAINS;

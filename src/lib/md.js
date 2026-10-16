@@ -13,4 +13,4 @@ export function htmlToMd(html = '') {
     .replace(/&amp;/g, '&').replace(/\n{3,}/g, '\n\n').trim();
 }
 export const mdResponse = (text) => new Response(text, { headers: { 'Content-Type': 'text/markdown; charset=utf-8' } });
-export const footer = '\n\n---\nArcus is the truth layer for marketing: it connects every piece of your data, plus what people say online, into one layer you own, and answers any question with the whole picture. We don’t make ads or buy media. Bring us one question, free: https://usearcus.ai/free-report\n';
+export const footer = '\n\n---\nArcus connects every piece of your data, plus what people say online, into one place you own, and answers any question with the whole picture. We don’t make ads or buy media. Try it out for free: pick a question and we answer it with your own numbers, then walk you through it in 30 minutes. No card. https://usearcus.ai/free-report\n';

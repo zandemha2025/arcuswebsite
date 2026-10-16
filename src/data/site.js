@@ -1,12 +1,15 @@
 // One source of truth for facts the whole site repeats. Change a fact here, not in a page.
 export const SITE = 'https://usearcus.ai';
 export const DOMAIN = 'usearcus.ai';
+// Where every "Book a call" goes. Our own /book page for now; swap in the scheduling link here once it is chosen.
+export const BOOK_URL = '/book';
 
 // The entity sentence: used word for word in About, FAQ, Organization schema, llms.txt and the meta of Home.
 export const ENTITY =
-  'Arcus is the truth layer for marketing leaders, founders and executives at entertainment and lifestyle brands. It connects the data every team already has, from sales, CRM and player or viewer data to social and agency reports, into one layer the brand owns, adds what audiences say across the internet, checks every claim, and answers any question with the whole picture. It doesn’t make ads, buy media or take a cut of spend.';
+  'Arcus shows CMOs, founders and executives at entertainment and lifestyle brands where their marketing money is working. It connects what their teams know, from sales, CRM and fan data to ads and agency reports, with what people say online, in one place the brand owns, and answers any question with the whole picture. Arcus doesn’t make ads or buy media.';
 
-export const SHORT = 'Arcus is the truth layer for marketing. It connects every piece of data your teams have, plus what people say online, into one layer you own, so any question gets answered with the whole picture. We don’t make ads or buy media. If it can’t be checked, it doesn’t count.';
+// The one-liner. Its last sentence is also the schema `slogan` in Site.astro; change the two together.
+export const SHORT = 'Arcus connects every piece of your data, plus what people say online, into one place you own, and shows which spend works. If it can’t be checked, it doesn’t count.';
 
 // Placeholders the team still has to confirm. Anything in brackets stays out of structured data.
 export const TBD = {
@@ -34,13 +37,13 @@ export const TEAM = [
     bio: 'Nazeem leads the AI side of Arcus: the checks that run on your data and the rules that limit what they can do. If a number shows up in a report, he can tell you where it came from. [Background to add.]' },
   { slug: 'min-kwak', photo: '', linkedin: '', credentials: [], knowsAbout: [], name: 'Min Kwak', title: 'Chief Revenue Officer', initials: 'MK',
     line: 'Runs sales and partnerships. Probably the first person you talk to.',
-    bio: 'Min works with the brand teams who use Arcus, from the first question to the setup and every answer after. [Background to add.]' },
+    bio: 'Min works with the brand teams who use Arcus, from trying it free to the setup and every answer after. [Background to add.]' },
   { slug: 'devin-min', photo: '', linkedin: '', credentials: [], knowsAbout: [], name: 'Devin Min', title: 'Chief Product Officer', initials: 'DM',
     line: 'Runs the product: what your answers say and how they read.',
     bio: 'Devin decides what goes into an Arcus answer and what stays out. His rule: the answer goes on top, and every number has a source. [Background to add.]' },
   { slug: 'brendon-ghaderi', photo: '', linkedin: '', credentials: [], knowsAbout: [], name: 'Brendon Ghaderi', title: 'Chief Technology Officer', initials: 'BG',
-    line: 'Runs engineering: connecting your data into one layer and checking every number.',
-    bio: 'Brendon builds the layer behind every Arcus answer: the connections to every system you run, the checks, and the logs that trace each number back to its source. Security and legal questions come to him. [Background to add.]' },
+    line: 'Runs engineering: connecting your data into one place and tracing every number to its source.',
+    bio: 'Brendon builds what sits behind every Arcus answer: the connections to every system you run, the checks, and the logs that trace each number back to its source. Security and legal questions come to him. [Background to add.]' },
 ];
 
 // Where we listen. Third-party sources, read alongside a brand's own (first-party) data.
@@ -75,7 +78,7 @@ export const LISTEN_SOURCES = [
   { name: 'News and trade press', logo: '', what: 'Coverage and filings' },
 ];
 export const LISTEN = LISTEN_SOURCES.map((s) => s.name);
-export const OWN = ['Sales, tickets and sign-ups', 'Players, viewers and app usage', 'Email, CRM and customer data', 'Retail and partner data', 'Your ad accounts', 'Your social accounts', 'Your agencies’ reports'];
+export const OWN = ['Sales, tickets and sign-ups', 'Players, viewers and app usage', 'Email, CRM and customer data', 'Retail and partner data', 'Your ad accounts', 'Your social accounts', 'Agency reports'];
 
 // Tools brands already use. We connect to these where they are; nothing moves into a new tool.
 export const TOOLS = [

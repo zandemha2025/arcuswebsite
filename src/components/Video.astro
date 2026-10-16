@@ -8,10 +8,10 @@ const thumb = v ? `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg` : '';
 const data = v && { '@context': 'https://schema.org', '@type': 'VideoObject', name: v.name, description: v.description, thumbnailUrl: thumb, uploadDate: v.uploadDate, duration: v.duration, embedUrl: `https://www.youtube-nocookie.com/embed/${v.youtubeId}`, publisher: { '@id': `${SITE}/#org` } };
 ---
 {v && (
-  <section class="wrap" style="padding-bottom:64px">
+  <section class="wrap blk-s">
     <a class="video" href={`https://www.youtube.com/watch?v=${v.youtubeId}`} data-yt={v.youtubeId} aria-label={`Play video: ${v.name}`}>
       <img src={thumb} alt="" width="480" height="360" loading="lazy" />
-      <span class="video-play" aria-hidden="true">▶</span>
+      <span class="video-play" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 5.5v13l10.5-6.5z"/></svg></span>
     </a>
     <p class="small muted" style="margin-top:8px">{v.name}</p>
     <script type="application/ld+json" set:html={JSON.stringify(data)} />

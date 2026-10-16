@@ -3,39 +3,58 @@ import Video from '../components/Video.astro';
 import Site from '../layouts/Site.astro';
 import Crumbs from '../components/Crumbs.astro';
 import Close from '../components/Close.astro';
+import AnswerStage from '../components/AnswerStage.astro';
 import QuickAnswer from '../components/QuickAnswer.astro';
 import PageFAQ from '../components/PageFAQ.astro';
 import Related from '../components/Related.astro';
-import ToolsMarquee from '../components/ToolsMarquee.astro';
+import ToolsStrip from '../components/ToolsStrip.astro';
 import Arrow from '../components/Arrow.astro';
-import { SITE } from '../data/site.js';
+import AskRow from '../components/AskRow.astro';
+import * as site from '../data/site.js';
+const { SITE } = site;
+const { BOOK_URL } = site;
 const crumbs = [{ name: 'How it works', href: '/how-it-works' }];
+// Six steps in the order of the story: try it free, then we build it (connect, own, customize), then the answers.
+// Each receipt's stamp inks in its meaning: periwinkle is Arcus acting or what people say, teal is checked, amber is the answer.
+// Keep the #start, #build, #check, #listen and #report anchors: llms.txt and other pages link to them.
 const steps = [
-  { id: 'start', n: '01', t: 'Bring us one question', b: 'Pick the question you’re least sure about: an agency’s results, your posts, your audience or anything else. We answer it with your own numbers and what people say online, check every claim, and walk you through the answer on a 30-minute call. Free.', you: 'Send the question. Give access. Join the call.', rc: [['Your question', 'Received'], ['Your own numbers', 'Connected'], ['Walkthrough', 'Booked']], stamp: 'Received' },
-  { id: 'build', n: '02', t: 'We connect everything into one layer you own', b: 'If you want more, we spend about three months connecting every system you run, from sales, viewers or players, email and CRM to ads, social and agency reports, into one layer inside your own setup. We test every number on the way in. Nothing moves into a new tool, and answers arrive along the way.', you: 'Approve each step. That’s it.', rc: [['Sales, tickets, sign-ups', 'Connected'], ['Email and CRM', 'Connected'], ['Ads and agency reports', 'Connected'], ['Listening sources', 'Picked']], stamp: 'Approved' },
-  { id: 'check', n: '03', t: 'We check every claim', b: 'Each sale, ticket or sign-up an agency claims is checked against your own numbers and counted once. When two agencies claim the same sale, we say so. When you need proof that something caused sales, we run a simple test: run it in some regions and not others, then compare.', you: 'Nothing. We send what we find.', rc: [['Claimed', '4,200'], ['Counted twice', '1,610'], ['From your email', '740'], ['Already searching for you', '470'], ['Held up', '1,380']], stamp: 'Counted twice', ex: true },
-  { id: 'listen', n: '04', t: 'We add what people say', b: 'We read what people say about you on Reddit, TikTok, YouTube, Discord, Twitch, Kick, Facebook groups, Google, Goodreads, Fable and more, plus any listening tool you already pay for. We count what comes up, and line it up with your sales and customers.', you: 'Tell us where your audience hangs out, if you know.', rc: [['Comments counted', '6,622'], ['Posts sorted', '293'], ['Reddit questions', '4,283'], ['Voice rules', '4']], stamp: 'Counted' },
-  { id: 'report', n: '05', t: 'You ask anything', b: 'Any leader can ask any question, and the answer draws on everything we connected. Each answer is a few slides, with the answer on top and what to keep, test and stop at the end. Answers land where your team already works: Slack, email, Sheets or your dashboard, plus regular check-ins on the schedule you pick. A person on our team reads every answer before you do.', you: 'Ask. Read the slides. Decide.', rc: [['Keep', 'Hosting hacks'], ['Test', 'Friend-group frame'], ['Stop', '3D animation']], stamp: 'Held up' },
+  { id: 'start', n: '01', t: 'Try it free', b: 'Pick the question you’re least sure about: which spend worked, which posts work, what your audience says, or anything else. We answer it with your own numbers and what people say online, then walk you through the answer on a 30-minute call. No card.', you: 'Pick a question. Give access to the accounts it touches. Join the call.', rc: [['Your question', 'Received'], ['Your own numbers', 'Connected'], ['Walkthrough', 'Booked']], stamp: 'Received', tone: '' },
+  { id: 'build', n: '02', t: 'We connect your data', b: 'If you go ahead, we connect every system you run, from sales, viewers or players, email and CRM to ad accounts, social accounts and agency reports. It all goes into one place you own, inside your own setup: your own data lake. It takes about three months. We test every number on the way in, and answers arrive along the way.', you: 'Approve each step. That’s it.', rc: [['Sales, tickets, sign-ups', 'Connected'], ['Email and CRM', 'Connected'], ['Ad accounts', 'Connected'], ['Agency reports', 'Connected'], ['Social accounts', 'Connected']], stamp: 'Approved', tone: 'ink-ok' },
+  { id: 'context', n: '03', t: 'Built around your brand', b: 'We write down what we learn about your brand: your products, seasons, audiences, goals and the numbers you report on. That’s your context layer, customized to you, so every answer starts from your business instead of a template.', you: 'Tell us what matters. We write it down.', rc: [['Products and drops', 'Written down'], ['Seasons and launches', 'Written down'], ['Audiences', 'Written down'], ['The numbers you report on', 'Written down']], stamp: 'Yours', tone: '' },
+  { id: 'check', n: '04', t: 'We count every result once', b: 'Your ad accounts, partners and creators each report their own results, and each ad platform gives itself credit. We match every reported sale, ticket or sign-up to your own numbers and count it once. When you need proof that something caused sales, we run ads in some regions and pause them in others, then compare sales. That’s a regions-on, regions-off test.', you: 'Nothing. We send what we find.', rc: [['Each channel’s results', 'Lined up'], ['Same sale, two reports', 'Counted once'], ['Your own numbers', 'Matched'], ['Proof it caused sales', 'Tested']], stamp: 'Counted once', tone: 'ink-ok' },
+  { id: 'listen', n: '05', t: 'We add what people say', b: 'We read what people say about you on Reddit, TikTok, YouTube, Discord, Twitch, Kick, Facebook groups, Google, Goodreads, Fable and more, plus any listening tool you already pay for. We count what comes up, and line it up with your sales and customers.', you: 'Tell us where your audience hangs out, if you know.', rc: [['Comments counted', '6,622'], ['Posts sorted', '293'], ['Reddit questions', '4,283'], ['Voice rules', '4']], stamp: 'Counted', tone: '' },
+  { id: 'report', n: '06', t: 'You ask anything', b: 'Anyone on your team can ask anything, and the answer draws on everything we connected. Each answer is a few slides: the answer on top, where every number came from, and what to keep, test and stop. Answers land in Slack, email or Sheets, plus regular check-ins on the schedule you pick. A person on our team reads every answer before you do.', you: 'Ask. Read the slides. Decide.', rc: [['Keep', 'Hosting hacks'], ['Test', 'Friend-group frame'], ['Stop', '3D animation']], stamp: 'Answered', tone: 'ink-nx' },
 ];
 const howto = { '@type': 'HowTo', name: 'How Arcus works', step: steps.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, name: s.t, text: s.b, url: `${SITE}/how-it-works#${s.id}` })) };
 ---
-<Site title="How Arcus works: one question, then we plug in | Arcus" description="How Arcus works: bring us one question and we answer it free. Then we spend about three months connecting every piece of your data into one layer you own, so any question gets answered with the whole picture." path="/how-it-works" active="how" page="how" crumbs={crumbs} schema={[howto]}>
-  <header class="phero l">
-    <Crumbs items={crumbs} />
-    <h1 class="dh d96">One question. Then we connect everything.</h1>
-    <p class="lead">You don’t need a data team or new software. Here’s exactly what happens, what we do, and what we need from you.</p>
-    <QuickAnswer q="How does Arcus work?" a="You bring us one question and we answer it free, with your own numbers and what people say online. If you want more, we spend about three months connecting every system you run (sales, viewers or players, email and CRM, ads, social, agency reports) into one layer you own, inside your own setup. After that, anyone on your team can ask anything, and the answer sees the whole picture." />
-  </header>
+<Site title="How Arcus works: try it free, then we build it for you | Arcus" description="Pick a question and we answer it free. Then, in about three months, we connect all your marketing data in one place you own, built around your brand." path="/how-it-works" active="how" page="how" crumbs={crumbs} schema={[howto]} heroCta>
+  <section class="split-hero">
+    <div class="stack-24">
+      <Crumbs items={crumbs} />
+      <h1 class="dh d96"><span class="ln">Try it free.</span><span class="ln">Then we build it for you.</span></h1>
+      <p class="lead">You don’t need a data team. Here’s what happens, what we do, and what we need from you.</p>
+      <div class="btnrow l">
+        <a href="/free-report" class="jb k" data-jelly data-loc="how-hero"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
+        <a href={BOOK_URL} class="jb ln" data-jelly data-loc="how-hero-2"><span class="bg"></span><span class="lb">Book a call</span></a>
+      </div>
+      <p class="small muted">Free, no card. Pick a question and we answer it with your own numbers.</p>
+    </div>
+    <AnswerStage shared />
+  </section>
+
+  <section class="wrap blk">
+    <QuickAnswer q="How does Arcus work?" a="You pick a question and we answer it free, with your own numbers and what people say online. If you go ahead, we connect every system you run into one place you own, inside your own setup: sales, viewers or players, email and CRM, ads, social and agency reports. We build it around your brand, in about three months. After that, anyone on your team can ask anything, and the answer sees the whole picture." />
+  </section>
   <Video page={'/how-it-works'} />
 
-  <section class="wrap" style="padding-bottom:96px">
+  <section class="wrap blk">
     <div class="split">
       <div class="stepper" data-stepper>
         {steps.map((s) => (
           <section id={s.id} data-step={s.id} aria-labelledby={`${s.id}-h`}>
-            <span class="dh d56" style="color:var(--stamp-text)">{s.n}</span>
+            <span class="sp-n" aria-hidden="true">{s.n}</span>
             <h2 id={`${s.id}-h`} class="h2s">{s.t}</h2>
-            <p class="muted" style="font-size:18px;max-width:52ch">{s.b}</p>
+            <p class="muted step-b">{s.b}</p>
             <p class="small"><b>What you do:</b> {s.you}</p>
           </section>
         ))}
@@ -44,31 +63,31 @@ const howto = { '@type': 'HowTo', name: 'How Arcus works', step: steps.map((s, i
         <div class="steprc" data-stepper-art data-state="start">
           {steps.map((s) => (
             <div class={`rc wide st-${s.id}`}>
-              {s.ex && <span class="ex">Example</span>}
               <div class="hd">Step {s.n}</div>
               {s.rc.map(([k, v]) => <div class="r"><span>{k}</span><span>{v}</span></div>)}
               <div class="bar"></div>
-              <span class="stamp" style="right:16px;bottom:44px;rotate:-8deg">{s.stamp}</span>
+              <span class:list={['stamp', s.tone]}>{s.stamp}</span>
             </div>
           ))}
         </div>
       </div>
     </div>
+    <AskRow loc="how-steps" class="after" note="Step 01 is free. No card." />
   </section>
 
   <section class="slab s-ink on-dark" aria-labelledby="ai-h">
     <div class="split mid">
-      <div class="sec-h" style="margin:0">
-        <h2 id="ai-h" class="dh d72 wipe" data-reveal><span class="ln">Our AI can’t</span><span class="ln">do a backflip.</span></h2>
-        <p class="lead">It can only do the jobs we’ve approved. Every step it takes is logged. And a person on our team reads every answer before you do.</p>
+      <div class="sec-h m0">
+        <h2 id="ai-h" class="dh d72"><span class="ln">Our AI only does</span><span class="ln">the jobs we approve.</span></h2>
+        <p class="lead">It can’t do a backflip. Every step it takes is logged, and a person on our team reads every answer before you do.</p>
         <a href="/security" class="arrow">How we handle your data <Arrow /></a>
       </div>
-      <div class="rc wide" style="color:#2B2B2B">
+      <div class="rc wide">
         <div class="hd">Approved jobs</div>
-        <div class="r"><span>Check claims against your numbers</span><span>✓</span></div>
-        <div class="r"><span>Count comments and posts</span><span>✓</span></div>
-        <div class="r"><span>Draft the slides</span><span>✓</span></div>
-        <div class="r"><span>Log every step</span><span>✓</span></div>
+        <div class="r pass"><span>Count results against your numbers</span><span>Allowed</span></div>
+        <div class="r pass"><span>Count comments and posts</span><span>Allowed</span></div>
+        <div class="r pass"><span>Draft the slides</span><span>Allowed</span></div>
+        <div class="r pass"><span>Log every step</span><span>Allowed</span></div>
         <div class="r x"><span>Backflip</span><span>Not allowed</span></div>
         <div class="bar"></div>
       </div>
@@ -78,28 +97,28 @@ const howto = { '@type': 'HowTo', name: 'How Arcus works', step: steps.map((s, i
   <section class="wrap sec" aria-labelledby="types-h">
     <div class="sec-h">
       <h2 id="types-h" class="dh d72">The four questions we get most.</h2>
-      <p class="lead muted">You can ask anything. These four come up first, and each has a real or example answer you can flip through.</p>
+      <p class="lead muted">You can ask anything. These four come up first. Three have a real answer you can flip through. The fourth you can try on your own numbers.</p>
     </div>
-    <div class="tbl">
+    <div class="tbl" tabindex="0" role="region" aria-label="The four report types, table">
       <table>
         <thead><tr><th scope="col">Report</th><th scope="col">The question it answers</th><th scope="col">What we use</th><th scope="col">See one</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Agency check</th><td>Which of our agencies’ claims hold up?</td><td>Agency reports, your own numbers, your ad accounts</td><td><a class="ul" href="/reports/agency-check">Example</a></td></tr>
-          <tr><th scope="row">Content report</th><td>Which posts get watched and shared, and what should we make next?</td><td>Your social accounts, posting calendar, sales</td><td><a class="ul" href="/reports/content-report">Real report</a></td></tr>
-          <tr><th scope="row">Audience report</th><td>How does our audience talk, and what do they want from us?</td><td>Reddit, TikTok, YouTube, Discord, Twitch and more, plus your data</td><td><a class="ul" href="/reports/audience-report">Real report</a></td></tr>
-          <tr><th scope="row">Market report</th><td>What happened when brands like us made this move?</td><td>Filings, trade press, retailer and marketplace data</td><td><a class="ul" href="/reports/market-report">Real report</a></td></tr>
+          <tr><th scope="row">Spend report</th><td data-label="The question it answers">Which of our spend paid off, and what fell flat?</td><td data-label="What we use">Your own numbers, your ad accounts, agency and partner reports</td><td data-label="See one"><a class="ul" href="/free-report?start=what_worked">Try it free</a></td></tr>
+          <tr><th scope="row">Content report</th><td data-label="The question it answers">Which posts get watched and shared, and what should we make next?</td><td data-label="What we use">Your social accounts, posting calendar, sales</td><td data-label="See one"><a class="ul" href="/reports/content-report">See the content report</a></td></tr>
+          <tr><th scope="row">Audience report</th><td data-label="The question it answers">How does our audience talk, and what do they want from us?</td><td data-label="What we use">Reddit, TikTok, YouTube, Discord, Twitch and more, plus your data</td><td data-label="See one"><a class="ul" href="/reports/audience-report">See the audience report</a></td></tr>
+          <tr><th scope="row">Market report</th><td data-label="The question it answers">What happened when brands like us made this move?</td><td data-label="What we use">Filings, trade press, retailer and marketplace data</td><td data-label="See one"><a class="ul" href="/reports/market-report">See the market report</a></td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <section class="wrap" style="padding-bottom:120px" aria-labelledby="who-h">
+  <section class="wrap blk-l" aria-labelledby="who-h">
     <div class="sec-h"><h2 id="who-h" class="dh d72">Who does what.</h2></div>
     <div class="honest">
       <div>
         <p class="h3">Your team</p>
         <ul class="nolist yeslist">
-          <li>Brings one question to start</li>
+          <li>Picks a question to start</li>
           <li>Approves access to the accounts we connect</li>
           <li>Tells us the questions that matter</li>
           <li>Reads a few slides, and decides</li>
@@ -108,8 +127,8 @@ const howto = { '@type': 'HowTo', name: 'How Arcus works', step: steps.map((s, i
       <div>
         <p class="h3">Arcus</p>
         <ul class="nolist yeslist">
-          <li>Connects every system into one layer you own, and keeps it running</li>
-          <li>Checks every agency claim against your own numbers</li>
+          <li>Connects every system into one place you own, and keeps it running</li>
+          <li>Counts every result once against your own numbers</li>
           <li>Reads and counts what your audience says</li>
           <li>Runs tests when you need proof</li>
           <li>Answers every question, and walks you through it</li>
@@ -118,97 +137,45 @@ const howto = { '@type': 'HowTo', name: 'How Arcus works', step: steps.map((s, i
     </div>
   </section>
 
-  <section class="wrap sec" aria-labelledby="claim-h">
-    <div class="sec-h">
-      <h2 id="claim-h" class="dh d72">How we check a claim, line by line.</h2>
-      <p class="lead muted">Example numbers. This is the core of an agency check: every result an agency claims gets one of four outcomes.</p>
-    </div>
-    <div class="tbl">
-      <table>
-        <thead><tr><th scope="col">What the claim looked like</th><th scope="col">What we found in your numbers</th><th scope="col">Outcome</th><th scope="col">Example count</th></tr></thead>
-        <tbody>
-          <tr><td>A sale claimed by the social agency and the search agency</td><td>One sale, on the same day, same product</td><td class="no">Counted twice. Kept once</td><td class="num">1,610</td></tr>
-          <tr><td>A sale claimed by a paid social ad</td><td>The buyer clicked your own email first</td><td class="no">Came from your email</td><td class="num">740</td></tr>
-          <tr><td>A sale claimed by a search ad</td><td>The buyer typed your brand name</td><td class="no">Already searching for you</td><td class="num">470</td></tr>
-          <tr><td>A sale claimed by one agency, with a matching result in your numbers</td><td>One result, one claim</td><td class="yes">Held up</td><td class="num">1,380</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="honest" style="margin-top:16px">
-      <div><p class="h3">What “held up” means</p><p class="muted">The claim matches a real result in your own numbers, and no one else claimed it. It doesn’t prove the ad caused it. For that, we test.</p></div>
-      <div><p class="h3">What the test looks like</p><p class="muted">Run the campaign in some regions and pause it in others for a few weeks. If results drop where it’s paused, it was working, and you know by how much. If they don’t, that budget can go somewhere that earns it.</p></div>
-    </div>
-  </section>
-
-  <section class="slab s-ic" aria-labelledby="listen2-h">
-    <div class="sec-h">
-      <h2 id="listen2-h" class="dh d72">How we listen, step by step.</h2>
-      <p class="lead">Counts from a real audience report we made for a streaming service.</p>
-    </div>
-    <ol class="steps" style="--n:5;padding:0;list-style:none">
-      <li class="step"><span class="n">01</span><p class="h3">Pick the places</p><p class="muted">Where your audience talks: TikTok, Reddit, YouTube, Discord, Twitch, Goodreads. Different for every brand.</p></li>
-      <li class="step"><span class="n">02</span><p class="h3">Pull what’s public</p><p class="muted">Posts, comments, threads and reviews. In the real report: 293 TikToks and 78,682 trailer comments.</p></li>
-      <li class="step"><span class="n">03</span><p class="h3">Sort by hand</p><p class="muted">People label what matters, like jokes, questions and complaints. 2,965 comments, sorted one by one.</p></li>
-      <li class="step"><span class="n">04</span><p class="h3">Count the same way</p><p class="muted">The same rules for your audience and your brand, so the comparison is fair. 6,622 comments counted.</p></li>
-      <li class="step"><span class="n">05</span><p class="h3">Line it up and decide</p><p class="muted">Next to your own numbers. The result was four rules for the brand’s voice, each one backed by counts.</p></li>
-    </ol>
-    <p style="margin-top:24px"><a class="arrow" href="/listening">Everywhere people talk about you <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></p>
-  </section>
-
-  <section class="wrap sec" aria-labelledby="need-h">
+  {/* No padding of its own: the block above pads its foot, and the tools strip below brings its own head room. */}
+  <section class="wrap" aria-labelledby="need-h">
     <div class="split">
-      <div class="sec-h" style="margin:0">
+      <div class="sec-h m0">
         <h2 id="need-h" class="dh d72">What we’ll ask you for.</h2>
-        <p class="lead muted">No surprises. This is the full list for setup. The first question needs only what it touches: for an agency question, the first three.</p>
+        <p class="lead muted">No surprises. This is the full list for setup. Trying it free needs only what your question touches.</p>
+        <AskRow loc="how-need" />
       </div>
-      <ol class="qa" style="padding:0;margin:0;list-style:none">
+      <ol class="numlist">
         {[
-          ['The agency report you want checked', 'A PDF, deck or spreadsheet. Whatever they send you.'],
-          ['Your own numbers for the same dates', 'Sales, tickets, sign-ups, streams or viewing. From wherever they live: your site, a retailer, a ticketing partner, a spreadsheet.'],
-          ['Access to the ad accounts the report covers', 'Meta, Google, TikTok and so on. We walk you through it. [Confirm: read-only wherever the platform allows.]'],
+          ['Your own numbers', 'Sales, tickets, sign-ups, streams or viewing. From wherever they live: your site, a retailer, a ticketing partner, a spreadsheet.'],
+          ['Access to your ad accounts', 'Meta, Google, TikTok and so on. We walk you through it. [Confirm: read-only wherever the platform allows.]'],
           ['Your social accounts', 'For content reports: what you posted and how it did.'],
           ['Your email and customer lists', 'To see who buys, and what came from your own channels.'],
           ['The questions you most want answered', 'Which creators work? Is the retail launch landing? What do fans want next? We start with these.'],
-          ['One person to approve each step', 'Usually the brand lead. About 30 minutes for each report walkthrough.'],
-        ].map(([t, d], i) => <li style="padding:18px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px"><span class="dh" style="font-size:28px;color:var(--stamp-text)">{i + 1}</span><span><b class="h3" style="display:block">{t}</b><span class="muted">{d}</span></span></li>)}
+          ['One person to approve each step', 'Usually the brand lead. About 30 minutes for each walkthrough.'],
+        ].map(([t, d], i) => <li><span class="nl-n">{i + 1}</span><span><b class="h3 db">{t}</b><span class="muted">{d}</span></span></li>)}
       </ol>
     </div>
   </section>
 
-  <section class="wrap" style="padding-bottom:120px" aria-labelledby="ba-h">
-    <div class="sec-h"><h2 id="ba-h" class="dh d72">Before and after.</h2></div>
-    <div class="tbl">
-      <table>
-        <thead><tr><th scope="col"></th><th scope="col">Before Arcus</th><th scope="col" class="us">With Arcus</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">Agency recaps</th><td>Each one says it worked. Together they add up to more than you got</td><td class="us">Every claim checked once against your own numbers</td></tr>
-          <tr><th scope="row">Renewals</th><td>Decided on the recap and the relationship</td><td class="us">Decided on what held up, with a list of questions to ask</td></tr>
-          <tr><th scope="row">Your audience</th><td>A listening dashboard read on its own, or a hunch from scrolling</td><td class="us">Counted: the words, jokes, requests and complaints, next to what they buy</td></tr>
-          <tr><th scope="row">Your data</th><td>Spread across tools nobody has time to read</td><td class="us">Connected into one layer you own, so any question sees the whole picture</td></tr>
-          <tr><th scope="row">What to make next</th><td>Whatever the last meeting decided</td><td class="us">Keep, test, stop, based on what worked</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <ToolsMarquee />
+  <ToolsStrip />
 
   <PageFAQ id="how-faq" items={[
     ['How long does setup take?', 'About three months from kickoff to everything running. Findings arrive along the way, so you don’t wait three months to learn something.'],
-    ['Do we need to buy new software?', 'No. We work inside your own setup, with the accounts you already have. There’s no new dashboard for your team to learn.'],
-    ['Do we have to change agencies?', 'No. Arcus works alongside your agencies and holds them to your own numbers. Sometimes that shows an agency is doing great work.'],
-    ['Is this attribution?', 'No. Attribution decides who gets credit. We check whether the credit is real: each claim is checked once against your own numbers, and anything you’d move budget on gets a simple test.'],
-    ['Who reads the reports before we do?', 'A person on our team reads every report, checks the numbers and writes up what it means.'],
+    ['Do we have to change our tools or partners?', 'No. We connect to what you already use, with the accounts you already have.'],
+    ['What exactly do you build for us?', 'They’re the two things we build for you. One place that holds all your data, inside your own setup, is your own data lake, and it stays yours. What we learn about your brand (your products, seasons, audiences, goals and the numbers you report on), written down so every answer starts from it, is your context layer.'],
+    ['Is this attribution?', 'No. Attribution decides who gets credit. We check whether the credit is real: each result is counted once against your own numbers, and anything you’d move budget on gets a simple test.'],
+    ['Who reads the answers before we do?', 'A person on our team reads every answer, checks the numbers and writes up what it means.'],
     ['What if most of our sales happen in stores, theaters or on other platforms?', 'We work with the numbers you have: retail and distributor data, ticketing partners, streaming dashboards, app stores. Where the data is too thin to call, we say so, and a regions-on, regions-off test often fills the gap.'],
-    ['How often do reports come?', 'On the schedule you pick, usually monthly, plus whenever you have a question before a renewal, launch or budget meeting.'],
-    ['What does a report look like?', 'A few slides. The first says what we found. The middle shows the evidence, with a source for every number. The last says what to keep, test and stop.'],
+    ['How often do answers come?', 'On the schedule you pick, usually monthly, plus whenever you have a question before a launch or a budget meeting.'],
+    ['What does an answer look like?', 'A few slides. The first says what we found. The middle shows the evidence, with a source for every number. The last says what to keep, test and stop.'],
   ]} />
 
   <Related items={[
     ['What people say', 'Every place we read, and how it lines up with your own numbers.', '/listening'],
     ['Real answers', 'Real questions brands brought us, with names removed.', '/reports'],
-    ['Pricing', 'First question free, then a one-time setup and a monthly fee.', '/pricing'],
+    ['Pricing', 'Try it free, then a one-time setup and a monthly fee.', '/pricing'],
   ]} />
 
-  <Close variant="or" lines={['Start with', 'step one.']} loc="how-close" />
+  <Close variant="paper" lines={['Start with', 'step one.']} loc="how-close" />
 </Site>

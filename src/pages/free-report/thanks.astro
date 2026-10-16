@@ -1,34 +1,45 @@
 ---
 import Site from '../../layouts/Site.astro';
 import Arrow from '../../components/Arrow.astro';
+import HeardAsk from '../../components/HeardAsk.astro';
 import { TBD } from '../../data/site.js';
+// The walkthrough is booked right here, never through a second form. With a scheduling link set in site.js
+// (TBD.calLink), initPrefill puts the calendar in [data-cal], with the lead's name and email filled in. Until then the
+// card says what happens instead: we email to set a time.
+const calLive = !TBD.calLink.startsWith('[');
 ---
-<Site title="Got it. Pick a time | Arcus" description="Your question is in. Pick a time for your walkthrough." path="/free-report/thanks" page="thanks" noindex>
-  <section class="split-hero" data-prefill style="align-items:start">
-    <div style="display:flex;flex-direction:column;gap:24px">
+<Site title="Got it. Your question is in | Arcus" description="Your question is in. Next: a time for your walkthrough." path="/free-report/thanks" page="thanks" noindex navCta={false}>
+  <section class="split-hero frt" data-prefill>
+    <div class="frt-copy">
       <h1 class="dh d96">Got it, <span data-lead-name>thanks</span>.</h1>
-      <p class="lead">Your question is in. Pick a time for your walkthrough below, and we’ll email you a short list of what to connect.</p>
-      <div data-printer style="position:relative;padding-top:12px">
+      <p class="lead">{calLive ? 'Your question is in. Pick a time for your walkthrough, and we’ll email you a short list of what to connect.' : 'Your question is in. We’ll email you to set a time for your walkthrough, with a short list of what to connect.'}</p>
+      <div data-printer="load" class="frt-rc">
         <div class="rc wide prn">
           <div class="hd">Your question</div>
           <div class="r"><span>Form</span><span>Received</span></div>
           <div class="r"><span>Access list</span><span>On its way</span></div>
           <div class="r"><span>Turnaround</span><span>{TBD.turnaround}</span></div>
-          <div class="r"><span>Walkthrough</span><span>Pick a time</span></div>
+          <div class="r"><span>Walkthrough</span><span>{calLive ? 'Pick a time' : 'We’ll email you'}</span></div>
           <div class="r tot"><span>Total</span><span>$0</span></div>
           <div class="bar"></div>
         </div>
-        <span class="stamp stp" style="right:24px;bottom:60px;rotate:-9deg">Received</span>
+        <span class="stamp stp frt-stamp">Received</span>
       </div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:16px">
-      <h2 class="h2s">Pick a time for your walkthrough</h2>
-      <div data-cal={TBD.calLink} class="card ph" style="min-height:520px;padding:24px">[Cal.com booking embed: set the booking link in site.js]</div>
-      <div class="card" style="padding:24px;display:flex;flex-direction:column;gap:12px">
+    <div class="frt-side">
+      <div class="card frt-card frt-main" data-ask-away>
+        <h2 class="h2s">{calLive ? 'Pick a time for your walkthrough' : 'Your walkthrough'}</h2>
+        <p class="muted">30 minutes. We go through the answer, where every number came from, and what to keep, test and stop.</p>
+        <div class="frt-cal" data-cal={TBD.calLink}>
+          <p class="small">We’ll email you to set a time. In a hurry? Email <a class="ul" href="mailto:hello@usearcus.ai">hello@usearcus.ai</a> and we’ll send times.</p>
+        </div>
+      </div>
+      <div class="card frt-card">
         <p class="h3">Bring someone along</p>
         <p class="muted small">Walkthroughs go better with whoever signs off on the budget in the room.</p>
         <div class="btnrow l"><a data-boss href="mailto:" class="jb ln sm" data-track="boss_invited"><span class="bg"></span><span class="lb">Loop in your boss</span></a><a href="/make-the-case" class="arrow">Get the one-pager <Arrow /></a></div>
       </div>
+      <HeardAsk />
     </div>
   </section>
 </Site>

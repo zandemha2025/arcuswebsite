@@ -1,5 +1,5 @@
 // Real Arcus reports, anonymized. Numbers come from the client decks; brand, campaign and show names are removed.
-// The agency check is the only one shown with example numbers, and it says so everywhere it appears.
+// Never change a number here. Every report is a real one; none uses example numbers.
 
 export const REPORTS = [
   {
@@ -61,7 +61,7 @@ export const REPORTS = [
     kind: 'Market report',
     who: 'A skincare brand moving into retail',
     question: 'Will retail eat our online sales?',
-    color: 'or',
+    color: 'k',
     title: 'Retail didn’t eat online sales at any of five brands that made the move. It took margin.',
     short: 'We traced five direct-to-consumer brands that scaled into retail through the public record, set the brand’s own public numbers against them, and sourced every number.',
     sides: { own: 'The brand’s own question and its plan for moving from selling online into retail.', out: 'What five brands that made the same move actually saw, from filings, trade press, retailer media and marketplace listings: 157 sources.' },
@@ -82,34 +82,10 @@ export const REPORTS = [
     ],
     receipts: 'Every number traces to a source in a 157-source ledger, and 14 source slides show the page behind each one.',
   },
-  {
-    slug: 'agency-check',
-    kind: 'Agency check',
-    who: 'Example',
-    question: 'Which of our agencies’ results actually happened?',
-    example: true,
-    color: 'or',
-    title: 'Three agencies claimed 4,200 results. In this example, 1,380 held up.',
-    short: 'We line up each agency’s claims against your own numbers, whether that’s sales, tickets, sign-ups or streams, and show which ones hold up.',
-    sides: { own: 'Your own sales, tickets, sign-ups or viewing for the same weeks.', out: 'What each agency claims, and the ad accounts behind those claims. Example numbers.' },
-    scope: 'Your agencies’ reports, your own numbers (sales, tickets, sign-ups or viewing), and the ad accounts the reports cover.',
-    sources: ['Your agencies’ reports', 'Your sales, tickets or sign-ups', 'Your ad accounts'],
-    headline: { n: '4,200 → 1,380', label: 'Example: results three agencies claimed between them, and how many held up' },
-    stats: [
-      { n: 'Once', label: 'each result is counted, whether it’s a sale, a ticket, a sign-up or a stream, no matter how many agencies claim it' },
-      { n: '3', label: 'reasons claims fall out: counted twice, came from email, or came from people already searching your name' },
-      { n: 'Test', label: 'when you need to know what caused a sale: run it in some regions, not others, and compare' },
-    ],
-    slides: [
-      { label: 'The headline', big: 'They said 4,200. We found 1,380.', body: 'Example numbers. Each claim is checked against your own numbers. 2,820 didn’t hold up.' },
-      { label: 'How we match', big: 'Every claim, counted once.', body: 'Example. Each sale, ticket or sign-up an agency claims is checked against your own numbers by date, title or product, and channel. Each one can be matched once. If two agencies claim it, it goes to neither until a test says otherwise.' },
-      { label: 'Where the rest went', big: '2,820 claims didn’t hold up.', body: 'Example. 1,610 were counted by two agencies at once. 740 came from your own emails. 470 came from people already searching your name.' },
-      { label: 'Agency by agency', list: [['Social', 'Claimed 2,100. Matched 820.'], ['Search', 'Claimed 1,300. Matched 310, most of it brand search.'], ['Creators', 'Claimed 800. Matched 250, after coupon-site codes.']] },
-      { label: 'What we’d test', big: 'Pause brand search in half your regions for three weeks.', body: 'Example. If sales hold in the paused regions, that budget can go somewhere that earns it. If they drop, you know the channel works, and you know by how much.' },
-      { label: 'What to do', list: [['Ask', 'Take the list of claims that didn’t hold up to your next agency review.'], ['Test', 'For anything you’d move budget on, run a regions-on, regions-off test.'], ['Renew', 'Keep the agencies whose claims hold up. You’ll know which ones.']] },
-    ],
-    receipts: 'Example numbers. Your report uses your agencies’ claims and your own numbers.',
-  },
 ];
 
 export const bySlug = Object.fromEntries(REPORTS.map((r) => [r.slug, r]));
+// A report's color as its tag class (.t-g, .t-i, .t-k, .t-o). One place, so every tag agrees.
+// The tag's dot: teal (g) when the answer came from the brand's own numbers, periwinkle (i) when it came from outside
+// sources (what people say, the market).
+export const toneOf = (r) => (r.color === 'gr' ? 'g' : 'i');

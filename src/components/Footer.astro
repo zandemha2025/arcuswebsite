@@ -1,5 +1,5 @@
 ---
-import { ASK_AI } from '../data/site.js';
+import { ASK_AI, BOOK_URL } from '../data/site.js';
 const q = encodeURIComponent(ASK_AI);
 const ai = [
   ['ChatGPT', `https://chatgpt.com/?q=${q}`],
@@ -10,16 +10,17 @@ const ai = [
 ];
 ---
 <footer class="foot on-dark">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap">
-    <div style="display:flex;flex-direction:column;gap:14px;max-width:400px">
+  <div class="foot-top">
+    <div class="foot-brand">
       <a href="/" class="logo" aria-label="Arcus home">arcus<i></i></a>
-      <p class="muted">The truth layer for marketing. Arcus connects every piece of your data, plus what people say online, into one layer you own, and answers any question with the whole picture.</p>
+      <p class="muted">The truth layer for marketing at entertainment and lifestyle brands. Arcus connects every piece of your data, plus what people say online, into one place you own, and answers any question with the whole picture.</p>
     </div>
-    <form class="foot-news-wrap" data-lead="newsletter" novalidate style="display:flex;flex-direction:column;gap:8px;min-width:min(100%,360px)">
-      <label for="fn-email" class="h3" style="font-size:18px">The Receipts</label>
-      <p class="small muted">One number marketing gets wrong each month, and how to check it. <a class="ul" href="/newsletter" style="color:inherit">Past issues</a></p>
+    <form class="foot-news-wrap" data-lead="newsletter" method="post" action="/api/lead" novalidate>
+      <input type="hidden" name="form_id" value="newsletter" />
+      <label for="fn-email" class="h3 foot-news-t">The Receipts</label>
+      <p class="small muted">One number marketing gets wrong each month, and how to check it. <a class="ul" href="/newsletter">Past issues</a></p>
       <div data-body class="foot-news">
-        <input id="fn-email" name="email" type="email" required autocomplete="email" placeholder="you@yourbrand.com" />
+        <input id="fn-email" name="email" type="email" required data-req="Enter your email to subscribe." autocomplete="email" placeholder="you@yourbrand.com" />
         <span class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off" /></span>
         <button type="submit" class="jb wt sm" data-jelly data-loc="footer-news"><span class="bg"></span><span class="lb">Subscribe</span></button>
       </div>
@@ -27,22 +28,21 @@ const ai = [
       <p data-ok hidden tabindex="-1" role="status" class="small">You’re on the list. Next issue lands at the start of the month.</p>
     </form>
   </div>
-  <section aria-label="Ask an AI about Arcus" style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px;padding:40px 0;border-top:1px solid #F4F4F429;border-bottom:1px solid #F4F4F429;flex-wrap:wrap">
+  <section aria-label="Ask an AI about Arcus" class="foot-ai">
     <div>
-      <p class="h2s" style="font-size:36px">Want the short version?</p>
-      <p class="muted" style="max-width:48ch;margin-top:10px">Ask your AI of choice what Arcus does and whether it’s right for your team.</p>
+      <p class="h2s foot-ai-t">Want the short version?</p>
+      <p class="muted foot-ai-s">Ask your AI of choice what Arcus does and whether it’s right for your team.</p>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;max-width:480px;justify-content:flex-end">
+    <div class="foot-ai-l">
       {ai.map(([n, h]) => <a class="fchip" href={h} rel="noopener" target="_blank" data-track="ask_ai_clicked" data-props={JSON.stringify({ engine: n })}>{n}</a>)}
     </div>
   </section>
   <nav aria-label="Footer" class="fmap">
-    <div><b>Arcus</b><a href="/how-it-works">How it works</a><a href="/reports">Real answers</a><a href="/listening">What people say</a><a href="/integrations">Integrations</a><a href="/pricing">Pricing</a><a href="/free-report">Bring us one question</a></div>
+    <div><b>Arcus</b><a href="/how-it-works">How it works</a><a href="/reports">Real answers</a><a href="/listening">What people say</a><a href="/integrations">Integrations</a><a href="/pricing">Pricing</a><a href="/free-report">Try it out for free</a></div>
     <div><b>Who it’s for</b><a href="/for">All teams</a><a href="/for/studios-and-streaming">Studios and streaming</a><a href="/for/spirits-and-beverage">Spirits and beverage</a><a href="/for/games-and-music">Games and music</a><a href="/for/fashion-and-beauty">Fashion and beauty</a></div>
-    <div><b>Learn</b><a href="/library">Library</a><a href="/newsletter">The Receipts</a><a href="/events">Live teardowns</a><a href="/glossary">Glossary</a><a href="/tools/agency-math">Agency math calculator</a><a href="/compare">Compare</a><a href="/faq">FAQ</a></div>
-    <div><b>Company</b><a href="/about">About</a><a href="/security">Security</a><a href="/partners">Partners</a><a href="/press">Press</a><a href="/make-the-case">Make the case</a><a href="/book">Book a call</a></div>
+    <div><b>Learn</b><a href="/library">Library</a><a href="/newsletter">The Receipts</a><a href="/events">Live Teardown</a><a href="/glossary">Glossary</a><a href="/compare">Compare</a><a href="/faq">FAQ</a></div>
+    <div><b>Company</b><a href="/about">About</a><a href="/security">Security</a><a href="/partners">Partners</a><a href="/press">Press</a><a href="/make-the-case">Make the case</a><a href={BOOK_URL}>Book a call</a></div>
     <div><b>Legal</b><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies</a><button type="button" data-consent-open>Cookie settings</button><a href="/accessibility">Accessibility</a></div>
   </nav>
-  <div style="display:flex;justify-content:space-between;font-size:13px;color:#F4F4F4A6;flex-wrap:wrap;gap:12px"><span>© 2026 Arcus</span><span>If it can’t be checked, it doesn’t count.</span></div>
-  <div class="bigword" aria-hidden="true" data-big>Know what’s working.</div>
+  <div class="foot-base"><span>© 2026 Arcus</span></div>
 </footer>

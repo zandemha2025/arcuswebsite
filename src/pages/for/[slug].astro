@@ -3,17 +3,21 @@ import Pic from '../../components/Pic.astro';
 import Site from '../../layouts/Site.astro';
 import Crumbs from '../../components/Crumbs.astro';
 import Close from '../../components/Close.astro';
+import InsightCard from '../../components/InsightCard.astro';
 import QuickAnswer from '../../components/QuickAnswer.astro';
 import PageFAQ from '../../components/PageFAQ.astro';
 import Related from '../../components/Related.astro';
 import Logo from '../../components/Logo.astro';
 import Arrow from '../../components/Arrow.astro';
+import AskRow from '../../components/AskRow.astro';
 import { INDUSTRIES } from '../../data/content.js';
 import { bySlug } from '../../data/reports.js';
-import { LISTEN_SOURCES } from '../../data/site.js';
-import { IND_DEEP, PLATFORMS } from '../../data/industries-deep.js';
+import * as site from '../../data/site.js';
+import { IND_DEEP } from '../../data/industries-deep.js';
 export function getStaticPaths() { return INDUSTRIES.map((i) => ({ params: { slug: i.slug }, props: { i } })); }
 const { i } = Astro.props;
+const { LISTEN_SOURCES } = site;
+const { BOOK_URL } = site;
 const d = IND_DEEP[i.slug] || {};
 const r = bySlug[d.proof?.report || i.report];
 const crumbs = [{ name: 'Who it’s for', href: '/for' }, { name: i.name, href: `/for/${i.slug}` }];
@@ -27,60 +31,68 @@ const deepListen = (d.listen || []).map(([n, t]) => ({ ...(LISTEN_SOURCES.find((
 const srcs = deepListen.length ? deepListen : LISTEN_SOURCES.filter((s) => where.includes(s.name));
 const others = INDUSTRIES.filter((x) => x.slug !== i.slug);
 ---
-<Site md={`/for/${i.slug}.md`} title={`Arcus for ${i.name.toLowerCase()} marketing teams | Arcus`} description={i.lead} path={`/for/${i.slug}`} active="for" page="industry" crumbs={crumbs}>
+<Site md={`/for/${i.slug}.md`} title={`Arcus for ${i.name.toLowerCase()} marketing teams | Arcus`} description={i.meta || i.lead} path={`/for/${i.slug}`} active="for" page="industry" crumbs={crumbs} heroCta>
   <section class="split-hero">
-    <div style="display:flex;flex-direction:column;gap:24px">
+    <div class="stack-24">
       <Crumbs items={crumbs} />
-      <h1 class="dh d96">{i.h1}</h1>
+      <h1 class:list={["dh", i.h1.length > 40 ? "d72" : "d96"]}>{i.h1}</h1>
       <p class="lead">{i.lead}</p>
       <div class="btnrow l">
-        <a href="/free-report" class="jb k" data-jelly data-loc="industry-hero"><span class="bg"></span><span class="lb">Bring us one question</span></a>
-        <a href={`/reports/${r.slug}`} class="jb ln" data-jelly data-loc="industry-hero-2"><span class="bg"></span><span class="lb">See a real answer</span></a>
+        <a href="/free-report?start=what_worked" class="jb k" data-jelly data-loc="industry-hero"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
+        <a href={BOOK_URL} class="jb ln" data-jelly data-loc="industry-hero-2"><span class="bg"></span><span class="lb">Book a call</span></a>
       </div>
+      <p class="small muted">Free, no card. Pick a question and we answer it with your own numbers.</p>
     </div>
-    <div style="position:relative">
-      <Pic name={i.img} alt={i.alt} sizes="(max-width:900px) 100vw, 45vw" eager style="border-radius:16px;aspect-ratio:4/3;object-fit:cover;width:100%" />
-      <div class="rc" style="position:absolute;left:-20px;bottom:-30px">
-        <span class="ex">Example</span>
-        <div class="hd">{i.stamp}, checked</div>
-        <div class="r"><span>Claimed</span><span>4,200</span></div>
-        <div class="r tot"><span>Held up</span><span>1,380</span></div>
-        <div class="bar"></div>
-      </div>
+    <div class="hero-pic">
+      <Pic name={i.img} alt={i.alt} widths={[800, 1200, 1600]} sizes="(max-width:900px) 100vw, 45vw" eager style="border-radius:16px;aspect-ratio:4/3;object-fit:cover;width:100%" />
+      <InsightCard surface="photo" />
     </div>
   </section>
 
-  <section class="wrap" style="padding-bottom:96px">
+  <section class="wrap blk">
     <QuickAnswer q={`What does Arcus do for ${i.name.toLowerCase()} brands?`} a={d.answer || i.lead} points={i.questions.map(([q]) => q)} />
   </section>
 
   {d.intro && (
-  <section class="wrap" style="padding-bottom:96px" aria-labelledby="intro-h">
+  <section class="wrap blk" aria-labelledby="intro-h">
     <div class="split">
       <h2 id="intro-h" class="dh d72">Why nobody sees the whole picture.</h2>
       <div class="prose">{d.intro.map((p) => <p>{p}</p>)}</div>
     </div>
   </section>)}
 
+  {d.pieces && (
+  <section class="wrap blk" aria-labelledby="pieces-h">
+    <div class="sec-h"><h2 id="pieces-h" class="dh d56">What you know, plus what people say.</h2><p class="lead muted">We connect every piece into one place you own, inside your own setup. The answer draws on both halves.</p></div>
+    <div class="split">
+      <div><p class="h3 pk-h mb14"><i class="dot p1" aria-hidden="true"></i>What you know</p><ul class="own">{d.pieces.map((p) => <li><i aria-hidden="true"></i>{p}</li>)}</ul></div>
+      <div><p class="h3 pk-h mb14"><i class="dot p3" aria-hidden="true"></i>What people say</p><ul class="plats" style="margin:0;padding:0;list-style:none">{srcs.map((s) => <li class="plat"><i aria-hidden="true"></i>{s.name}</li>)}</ul></div>
+    </div>
+  </section>)}
+
   {d.pains && (
-  <section class="wrap" style="padding-bottom:96px" aria-labelledby="pains-h">
+  <section class="wrap blk" aria-labelledby="pains-h">
     <div class="sec-h"><h2 id="pains-h" class="dh d56">What teams like yours tell us.</h2></div>
     <div class="tiles" style="--n:2">{d.pains.map(([t, x]) => <div class="tile"><p class="h3">{t}</p><p class="muted">{x}</p></div>)}</div>
   </section>)}
 
   {d.measures && (
-  <section class="wrap" style="padding-bottom:96px" aria-labelledby="meas-h">
-    <div class="sec-h"><h2 id="meas-h" class="dh d56">The numbers that matter.</h2><p class="lead muted">The ones that tell you if marketing worked in {i.name.toLowerCase()}, where each one lives today, and what it shows once it sits next to the rest.</p></div>
-    <div class="tbl"><table><thead><tr><th scope="col">Measure</th><th scope="col">Why it matters</th></tr></thead><tbody>{d.measures.map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}</tbody></table></div>
+  <section class="wrap blk" aria-labelledby="meas-h">
+    <div class="sec-h"><h2 id="meas-h" class="dh d56">The numbers that matter.</h2><p class="lead muted">The ones that show whether marketing worked in {i.name.toLowerCase()}, and where each one comes from today.</p></div>
+    <div class="tbl" tabindex="0" role="region" aria-label="The numbers that matter, table"><table><thead><tr><th scope="col">Measure</th><th scope="col">Why it matters</th></tr></thead><tbody>{d.measures.map(([k, v]) => <tr><th scope="row">{k}</th><td data-label="Why it matters">{v}</td></tr>)}</tbody></table></div>
   </section>)}
 
-  <section class="slab s-gr" aria-labelledby="proof-h">
+  {/* A real answer: navy, like Real answers everywhere, so it never reads as the illustrative card up top. */}
+  <section class="slab s-ink on-dark" aria-labelledby="proof-h">
     <div class="split mid">
-      <div class="sec-h" style="margin:0">
-        <p class="tiny" style="font-weight:700;letter-spacing:.08em;text-transform:uppercase">From a real answer</p>
+      <div class="sec-h m0">
         <h2 id="proof-h" class="dh d72">{d.proof?.h || r.headline.n}</h2>
         <p class="lead">{d.proof?.body || i.proof}</p>
-        <a href={`/reports/${r.slug}`} class="arrow">See the answer <Arrow /></a>
+        {/* The proof sits next to the ask. */}
+        <div class="btnrow l">
+          <a href="/free-report?start=what_worked" class="jb k" data-jelly data-loc="industry-proof"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
+          <a href={`/reports/${r.slug}`} class="arrow">See the real answer <Arrow /></a>
+        </div>
       </div>
       <div class="rc wide">
         <div class="hd">{r.kind}</div>
@@ -93,35 +105,36 @@ const others = INDUSTRIES.filter((x) => x.slug !== i.slug);
   <section class="wrap sec" aria-labelledby="where-h">
     <div class="sec-h">
       <h2 id="where-h" class="dh d72">Where your audience talks.</h2>
-      <p class="lead muted">The places we usually read for {i.name.toLowerCase()} brands. What people say there joins the same layer as your own sales and customers.</p>
+      <p class="lead muted">The places we usually read for {i.name.toLowerCase()} brands. What people say there ends up in the same place as your own sales and customers.</p>
     </div>
     <ul class="lw" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">{srcs.map((s) => <li><Logo name={s.name} logo={s.logo} size={20} /><span class="small muted">{s.why || s.what}</span></li>)}</ul>
-    <p class="small" style="margin-top:16px"><a class="ul" href="/listening">Everywhere people talk about you</a></p>
+    <p class="small" style="margin-top:16px"><a class="ul" href="/listening">See everywhere we listen</a></p>
   </section>
 
   {d.patterns && (
-  <section class="wrap" style="padding-bottom:96px" aria-labelledby="pat-h">
+  <section class="wrap blk" aria-labelledby="pat-h">
     <div class="split">
-      <div class="sec-h" style="margin:0"><h2 id="pat-h" class="dh d56">What we look for first.</h2><p class="muted">Most teams start with an agency recap. These are the patterns that most often explain the gap between what was claimed and what your own numbers show.</p></div>
-      <ol class="qa" style="padding:0;margin:0;list-style:none">{d.patterns.map(([t, x], n) => <li style="padding:18px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px"><span class="dh" style="font-size:28px;color:var(--stamp-text)">{n + 1}</span><span><b class="h3" style="display:block">{t}</b><span class="muted">{x}</span></span></li>)}</ol>
+      <div class="sec-h m0"><h2 id="pat-h" class="dh d56">What we look for first.</h2><p class="muted">The patterns that most often explain the gap between what each channel reports and what your own numbers show.</p></div>
+      <ol class="numlist">{d.patterns.map(([t, x], n) => <li><span class="nl-n">{n + 1}</span><span><b class="h3 db">{t}</b><span class="muted">{x}</span></span></li>)}</ol>
     </div>
   </section>)}
 
   {d.agencyQuestions && (
-  <section class="slab s-or" aria-labelledby="aq-h">
+  <section class="wrap sec" style="padding-top:24px" aria-labelledby="aq-h">
     <div class="split mid">
-      <div class="sec-h" style="margin:0"><h2 id="aq-h" class="dh d72">Ask your agency.</h2><p class="lead">Six questions for your next review, written in your industry’s terms. Good agencies answer them without flinching.</p><a href="/library/questions-before-you-renew" class="arrow">More questions before you renew <Arrow /></a></div>
-      <div class="rc wide"><div class="hd">For your next agency review</div>{d.agencyQuestions.map((q, n) => <div class="r" style="padding:6px 0;border-top:1px dashed #A8A8A0"><span style="font-weight:700">{n + 1}.</span><span style="text-align:left;flex:1;margin-left:8px">{q}</span></div>)}<div class="bar"></div></div>
+      <div class="sec-h m0"><h2 id="aq-h" class="dh d72">Questions worth asking.</h2><p class="lead muted">Six questions for your next budget meeting, in your industry’s terms.</p><a href="/library/incrementality-without-the-math" class="arrow">How to test before you move budget <Arrow /></a></div>
+      <div class="rc wide"><div class="hd">For your next budget meeting</div>{d.agencyQuestions.map((q, n) => <div class="r" style="padding:6px 0;border-top:1px dashed var(--silver,#D9D9D9)"><span style="font-weight:700">{n + 1}.</span><span style="text-align:left;flex:1;margin-left:8px">{q}</span></div>)}<div class="bar"></div></div>
     </div>
   </section>)}
 
   {d.start && (
   <section class="wrap sec" aria-labelledby="st-h">
-    <div class="sec-h"><h2 id="st-h" class="dh d56">Start with one question.</h2></div>
-    <ol class="steps" style={`--n:${d.start.length};padding:0;list-style:none`}>{d.start.map(([t, x], n) => <li class="step"><span class="n">{String(n + 1).padStart(2, '0')}</span><p class="h3">{t}</p><p class="muted">{x}</p></li>)}</ol>
+    <div class="sec-h"><h2 id="st-h" class="dh d56"><span class="ln">Try it free.</span><span class="ln">Then we build it for you.</span></h2></div>
+    <ol class:list={['steps', d.start.length <= 4 ? 'chain' : 'discs']} style={`--n:${d.start.length};padding:0;list-style:none`} data-once>{d.start.map(([t, x], n) => <li class="step"><span class="n" aria-hidden="true">{String(n + 1).padStart(2, '0')}</span><p class="h3">{t}</p><p class="muted">{x}</p></li>)}</ol>
+    <AskRow loc="industry-start" start="what_worked" class="after" />
   </section>)}
 
   <PageFAQ id="ind-faq" title={`Questions ${i.name.toLowerCase()} teams ask`} items={[...i.questions, ...(d.faq || [])]} />
   <Related title="Other teams we work with" items={others.map((o) => [o.name, o.h1, `/for/${o.slug}`])} />
-  <Close variant="ink" lines={['See the whole', 'picture.']} loc="industry-close" />
+  <Close variant="navy" lines={['See the whole', 'picture.']} loc="industry-close" primary={['Try it out for free', '/free-report?start=what_worked']} />
 </Site>

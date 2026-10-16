@@ -17,16 +17,16 @@ const crumbs = c ? [{ name: 'Customers', href: '/customers' }, { name: c.company
 const schema = c ? [{ '@type': 'Article', headline: c.headline, about: { '@type': 'Organization', name: c.company }, author: { '@id': `${SITE}/#org` }, datePublished: c.approved, ...(c.quote ? { review: { '@type': 'Review', reviewBody: c.quote.text, author: { '@type': 'Person', name: c.quote.name } } } : {}) }] : [];
 ---
 {list && (
-<Site title="Customers: how brand teams use Arcus | Arcus" description="How in-house brand teams use Arcus to check agencies, hear their audience and decide what to make next. Published with each client’s permission." path="/customers" page="customers" crumbs={crumbs}>
+<Site title="Customers: how brand teams use Arcus | Arcus" description="How in-house brand teams use Arcus to see which spend works, hear their audience and decide what to make next. Published with each client’s permission." path="/customers" page="customers" crumbs={crumbs}>
   <header class="phero l"><Crumbs items={crumbs} /><h1 class="dh d96">In their words.</h1><QuickAnswer q="Who uses Arcus?" a="Marketing leaders, founders and executives at entertainment and lifestyle brands. Every story here is published with the client’s written permission." /></header>
-  <section class="wrap" style="padding-bottom:96px">{list.map((x) => <a class="listrow" href={`/customers/${x.slug}`}><span class="tag t-k">{x.industry}</span><span style="display:flex;flex-direction:column;gap:6px"><span class="h3">{x.company}: {x.headline}</span></span><span class="go"><Arrow /></span></a>)}</section>
-  <Close variant="ink" lines={['Your turn.']} loc="customers-close" />
+  <section class="wrap blk">{list.map((x) => <a class="listrow" href={`/customers/${x.slug}`}><span class="tag t-k">{x.industry}</span><span class="stack-6"><span class="h3">{x.company}: {x.headline}</span></span><span class="go"><Arrow /></span></a>)}</section>
+  <Close variant="navy" lines={['Your turn.']} loc="customers-close" />
 </Site>)}
 {c && (
 <Site title={`${c.company}: ${c.headline} | Arcus`} description={c.challenge} path={`/customers/${c.slug}`} page="case" crumbs={crumbs} schema={schema}>
   <header class="phero l"><Crumbs items={crumbs} />{c.logo && <img src={c.logo} alt={c.company} style="height:40px;width:auto" />}<h1 class="dh d96">{c.headline}</h1></header>
-  <section class="wrap" style="padding-bottom:64px"><div class="tiles" style={`--n:${c.results.length}`}>{c.results.map(([n, l]) => <div class="tile"><p class="dh" style="font-size:56px">{n}</p><p class="muted">{l}</p></div>)}</div></section>
-  <section class="wrap" style="padding-bottom:96px"><div class="honest"><div><h2 class="h3">The problem</h2><p class="muted">{c.challenge}</p></div><div><h2 class="h3">What we did</h2><p class="muted">{c.approach}</p></div></div></section>
-  {c.quote && <section class="slab s-ic"><figure class="narrow" style="margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:16px"><blockquote class="quote" style="margin:0">“{c.quote.text}”</blockquote><figcaption class="small">{c.quote.name}, {c.quote.title}</figcaption></figure></section>}
-  <Close variant="or" lines={['Your question', 'is next.']} loc="case-close" />
+  <section class="wrap blk-s"><div class="tiles" style={`--n:${c.results.length}`}>{c.results.map(([n, l]) => <div class="tile"><p class="dh fig-56">{n}</p><p class="muted">{l}</p></div>)}</div></section>
+  <section class="wrap blk"><div class="honest"><div><h2 class="h3">The problem</h2><p class="muted">{c.challenge}</p></div><div><h2 class="h3">What we did</h2><p class="muted">{c.approach}</p></div></div></section>
+  {c.quote && <section class="slab s-paper"><figure class="narrow" style="margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:16px"><blockquote class="quote m0">“{c.quote.text}”</blockquote><figcaption class="small">{c.quote.name}, {c.quote.title}</figcaption></figure></section>}
+  <Close variant="paper" lines={['Your question', 'is next.']} loc="case-close" />
 </Site>)}

@@ -1,6 +1,5 @@
 // Long-form content for each report page. Keyed by the slugs in reports.js.
-// Numbers come only from the anonymized client decks. The agency check is an example walk-through:
-// every number in it is labeled as an example. Unconfirmed company facts sit in [Confirm: ...] brackets.
+// Numbers come only from the anonymized client decks. Unconfirmed company facts sit in [Confirm: ...] brackets.
 
 export const DEEP = {
   'content-report': {
@@ -46,7 +45,7 @@ export const DEEP = {
     applyToYou: [
       ['Could Arcus run this on our own social accounts?', 'Yes. You give us your social media management export, or access to the tool [Confirm: read-only access], for a campaign or a quarter, plus the labels you use for campaigns. We watch every post, sort it, score it against your own account average and send a few slides: the answer on top, a scorecard by kind of post, and what to keep, test and stop.'],
       ['We post on TikTok and YouTube too. Does the method change?', 'No. It works the same on every platform: sort by what is on screen, score each kind against that account’s own average, and keep the platforms apart. We can also line your posts up with public conversation about the brand and with your own numbers, like sales or sign-ups, so you can see which content shows up next to results. Showing cause takes a test.'],
-      ['How do we start?', 'Bring us one question, free, with a 30-minute walkthrough. “Which of our posts work?” is a common first one. Once everything is connected, you can ask it again every quarter, with your sales or sign-ups in the same picture. [Confirm: turnaround for a content report.]'],
+      ['How do we start?', 'Try it free. Pick a question and we answer it with your own numbers, then walk you through it in 30 minutes. No card. “Which of our posts work?” is a common place to start. Once everything is connected, you can ask it again every quarter, with your sales or sign-ups in the same picture. [Confirm: turnaround for a content report.]'],
     ],
     limits: [
       'Small groups. Hosting hacks is four posts, the brief’s minimum for a read that is not directional. The tournament archetype is three posts and 3D animation is two, so both are directional. Every Facebook archetype is eight posts or fewer.',
@@ -161,7 +160,7 @@ export const DEEP = {
     applyToYou: [
       ['Could Arcus build a case series for our category?', 'Yes. You bring the decision you are facing, such as a retail move, a new market or a new format. We choose the brands that already made that move and left a public trail, source every number into a ledger, and send a few slides with the answer on top, the evidence, and the moves for your plan. The source ledger comes with it.'],
       ['Can it include our own numbers?', 'Yes, and that is where it gets sharper. Your own sales by channel, your retail data and your agency reports can sit next to the public cases, so the gaps are specific to you. [Confirm: how first-party data is stored and deleted.]'],
-      ['What does it cost?', 'Once everything is connected, a case series like this is one more question you can ask: setup fee [$X], then monthly [$Y]. Most teams start by bringing us one question, answered free with a 30-minute walkthrough.'],
+      ['What does it cost?', 'Once everything is connected, a case series like this is one more question you can ask: setup fee [$X], then monthly [$Y]. Most teams start by trying it free: pick a question, and we answer it and walk you through it in 30 minutes.'],
     ],
     limits: [
       'Five brands, chosen because they made the move and left a public trail. Brands that tried retail and struggled leave fewer records, so this series can’t show how often the move fails.',
@@ -175,64 +174,6 @@ export const DEEP = {
       ['What metrics do retail buyers care about?', 'Four: ACV (how much of the retailer’s volume carries your product), units per store per week against the category, household penetration and repeat rate.'],
       ['How should a brand use retail media networks?', 'In these cases brands bought retail media for position: rank in the retailer’s search results and new-to-brand share, often accepting a lower return on ad spend. The attributed sales show up in the buyer’s velocity dashboard.'],
       ['What is a case series?', 'A set of comparable stories about brands that faced the same decision, with every number sourced. It turns “what usually happens” into evidence you can check.'],
-    ],
-  },
-
-  'agency-check': {
-    question: 'Example: our agencies claim more results than we can see in our own numbers. Which of their claims hold up?',
-    context: [
-      'This is an example walk-through. Every number on this page is an example, made up to show the method. Your answer would use your agencies’ claims and your own numbers.',
-      'Picture a brand working with three agencies: one for social, one for search, one for creators. Each sends a monthly report. Each report looks reasonable on its own. Added together, the example claims come to 4,200 results for the quarter, and the brand’s own numbers don’t show anything like that many.',
-      'It matters because budget follows those reports. If two agencies are both claiming the same sale, or claiming results that came from your own emails, you are paying twice for work that happened once. The agency check sorts it out before the next renewal.',
-    ],
-    method: [
-      ['Collect every claim, line by line', 'We take each agency’s report and break it into individual claims: a date, a channel, a product or title, and a count. Example: the three agencies together claim 4,200 results for the quarter. Anything an agency counts goes on the list, whether it’s sales, tickets, sign-ups, streams or viewing.'],
-      ['Pull your own numbers for the same period', 'We pull your own record of results for the same dates: sales, tickets, sign-ups, streams or viewing, whichever your business counts. We also look at the ad accounts each report covers, so we know what ran and when. [Confirm: read-only access to ad accounts and first-party data.]'],
-      ['Match each claim by date, product or title, and channel', 'Each claim is matched to a result in your own numbers. The result has to fall inside the agency’s stated window, be for the product or title the agency promoted, and come through a channel the agency ran. Claims that can’t be matched don’t hold up.'],
-      ['Count each result once', 'A result can be matched to one claim only. If two agencies claim the same result, it goes to neither until a test settles it. That one rule is what keeps the total from adding up to more than you sold.'],
-      ['Sort the claims that fall out', 'Every claim that didn’t hold up gets a reason: counted by two agencies at once, came from your own email, or came from people already searching your name. Example: 2,820 claims fall out, and each one has a reason attached.'],
-      ['Test what you would move budget on', 'Matching shows what holds up. It doesn’t show cause. For any channel you might cut or grow, we design a regions-on, regions-off test, called a holdout: run it in some regions, pause it in others, and compare your own numbers.'],
-    ],
-    findings: [
-      { n: '4,200 → 1,380', h: 'Example: they claimed 4,200. 1,380 held up.', body: 'Example numbers. Across the three agencies, 4,200 results were claimed for the quarter. When each claim was matched against the brand’s own numbers by date, product and channel, and each result was counted once, 1,380 held up. The other 2,820 didn’t. That doesn’t mean the agencies did no work. It means the reports were counting in ways that can’t all be true at once.' },
-      { n: '1,610', h: 'Example: 1,610 were counted by two agencies at once', body: 'Example numbers. The biggest single reason claims fell out was overlap. A buyer saw a creator’s video, clicked a social ad a week later and bought, and both agencies counted the sale. Each platform gives itself credit whenever its ad was on the path. Under the count-once rule, those 1,610 go to neither agency until a test shows which one moved them.' },
-      { n: '740', h: 'Example: 740 came from your own emails', body: 'Example numbers. 740 claimed results came through the brand’s own email, where the buyer happened to have seen an ad earlier. Your email list is yours. A result that arrives from a click in your own newsletter isn’t an agency’s to claim, even if their ad was in the buyer’s history.' },
-      { n: '470', h: 'Example: 470 came from people already searching your name', body: 'Example numbers. 470 results came from people who typed the brand’s name into a search engine and clicked a paid ad on the way to a page they were already looking for. Brand search ads catch people who already decided. Some of that spend protects your name from competitors; some of it pays for visits you would have had anyway. Only a test tells you which.' },
-      { n: '2,100 → 820', h: 'Example: social claimed 2,100 and matched 820', body: 'Example numbers. The social agency’s report claimed the most of the three. 820 of its claims matched a result in the brand’s own numbers and weren’t claimed by anyone else. That is its contribution, and the number to judge it on at renewal.' },
-      { n: '1,300 → 310', h: 'Example: search claimed 1,300 and matched 310, most of it brand search', body: 'Example numbers. The search agency’s claims fell the furthest, because a large share came from people already searching the brand’s name. Of the 310 that held up, most were still brand search. Before renewing, the question for this agency is how much non-brand search it is running, and what that does.' },
-      { n: '800 → 250', h: 'Example: creators claimed 800 and matched 250, after coupon-site codes', body: 'Example numbers. Creator agencies often count every use of a creator’s discount code. Those codes leak onto coupon sites, where shoppers who were already buying go looking for a discount. After removing code uses that came through coupon sites, 250 of the creator agency’s 800 claims matched.' },
-      { n: '3 weeks', h: 'Example: the test to run next is pausing brand search in half your regions', body: 'Example. Pause brand search in half your regions for three weeks and leave it on in the rest. If sales hold in the paused regions, that budget can move somewhere that earns it. If they drop, you know the channel works, and by how much. Either answer is worth more than another quarter of reports.' },
-    ],
-    rules: [
-      ['Count once', 'Every result is counted once, starting from your own numbers. If two agencies claim it, it goes to neither until a test decides.'],
-      ['Match on three things', 'Date, product or title, and channel. A claim that misses any of the three doesn’t hold up.'],
-      ['Give every dropped claim a reason', 'Counted twice, came from your own email, or came from people already searching your name. A reason turns an argument into a list.'],
-      ['Test before you move budget', 'Matching shows what holds up. A regions-on, regions-off test shows what caused it. Run one before any big cut or increase.'],
-      ['Take the list to the review', 'Bring the claims that didn’t hold up to your next agency review, line by line. Keep the agencies whose claims hold up.'],
-    ],
-    lessons: [
-      ['Start from your own numbers', 'Agency reports start from the platform and count outward, so they overlap. Start from the results you can see in your own records and work back. The total can never add up to more than you got.'],
-      ['Ask every agency the same two questions', 'How do you count a result, a click or a view? And how many days after the ad do you still count it? Different answers explain most of the overlap before you look at a single line.'],
-      ['Treat brand search and discount codes with care', 'Both catch people who were already on their way. Both can look like the best channels in a report. Check them first, and test them before you scale them.'],
-      ['A fair count helps good agencies', 'An agency doing strong work keeps its results under a count-once rule, and gets a clean number to defend at renewal. The check protects the budget and the good partners at once.'],
-    ],
-    applyToYou: [
-      ['What would we need to give Arcus?', 'One agency report you want checked, access to your own numbers (sales, tickets, sign-ups, streams or viewing) for the same period, and the ad accounts the report covers. [Confirm: read-only access.] That is all the first question needs. The full setup connects every agency and runs the check on your reporting schedule.'],
-      ['What would we get back?', 'A few slides: the headline (claimed against held up), where the rest went with a reason for each, the agency-by-agency split, the test we would run, and what to keep, test and stop. Then a 30-minute walkthrough. [Confirm: turnaround for a first question.]'],
-      ['Will our agencies know?', '[Confirm: whether agencies are told, and how.] Either way, the report is yours. Most teams take the list of claims that didn’t hold up into the next agency review, where it starts a better conversation than a gut feeling does.'],
-    ],
-    limits: [
-      'Every number on this page is an example. Your report uses your agencies’ claims and your own numbers, and the split will look different.',
-      'Matching removes double counting and claims that weren’t an agency’s to make. It doesn’t prove that a matched result was caused by the ad. That takes a regions-on, regions-off test.',
-      'The check is only as detailed as the agency reports. If a report gives totals with no dates or channels, fewer claims can be matched, and the report says so.',
-      'A claim that didn’t hold up isn’t an accusation. Most overlap comes from how each platform counts, and the agency may not see the other agencies’ numbers.',
-    ],
-    faq: [
-      ['Why do agency reports add up to more than our own numbers show?', 'Each agency reports from the platforms it buys on, and each platform takes credit whenever its ad was on the path to a result. When a buyer saw ads from two agencies, both count the same result.'],
-      ['What is a holdout test?', 'A test where you run a channel in some regions and pause it in others for a few weeks, then compare your own numbers. If results hold where the channel was paused, it wasn’t doing as much as reported.'],
-      ['Should we cut brand search?', 'Not without a test. Brand search catches people already looking for you, so reports overstate it, but it can also protect your name from competitors. Pause it in half your regions for a few weeks and compare.'],
-      ['Does this work for tickets, streams or sign-ups?', 'Yes. The method only needs a record of results with a date and a product or title. Box office, streaming starts, game downloads and sign-ups all work the same way.'],
-      ['What does the first question include?', 'If your question is about an agency: one agency report checked against your own numbers, a few slides on what held up and what didn’t, and a 30-minute walkthrough. No card.'],
     ],
   },
 };

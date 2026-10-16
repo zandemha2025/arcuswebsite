@@ -13,7 +13,12 @@ npm install
 npm run dev        # http://localhost:4321
 npm run build      # static output in dist/
 npm run preview
+npm run check      # schema, keywords, and axe on every page at desktop and phone width (after a build)
 ```
+
+`npm run check` launches the Playwright browser from `node_modules`. If that
+browser isn't installed (a "Executable doesn't exist" error), point the check
+at a Playwright that has one: `PLAYWRIGHT_PATH=/path/to/playwright/index.mjs npm run check`.
 
 To get files you can open by double-clicking (no server), run
 `npm run build:standalone`. It writes `standalone/`, with CSS and JS inlined.

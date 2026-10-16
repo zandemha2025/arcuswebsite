@@ -1,0 +1,25 @@
+---
+// The answer stage, for the inner landing heroes (How it works, Pricing, each comparison): the page's one periwinkle
+// stage, with the homepage's equation in miniature. Two source tiles stand on the stage, what you know (teal) and what
+// people say (periwinkle), and the sample answer posts over them and crosses the stage's foot (z4): field, object,
+// overlay. The tiles repeat what the card's own source chips say, so assistive tech skips them; the card keeps its
+// accessible name ("Sample insight"). Illustrative, so it names no brand, carries no label, and never sits near a
+// client logo. It arrives once on load (CSS only); with no script, reduced motion or ?still it is simply there.
+import InsightCard from './InsightCard.astro';
+interface Props { shared?: boolean }
+const { shared = false } = Astro.props;
+const up = '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8.5v-7M2 4.5l3-3 3 3"/></svg>';
+---
+<div class="astage on-peri">
+  <div class="as-t as-own" aria-hidden="true">
+    <span class="pk"><i class="dot p1"></i>What you know</span>
+    <p class="as-tt">Sales, week 3</p>
+    <span class="mchip up"><Fragment set:html={up} />Up 18%</span>
+  </div>
+  <div class="as-t as-say" aria-hidden="true">
+    <span class="pk"><i class="dot p3"></i>What people say</span>
+    <p class="as-tt"><span class="hs-ic"><img src="/logos/tiktok.svg" alt="" width="16" height="16" /><img src="/logos/reddit.svg" alt="" width="16" height="16" /></span>TikTok and Reddit</p>
+    <span class="mchip say">1,240 posts</span>
+  </div>
+  <InsightCard surface="stage" shared={shared} class="as-card" />
+</div>

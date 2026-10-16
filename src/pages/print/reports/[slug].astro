@@ -5,6 +5,8 @@ import { DEEP } from '../../../data/reports-deep.js';
 export function getStaticPaths() { return REPORTS.map((r) => ({ params: { slug: r.slug }, props: { r } })); }
 const { r } = Astro.props;
 const d = DEEP[r.slug] || {};
+// Keep, Test and Stop speak the triad: worked (teal), the next dollar (amber), flopped (coral).
+const VERB = { keep: 'v-keep', test: 'v-test', stop: 'v-stop' };
 ---
 <Print title={`Arcus ${r.kind}`}>
   <div class="row"><span class="logo">arcus<i></i></span><span class="small faint">{r.kind} · {r.example ? 'Example numbers' : `${r.who}, names removed`}</span></div>
@@ -12,16 +14,16 @@ const d = DEEP[r.slug] || {};
   <p style="font-size:14px">{r.title} {r.short}</p>
   <div class="row" style="gap:16px;align-items:flex-start"><span class="n">{r.headline.n}</span><span style="flex:1">{r.headline.label}</span></div>
   <p class="small muted">{r.scope}</p>
-  {d.context && <><h2>{r.example ? 'Why check at all' : 'Why they asked'}</h2>{d.context.map((p) => <p>{p}</p>)}</>}
+  {d.context && <><h2>{r.example ? 'Why it matters' : 'Why they asked'}</h2>{d.context.map((p) => <p>{p}</p>)}</>}
   <h2>The answer, slide by slide</h2>
   <div class="grid">
     {r.slides.map((s) => <div class="sl"><span class="lab">{s.label}</span>{s.big && <span class="big">{s.big}</span>}{s.body && <span>{s.body}</span>}{s.list && <ul>{s.list.map(([k, v]) => <li><b>{k}:</b> {v}</li>)}</ul>}</div>)}
   </div>
   {d.method && <><h2>How we answered it</h2><ol>{d.method.map(([t, x]) => <li><b>{t}.</b> {x}</li>)}</ol></>}
   {d.findings && <><h2>Everything we found</h2><div class="grid">{d.findings.map((f) => <div class="sl">{f.n && <span class="n" style="font-size:22px;color:var(--ink)">{f.n}</span>}<b>{f.h}</b><span>{f.body}</span></div>)}</div></>}
-  {d.rules && <><h2>What we told them to do</h2><ul>{d.rules.map(([k, v]) => <li><b>{k}:</b> {v}</li>)}</ul></>}
+  {d.rules && <><h2>What we told them to do</h2><ul>{d.rules.map(([k, v]) => <li><b class={`v ${VERB[k.split(':')[0].trim().toLowerCase()] || ''}`}>{k}</b> {v}</li>)}</ul></>}
   {d.lessons && <><h2>What any brand can take from this</h2><ul>{d.lessons.map(([k, v]) => <li><b>{k}.</b> {v}</li>)}</ul></>}
   {d.limits && <><h2>What this doesn’t prove</h2><ul>{d.limits.map((x) => <li>{x}</li>)}</ul></>}
   <p class="small muted">{r.receipts} {r.example ? '' : 'Names of the brand, its campaigns and its titles are removed. The numbers are exactly as delivered.'}</p>
-  <div class="cta"><b>Your question is next.</b> Bring Arcus one question. We answer it with your own numbers and what people say, and walk you through it in 30 minutes. Free, no card. usearcus.ai/free-report</div>
+  <div class="cta"><b>Your question is next.</b> Try it free: pick a question and we answer it with your own numbers and what people say, then walk you through it in 30 minutes. No card. usearcus.ai/free-report</div>
 </Print>

@@ -1,0 +1,17 @@
+---
+// "How did you hear about us?", asked after the lead is in, as one tap (it used to sit in the form, between the
+// required fields and the send button). Shown only when the browser has the lead's email from the form it just sent
+// (site.js initHeard); it posts a small note (form_id "heard") that /api/lead files with the lead, not a second lead.
+const OPTS = [
+  ['ai_assistant', 'An AI assistant'], ['google', 'Search'], ['linkedin', 'LinkedIn'], ['colleague', 'A colleague or friend'],
+  ['agency_or_partner', 'An agency or partner'], ['podcast_or_event', 'A podcast or event'], ['newsletter_or_press', 'A newsletter or article'],
+  ['reddit_or_social', 'Reddit, TikTok or social'], ['other', 'Something else'],
+];
+---
+<div class="card frt-card" data-heard hidden>
+  <p class="h3" id="heard-h">One last thing: how did you hear about us?</p>
+  <div class="heard-l" role="group" aria-labelledby="heard-h">
+    {OPTS.map(([v, t]) => <button type="button" class="chip" data-heard-v={v}>{t}</button>)}
+  </div>
+  <p class="small muted" data-heard-ok tabindex="-1" hidden>Thanks. That helps.</p>
+</div>

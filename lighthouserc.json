@@ -2,7 +2,7 @@
   "ci": {
     "collect": {
       "staticDistDir": "./dist",
-      "url": ["/", "/free-report/", "/how-it-works/", "/reports/audience-report/", "/for/studios-and-streaming/", "/library/agency-double-counting-sales/", "/pricing/", "/listening/"],
+      "url": ["/", "/free-report/", "/how-it-works/", "/reports/audience-report/", "/for/studios-and-streaming/", "/library/incrementality-without-the-math/", "/pricing/", "/listening/"],
       "numberOfRuns": 2,
       "settings": { "preset": "desktop" }
     },

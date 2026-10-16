@@ -1,0 +1,67 @@
+---
+// The sample insight: an answer a team gets, as one short message. Not a receipt (.rc itemizes numbers; this answers).
+// Used in the homepage hero, the equation stage, /free-report and a few landing pages. Its numbers are illustrative,
+// so it carries no visible label (Nazeem: "people get it") but follows three rules: it names no brand, it never sits
+// next to or under a client logo or client descriptor, and it never claims to be a client result. Its accessible
+// name says what it is ("Sample insight"). Real reports, with real numbers, live in Real answers and look different.
+//
+// surface: 'photo' sits on the hero photo (deeper shadow), 'navy' sits on a navy slab, 'stage' sits on the periwinkle
+//          stage (.on-peri; not named 'peri', since the card gets on-${surface} and .on-peri marks the surface), 'paper'
+//          sits on the ground.
+// motion:  'none' is still. 'load' posts once on page load (the homepage hero's moment, CSS only). 'scroll' posts once
+//          when scrolled into view (site.js initInsight). Either way it is complete without JS and under reduced motion.
+// shared:  show the "Shared with the marketing team" footer line.
+// marks:   numbered navy markers on the card's left edge (Try it free): 1 at the answer, 2 at "Next", 3 at the sources.
+//          Each carries an anchor name, so the notes beside the card can draw a leader to it (site.css .annos).
+// link:    ties each number to the place it came from (homepage only). 'hero': pointing at a number rings it, its bar
+//          or tile, and its source chip (hover). 'eq': the same on the equation stage, by hover or keyboard focus, and
+//          the source chips become disclosures that open a navy source note (site.js initPost). Source A's note is open
+//          in the markup ([data-open]), so with no script the card still shows where its first number came from. On
+//          phones the chips use their short labels ("Sales + CRM"), so both stay on one row with the notes under them.
+//          The eq card and its notes are [data-consent-avoid]: the cookie banner never sits on the story's payoff.
+interface Props { surface?: 'photo' | 'navy' | 'stage' | 'paper'; motion?: 'none' | 'load' | 'scroll'; shared?: boolean; class?: string; link?: 'hero' | 'eq'; marks?: boolean }
+const { surface = 'paper', motion = 'none', shared = false, class: cls = '', link, marks = false } = Astro.props;
+const mkr = (n: number) => marks ? `<i class="mk m${n}" aria-hidden="true">${n}</i>` : '';
+const mk = link === 'hero' ? ['ring hm-a', 'ring rp hm-b'] : link === 'eq' ? ['ring m-a', 'ring rp m-b'] : [undefined, undefined];
+const ck = link === 'hero' ? ['ring hc-a', 'ring rp hc-b'] : [undefined, undefined];
+---
+<div
+  class:list={['insight', `on-${surface}`, motion === 'load' && 'ins-load', link === 'eq' && 'ic-eq', cls]}
+  role="group"
+  aria-label="Sample insight"
+  data-surface="light"
+  data-post={motion === 'scroll' ? '' : undefined}
+  data-consent-avoid={link === 'eq' ? '' : undefined}
+>
+  <div class="insight-h">
+    <span class="insight-av" aria-hidden="true">a<i></i></span>
+    <div class="insight-who">
+      <p class="insight-n">Arcus</p>
+      <p class="insight-meta"><span class="nw">#marketing</span> · <span class="nw">Mon 9:02</span></p>
+    </div>
+  </div>
+  <p class="insight-q"><b>You asked:</b> What drove sales in week&nbsp;3?</p>
+  <p class="insight-b"><Fragment set:html={mkr(1)} />Week 3: sales up <mark class={mk[0]}>18%</mark>. <mark class={mk[1]}>1,240</mark> TikTok and Reddit posts about one unpaid creator. <Fragment set:html={mkr(2)} />Next: test paying them in half your regions.</p>
+  {link === 'eq' ? (
+    <>
+      <ul class="insight-src" aria-label="Sources">
+        <li><button class="isrc ring c-a" type="button" aria-expanded="true" aria-controls="pop-a"><i class="d-own" aria-hidden="true"></i><span class="isrc-l">From your sales + CRM</span><span class="isrc-s">Sales + CRM</span></button></li>
+        <li><button class="isrc ring rp c-b" type="button" aria-expanded="false" aria-controls="pop-b"><i class="d-say" aria-hidden="true"></i><span class="isrc-l">From TikTok + Reddit</span><span class="isrc-s">TikTok + Reddit</span></button></li>
+      </ul>
+      <div class="pop pop-a" id="pop-a" role="note" data-open data-consent-avoid>
+        <p class="pop-r"><span>Sales, week 3</span><b>Up 18%</b></p>
+        <p class="pop-s"><i class="d-own" aria-hidden="true"></i>What you know</p>
+      </div>
+      <div class="pop pop-b" id="pop-b" role="note" hidden data-consent-avoid>
+        <p class="pop-r"><span>TikTok and Reddit</span><b>1,240 posts</b></p>
+        <p class="pop-s"><i class="d-say" aria-hidden="true"></i>What people say</p>
+      </div>
+    </>
+  ) : (
+    <ul class="insight-src" aria-label="Sources">
+      <li class={ck[0]}><Fragment set:html={mkr(3)} /><i class="d-own" aria-hidden="true"></i>From your sales + CRM</li>
+      <li class={ck[1]}><i class="d-say" aria-hidden="true"></i>From TikTok + Reddit</li>
+    </ul>
+  )}
+  {shared && <p class="insight-f">Shared with the marketing team</p>}
+</div>

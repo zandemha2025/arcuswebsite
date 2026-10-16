@@ -4,14 +4,16 @@ import Crumbs from '../components/Crumbs.astro';
 import Close from '../components/Close.astro';
 import QuickAnswer from '../components/QuickAnswer.astro';
 import PageFAQ from '../components/PageFAQ.astro';
-import { TBD } from '../data/site.js';
+import * as site from '../data/site.js';
+const { TBD } = site;
+const { BOOK_URL } = site;
 const crumbs = [{ name: 'Security', href: '/security' }];
 const sections = [
-  ['access', 'What we access', ['Only the accounts you approve. For your first question, that’s just the accounts the question touches. For the full setup, we connect your systems one at a time, and you approve each step: sales, ticketing, viewing or sign-up data, ad accounts, agency reports and social accounts.', '[Confirm: read-only access wherever the platform allows it.]', 'You can remove our access at any time from each platform’s settings.']],
-  ['where', 'Where your data lives', ['The layer we build sits inside your own setup, and you own it.', '[Confirm: your data is kept in an environment set up for your brand, apart from every other client’s.]', '[Confirm the hosting and encryption details before publishing.]']],
+  ['access', 'What we access', ['Only the accounts you approve. When you try it free, that’s just the accounts your question touches. For the full setup, we connect your systems one at a time, and you approve each step: sales, ticketing, viewing or sign-up data, ad accounts, agency reports and social accounts.', '[Confirm: read-only access wherever the platform allows it.]', 'You can remove our access at any time from each platform’s settings.']],
+  ['where', 'Where your data lives', ['Everything we build sits in one place inside your own setup, and you own it.', '[Confirm: your data is kept in an environment set up for your brand, apart from every other client’s.]', '[Confirm the hosting and encryption details before publishing.]']],
   ['who', 'Who sees it', ['[Confirm: only the Arcus team working with you.]', 'We never share your data, numbers or name with another client, and never publish a report about you without your written permission.']],
-  ['ai', 'What the AI can do', ['Our AI can only do jobs we’ve approved: checking claims against your numbers, counting posts and comments, drafting slides.', 'Every step it takes is logged.', 'A person on our team reads every answer before you do.', '[Confirm: your data is not used to train AI models.]']],
-  ['end', 'When we stop working together', ['[Confirm deletion timeline and process before publishing.]', 'You keep every answer we sent you, and the layer we built inside your setup stays yours.']],
+  ['ai', 'What the AI can do', ['Our AI can only do jobs we’ve approved: counting results against your numbers, counting posts and comments, drafting slides.', 'Every step it takes is logged.', 'A person on our team reads every answer before you do.', '[Confirm: your data is not used to train AI models.]']],
+  ['end', 'When we stop working together', ['[Confirm deletion timeline and process before publishing.]', 'You keep every answer we sent you, and everything we built inside your setup stays yours.']],
   ['legal', 'Paperwork', ['[Confirm: DPA available on request.]', '[Confirm SOC 2 status before stating anything.]', `Questions go to ${TBD.securityEmail}. Brendon, our CTO, answers them.`]],
 ];
 ---
@@ -20,11 +22,11 @@ const sections = [
     <Crumbs items={crumbs} />
     <h1 class="dh d96">Hand this page to legal.</h1>
     <p class="lead">What we access, where it lives, who sees it, and what our AI is allowed to do. Written to be read, not skimmed past.</p>
-    <QuickAnswer q="Is my data safe with Arcus?" a="We only connect the accounts you approve, and the layer we build sits inside your own setup. We log every step our AI takes, and a person reads every answer before you do. You can remove our access at any time." />
+    <QuickAnswer q="Is my data safe with Arcus?" a="We only connect the accounts you approve, and everything we build sits inside your own setup. We log every step our AI takes, and a person reads every answer before you do. You can remove our access at any time." />
   </header>
-  <section class="wrap" style="padding-bottom:96px">
+  <section class="wrap blk">
     <div class="side">
-      <nav class="toc" data-toc aria-label="On this page">{sections.map(([id, t]) => <a href={`#${id}`}>{t}</a>)}</nav>
+      <nav class="toc" data-toc aria-label="On this page"><div class="toc-l">{sections.map(([id, t]) => <a href={`#${id}`}>{t}</a>)}</div></nav>
       <div style="display:flex;flex-direction:column;gap:48px">
         {sections.map(([id, t, items]) => (
           <section id={id as string} aria-labelledby={`${id}-h`} class="prose">
@@ -33,10 +35,10 @@ const sections = [
             {id === 'ai' && (
               <div class="rc wide" style="margin-top:12px">
                 <div class="hd">Approved jobs</div>
-                <div class="r"><span>Check claims against your numbers</span><span>✓</span></div>
-                <div class="r"><span>Count posts and comments</span><span>✓</span></div>
-                <div class="r"><span>Draft slides</span><span>✓</span></div>
-                <div class="r"><span>Log every step</span><span>✓</span></div>
+                <div class="r pass"><span>Count results against your numbers</span><span>Allowed</span></div>
+                <div class="r pass"><span>Count posts and comments</span><span>Allowed</span></div>
+                <div class="r pass"><span>Draft slides</span><span>Allowed</span></div>
+                <div class="r pass"><span>Log every step</span><span>Allowed</span></div>
                 <div class="r x"><span>Backflip</span><span>Not allowed</span></div>
                 <div class="r x"><span>Anything else</span><span>Not allowed</span></div>
                 <div class="bar"></div>
@@ -52,5 +54,5 @@ const sections = [
     ['Do you sell or share our data?', 'No. We never share your data with another client or publish anything about you without written permission.'],
     ['Can our legal team talk to someone?', 'Yes. Book a call and check the box to bring Brendon, our CTO.'],
   ]} />
-  <Close variant="ink" lines={['Questions from', 'legal?']} primary={['Book a call with Brendon', '/book']} secondary={['Bring us one question', '/free-report']} body="Bring your security and legal questions. Our CTO joins the call." loc="security-close" />
+  <Close variant="navy" lines={['Questions from', 'legal?']} primary={['Book a call with Brendon', BOOK_URL]} secondary={['Try it out for free', '/free-report']} body="Bring your security and legal questions. Our CTO joins the call." loc="security-close" />
 </Site>

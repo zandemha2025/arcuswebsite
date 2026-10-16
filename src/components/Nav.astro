@@ -1,26 +1,45 @@
 ---
-import { NAV } from '../data/site.js';
-const { active = 'none' } = Astro.props;
+// The header has one button. "Book a call" is the last link in the frosted pill (ink 600), and the periwinkle "Try it
+// out for free" sits on its own. cta={false} (Try it free and its thanks page, where the form is the action) drops that
+// button and keeps a "Book a call" pill in its place, on phones too. Where the hero has its own primary (wait, from
+// Site's heroCta: 'photo' over the homepage photo, 'light' over paper) both header CTAs ship .unlit and stay unlit
+// while that button is on screen (site.js initUnlit, styled only under html.js), so no screen shows two primaries.
+// Ask Arcus has a place in the chrome wherever its floating button would cover the page: an icon here from 901px to
+// 1471px, and a row in the menu sheet. Over the homepage photo the icon dims with the CTAs (.unlit), so a secondary
+// chat never out-draws the primary.
+import Arrow from './Arrow.astro';
+import { NAV, BOOK_URL } from '../data/site.js';
+const { active = 'none', cta = true, wait = false } = Astro.props; // wait: false | 'photo' | 'light'
+// On the Try it free page the primary goes straight to the form instead of reloading the page.
+const TRY = /^\/free-report\/?$/.test(Astro.url.pathname) ? '#form' : '/free-report';
+// On the booking pages themselves the header needs no "Book a call" pill.
+const onBook = /^\/book(\/|$)/.test(Astro.url.pathname);
+const ask = import.meta.env.PUBLIC_ASK_ENABLED !== 'false';
+const askIcon = '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h12v9H8l-4 3z"/></svg>';
 ---
-<header class="nav" data-nav>
+<header class="nav" data-nav data-unlit={cta && wait ? wait : undefined}>
   <div class="nav-l">
     <a href="/" class="logo" aria-label="Arcus home">arcus<i></i></a>
     <nav class="nav-links" aria-label="Main">
       {NAV.map((n) => <a href={n.href} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a>)}
+      {cta && <a href={BOOK_URL} class="nav-book">Book a call</a>}
     </nav>
   </div>
   <div class="nav-r">
-    <a href="/book" class="pill">Book a call</a>
-    <a href="/free-report" class="jb k full" data-jelly data-loc="nav"><span class="bg"></span><span class="lb">Bring us one question</span></a>
-    <a href="/free-report" class="jb k sm mini-cta" data-loc="nav-mobile"><span class="bg"></span><span class="lb">One free question</span></a>
+    {!cta && !onBook && <a href={BOOK_URL} class="pill">Book a call</a>}
+    {ask && <button type="button" class:list={['nav-ask', cta && wait === 'photo' && 'unlit']} data-ask-open aria-controls="ask-panel" aria-expanded="false" aria-label="Ask Arcus a question"><Fragment set:html={askIcon} /></button>}
+    {cta && <a href={TRY} class:list={['jb k full', wait && 'unlit']} data-jelly data-loc="nav"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>}
+    {cta && <a href={TRY} class:list={['jb k sm mini-cta', wait && 'unlit']} data-jelly data-loc="nav-mobile"><span class="bg"></span><span class="lb">Try it out for free</span></a>}
     <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-sheet" data-burger>
       <svg data-i="open" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h12M3 12h12"/></svg>
       <svg data-i="close" hidden width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4l10 10M14 4L4 14"/></svg>
     </button>
   </div>
 </header>
+<div class="scrim" data-scrim hidden aria-hidden="true"></div>
 <nav class="sheet" id="menu-sheet" aria-label="Menu" hidden>
   {NAV.map((n) => <a href={n.href} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a>)}
-  <a href="/book">Book a call</a>
-  <a href="/free-report" style="color:#C2410C">Bring us one question</a>
+  {ask && <button type="button" class="sheet-ask" data-ask-open aria-controls="ask-panel" aria-expanded="false">Ask Arcus</button>}
+  <a href={BOOK_URL}>Book a call</a>
+  <a href={TRY} class="jb k" data-jelly data-loc="menu"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
 </nav>

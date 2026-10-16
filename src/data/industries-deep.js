@@ -2,18 +2,21 @@
 // Every number comes from a real, anonymized Arcus report (see reports.js) or is labeled "Example".
 // Anything in square brackets still needs the team to confirm it.
 // `answer` is the short answer shown high on each industry page; it introduces the industry questions listed under it (content.js).
+// `pieces` is "what you know" in the industry's own words, for a what-you-know + what-people-say block. Pair it with the `listen` names.
+// `agencyQuestions` keeps its name because the page and its .md twin read it. The questions are for your own team and partners, in a budget meeting.
 
 export const IND_DEEP = {
   'spirits-and-beverage': {
-    answer: 'Arcus answers the questions no single team can answer alone, because it sees depletions, retail data, direct sales, ad accounts and what drinkers say at once. Most drinks teams start with one of these:',
+    answer: 'Arcus answers the questions no single team can answer alone, because it sees depletions, retail data, direct sales, ad accounts and what drinkers say in one place you own. Most drinks teams start with one of these:',
+    pieces: ['Depletions', 'Retail scan data', 'Direct and delivery sales', 'Email and loyalty lists', 'Ad accounts', 'Agency reports'],
     intro: [
-      'Drinks marketing runs on a long chain. You sell to a distributor, the distributor sells to a retailer or a bar, and the drinker buys a can or a pour somewhere you will never see. So the picture reaches you in pieces, late and in different shapes. Depletions come from distributor reports. Retail scan data sits with the sales team, where you buy it. Your site and delivery partners hold direct sales. Email and loyalty lists sit with CRM. And your agencies and creators report views, engagement and “sales” from inside the ad platforms, the same week the campaign runs.',
-      'With every piece in a different place, agency numbers drift and nobody can check them. A platform only sees what happens on the platform, so it fills the rest with estimates and credit rules. Two agencies can claim the same drinker. A summer campaign can take credit for summer. A region that gained new distribution the same month can make any media running there look brilliant. None of that means the work failed. It means nobody has lined the claims up against the numbers that pay your bills.',
-      'Arcus connects those pieces into one layer you own, inside your own setup: depletions, retail data, direct sales, CRM, ad accounts, social accounts and agency recaps, plus what drinkers say on TikTok, Reddit, Instagram and Google. Checking the agency recap is usually the first question. Then you can ask what nobody could answer before: which regions are selling through and which are just stocking up, which flavors drinkers ask for before the shelf has them, and which spend moved cases, not just views.',
+      'Drinks marketing runs on a long chain. You sell to a distributor, the distributor sells to a retailer or a bar, and the drinker buys a can or a pour somewhere you will never see. So the picture reaches you in pieces, late and in different shapes. Depletions come from distributor reports. Retail scan data sits with the sales team, where you buy it. Your site and delivery partners hold direct sales. Email and loyalty lists sit with CRM. And your ad accounts, partners and creators report views, engagement and “sales” from inside the ad platforms, the same week the campaign runs.',
+      'With every piece in a different place, nobody can see which spend is working. Each ad platform gives itself credit, and two channels can count the same drinker. A summer campaign can take credit for summer. A region that gained new distribution the same month can make any media running there look brilliant. None of that means the work failed. It means nobody has lined the results up against the numbers that pay your bills.',
+      'Arcus connects those pieces into one place you own, inside your own setup: depletions, retail data, direct sales, CRM, ad accounts, social accounts and agency reports, plus what drinkers say on TikTok, Reddit, Instagram and Google. The first question is usually simple: what worked this summer? Then you can ask what nobody could answer before: which regions are selling through and which are just stocking up, which flavors drinkers ask for before the shelf has them, and which spend moved cases, not just views.',
     ],
     pains: [
-      ['Sales arrive late and in pieces', 'Depletions come from distributors, scan data comes from retail, and bar sales often come from nowhere at all. By the time the numbers land, the campaign is over and the agency recap is already written.'],
-      ['Every partner grades their own work', 'Your social agency, your media agency and your creators each report from their own platform with their own credit rules. Add their claims together and the total can be bigger than what you sold.'],
+      ['Sales arrive late and in pieces', 'Depletions come from distributors, scan data comes from retail, and bar sales often come from nowhere at all. By the time the numbers land, the campaign is over and the recap is already written.'],
+      ['Every channel counts its own way', 'Your ad accounts, creators and partners each report with their own credit rules. Add them together and the total can be bigger than what you sold.'],
       ['Seasons and distribution do the heavy lifting', 'Summer, holidays and big sports moments lift the whole category. New doors and new placements lift your brand. A campaign that runs at the same time can look like the cause when it was along for the ride.'],
       ['Views don’t tell you what to make', 'A recap that says the campaign hit its view target doesn’t say which posts did it, or why. Without a read of what was on screen, the next brief starts from taste and the loudest opinion in the room.'],
     ],
@@ -26,10 +29,10 @@ export const IND_DEEP = {
       ['Shares and saves by type of post', 'From your own social accounts. Views tell you a post was served. Shares tell you someone sent it to a friend, and in drinks that is often where the occasion gets planned.'],
     ],
     agencyQuestions: [
-      'Which of the sales in this report would show up in our depletions or scan data, and which exist only in the platform’s estimate?',
-      'If we add your claims to our other agencies’ claims for the same weeks, does the total match what we sold?',
+      'Which of the sales in our recaps show up in depletions or scan data, and which exist only in a platform’s estimate?',
+      'If we add every channel’s reported results for the same weeks, does the total match what we sold?',
       'Did any of the campaign regions gain new distribution or new placements while the media ran?',
-      'How much of this result came from people who were already searching our name?',
+      'How much of the result came from people who were already searching our name?',
       'Which posts drove the views, and what was on screen in them?',
       'Can we hold the media back in a few regions on the next flight and compare sales?',
     ],
@@ -43,8 +46,8 @@ export const IND_DEEP = {
       ['News and trade press', 'Distribution wins, competitor launches and category moves that can explain a jump in your numbers before anyone credits it to media.'],
     ],
     patterns: [
-      ['Brand search riding along', 'We check how much of a campaign’s credited sales came from people typing your name. Those drinkers were already on their way, so we separate them before anyone takes credit. In our sample agency check (Example numbers), 470 of the claims came from people already searching the name.'],
-      ['New doors inside campaign regions', 'We compare where the media ran with where distribution changed. If both happened in the same place at the same time, we say so, and we suggest a regions-on, regions-off test before the result goes in a deck.'],
+      ['Brand search riding along', 'We check how much of a campaign’s credited sales came from people typing your name. Those drinkers were already on their way, so we separate them before anyone takes credit.'],
+      ['New doors inside campaign regions', 'We compare where the media ran with where distribution changed. If both happened in the same place at the same time, we say so. Before the result goes in a deck, we suggest a test: run the media in some regions, hold it back in others, and compare sales.'],
       ['Codes on coupon sites', 'We look for creator codes turning up on coupon and deal sites. Sales through a leaked code get credited to the creator, even when the buyer never saw the video.'],
       ['One post carrying a whole format', 'We check whether a content type’s numbers depend on a single hit. In our hard seltzer report, one post carried 77% of a format’s Instagram shares, and the format was the second weakest on the account without it.'],
     ],
@@ -54,13 +57,12 @@ export const IND_DEEP = {
       body: 'We watched and sorted every Instagram and Facebook post from one summer campaign for a hard seltzer brand: 39 on Instagram and 29 on Facebook. Hosting hacks, a trick with the can you could copy tonight, had a median of 19,188 views against an account average of 8,148. The most shared post was about a moment people were in, with 409 shares on 8,000 views, while Facebook averaged 1.2 shares per post. For a drinks brand, that splits the brief in two: one kind of post gets watched, and another gets sent to the group chat where the plans get made.',
     },
     start: [
-      ['Bring us one question', 'The agency recap you trust least is a good start. So is “which flavor should lead the summer push?” We answer it with your own numbers, from depletions and retail data to direct sales, and send back a few slides, free.'],
+      ['Try it free', 'Pick a question, like “which flavor should lead the summer push?” We answer it with your own numbers, from depletions and retail data to direct sales, plus what drinkers say online. You get a few slides with the answer on top. No card.'],
       ['Walk through it together', 'We go through the answer on a 30-minute call, including where your sales data is too thin to call and what it would take to fill the gap.'],
-      ['We connect everything', 'If you go ahead, we connect your distributor files, retail data, direct sales, CRM, ad accounts and social accounts into one layer you own, plus the listening. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
-      ['Ask anything', 'Any leader on your team can ask, and the answer sees the whole picture. Each one is a few slides: the answer on top, the evidence, then what to keep, test and stop. Your agencies keep doing the work. [Confirm: whether and how agencies are told about the checks.]'],
+      ['We build it for you', 'If you go ahead, we connect your distributor files, retail data, direct sales, CRM, ad accounts and social accounts, plus what drinkers say online. It all goes into one place you own, inside your own setup: your own data lake. We build it around your brand, with your regions, seasons and flavors written in, so every answer knows your business. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
+      ['Ask anything', 'Any leader on your team can ask, and the answer sees the whole picture. Each one is a few slides: the answer on top, the evidence, then what to keep, test and stop. [Confirm: whether partners are told when we connect their reports.]'],
     ],
     faq: [
-      ['How do you measure a drinks campaign when most sales happen in stores and bars?', 'We use the sales data that exists: distributor depletions, retail scan data, and your own site or delivery partners. We line it up with where and when the media ran, region by region. When you need to know what caused a lift, we run the media in some regions and hold it back in others, then compare.'],
       ['What are depletions, and why do they matter for marketing?', 'Depletions are what your distributors sell through to retailers and bars. They are the most common sales line in drinks, and they are a fair thing to measure campaigns against, because the ad platforms can’t see them.'],
       ['Can creator codes measure in-store sales?', 'Only a slice of them. A code shows up where someone types it, usually on direct or delivery sales. We check codes against your own numbers, look for codes leaking to coupon sites, and use regional tests for the in-store side.'],
       ['Is social listening useful for a beverage brand?', 'Yes, when it counts specific things and lines them up with sales. We count the flavors, occasions and serves drinkers mention, where they mention them, and whether those regions sell more.'],
@@ -69,16 +71,17 @@ export const IND_DEEP = {
   },
 
   'studios-and-streaming': {
-    answer: 'Arcus answers the questions no single team can answer alone, because it sees tickets, sign-ups, viewing, ad accounts and what fans say at once. Most studio and streaming teams start with one of these:',
+    answer: 'Arcus answers the questions no single team can answer alone, because it sees tickets, sign-ups, viewing, ad accounts and what fans say in one place you own. Most studio and streaming teams start with one of these:',
+    pieces: ['Tickets', 'Sign-ups and viewing', 'Email and fan lists', 'Ad accounts', 'Your YouTube channel', 'Agency reports'],
     intro: [
       'Film and TV marketing is built around dates. A trailer drops, a release lands, a season premieres, and the window to move people is short. The results you care about live in different places. Tickets come through exhibitors and ticketing partners. Sign-ups sit in the streaming service’s own systems. Viewing is measured by the platform, a ratings firm, or both. Email and fan lists sit with CRM. If you license a title to a service, you may not see viewing at all.',
-      'With every piece somewhere else, agency numbers drift and nobody can check them. A media agency reports reach and clicks. A social agency reports views and engagement. A trailer partner reports completed views. Each is true inside its own platform, and none of them sees a ticket bought at the box office or an episode watched on a living room TV. Meanwhile fans are talking in YouTube comments, Reddit threads, Letterboxd reviews and Discord servers, and that conversation often says more about what will open than any recap does.',
-      'Arcus connects those pieces into one layer you own, inside your own setup: tickets, sign-ups, viewing, CRM, ad accounts, your YouTube channel and agency recaps, plus what fans say. Checking a release recap is usually the first question. Then you can ask the bigger ones: who a new title is really for, which trailers brought viewers who stayed for the season, and whether your loudest fans are the ones buying tickets.',
+      'With every piece somewhere else, nobody can see which spend is working. Each ad platform gives itself credit, and two channels can count the same fan. Your ad accounts report reach and clicks. Your social accounts report views and engagement. A trailer partner reports completed views. Each number is true inside its own platform, and none of them sees a ticket bought at the box office or an episode watched on a living room TV. Meanwhile fans are talking in YouTube comments, Reddit threads, Letterboxd reviews and Discord servers, and that conversation often says more about what will open than any recap does.',
+      'Arcus connects those pieces into one place you own, inside your own setup: tickets, sign-ups, viewing, CRM, ad accounts, your YouTube channel and agency reports, plus what fans say. The first question is usually simple: what worked on the last release? Then you can ask the bigger ones: who a new title is really for, which trailers brought viewers who stayed for the season, and whether your loudest fans are the ones buying tickets.',
     ],
     pains: [
       ['Results live with other people', 'Ticketing partners, exhibitors, platforms and ratings firms each hold a piece. Pulling them into one view usually falls to whoever has time, which is nobody in release week.'],
-      ['Release windows reward everything', 'The week a title opens, every channel looks good, because demand peaks no matter what ran. Agencies claim the peak. Nobody claims the quiet weeks between seasons.'],
-      ['Fans talk about titles', 'In our audience report for a streaming service, fans talked about the shows and raised the service only when it got in the way: ads, the app, a cancelled show. Listening that tracks only your brand name misses most of the conversation.'],
+      ['Release windows reward everything', 'The week a title opens, every channel looks good, because demand peaks no matter what ran. Every report counts the peak. Nobody looks at the quiet weeks between seasons.'],
+      ['Fans talk about titles', 'In our audience report for a streaming service, fans talked about the shows and raised the service only when it got in the way: ads, the app, a canceled show. Listening that tracks only your brand name misses most of the conversation.'],
       ['The voice is hard to get right', 'Accounts that try to sound like fans often get mocked for it. Without counting how fans write, every caption is a guess about the register.'],
     ],
     measures: [
@@ -87,12 +90,12 @@ export const IND_DEEP = {
       ['Viewing and completion', 'Hours watched, episodes started and finished, from the platform or a ratings source. It tells you whether the people a campaign brought in stayed for the show.'],
       ['What fans post under trailers', 'From YouTube and TikTok. We count the callbacks, the lore, the complaints about the wait and the “we’re back” lines, which tell you what fans are waiting for.'],
       ['Search interest for the title', 'From Google Search, by region and day. It rises before tickets or sign-ups do, so it shows whether a trailer started demand or followed it.'],
-      ['Ratings and reviews over time', 'From Letterboxd, IMDb and Rotten Tomatoes. Shifts after opening show word of mouth, which agency recaps rarely cover.'],
+      ['Ratings and reviews over time', 'From Letterboxd, IMDb and Rotten Tomatoes. Shifts after opening show word of mouth, which campaign recaps rarely cover.'],
     ],
     agencyQuestions: [
-      'Which tickets, sign-ups or viewing hours in this report come from our own data, and which are platform estimates?',
-      'How did you separate the release-week peak from what your media added on top of it?',
-      'If two agencies both report this sign-up, who gets it?',
+      'Which tickets, sign-ups or viewing hours in our recaps come from our own data, and which are platform estimates?',
+      'How much of the release-week peak would have happened without the media, and how do we know?',
+      'If two channels both report the same sign-up, which one gets it, and does our total count it twice?',
       'How many of these results came from people searching the title by name?',
       'Which trailers and clips did fans comment on, and what did they say?',
       'Can we hold the media back in a few markets before the next release and compare?',
@@ -107,10 +110,10 @@ export const IND_DEEP = {
       ['Discord', 'Fan servers where the most committed viewers organize watch parties, theories and rewatches.'],
     ],
     patterns: [
-      ['Release-week credit', 'We check how much of an agency’s claimed result landed in the peak days around release. Then we compare it with markets or weeks where the media was lighter, so the peak doesn’t get counted as the campaign.'],
+      ['Release-week credit', 'We check how much of a reported result landed in the peak days around release. Then we compare it with markets or weeks where the media was lighter, so the peak doesn’t get counted as the campaign.'],
       ['Title search in the numbers', 'We check how many credited tickets or sign-ups came from people searching the title by name. They were already looking for it.'],
       ['Returning viewers inside new sign-ups', 'We split results into new viewers and people coming back. In our audience report, fans treated the service as something they stopped opening between shows, until a show brought them back.'],
-      ['The comments as a brief', 'We count what fans post under trailers and clips. In our audience report, a note to the marketing team got 54,000 likes, and a teaser built on the fandom’s own joke about the wait was applauded in a reply with 11,000 likes. Fans grade the marketing, and their comments tell you what they want next.'],
+      ['The comments as a brief', 'We count what fans post under trailers and clips. In our audience report, a note to the marketing team got 54,000 likes, and a teaser built on the fandom’s own joke about the wait was applauded in a reply with 11,000 likes. Fans review the marketing in public, and their comments tell you what they want next.'],
     ],
     proof: {
       report: 'audience-report',
@@ -118,31 +121,31 @@ export const IND_DEEP = {
       body: 'For a streaming service, we counted how men 18 to 24 talk across TikTok, Reddit, YouTube, X and Instagram: 293 TikToks, 6,622 comments and 4,283 Reddit questions. An acted-out bit had a median of 91,850 views, a sincere post 2,171 and a brand post 1,675. Only 1.9% of what they asked each other was about hobbies, games and entertainment, yet four trailers drew 78,682 comments. For studios and streamers, that means the audience gathers under the title itself, and that is where your marketing gets judged.',
     },
     start: [
-      ['Bring us one question', 'An agency recap from your last release is a good start. So is “who is our next title really for?” We answer it with your own tickets, sign-ups or viewing, and send back a few slides, free.'],
+      ['Try it free', 'Pick a question, like “who is our next title really for?” We answer it with your own tickets, sign-ups or viewing, plus what fans say online. You get a few slides with the answer on top. No card.'],
       ['Walk through it together', 'We go through it on a 30-minute call, including which numbers you hold, which ones partners hold, and where the data is too thin to call.'],
-      ['We connect everything', 'If you go ahead, we connect your ticketing data, sign-up records, viewing, CRM, ad accounts, YouTube channel and social accounts into one layer you own, plus the listening. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
+      ['We build it for you', 'If you go ahead, we connect your ticketing data, sign-up records, viewing, CRM, ad accounts, YouTube channel and social accounts, plus what fans say online. It all goes into one place you own, inside your own setup: your own data lake. We build it around your slate, with your release dates, titles and markets written in, so every answer knows your business. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
       ['Ask anything, around your dates', 'Ask before a release, during it or between seasons, and the answer sees the whole picture. Each one is a few slides: the answer on top, the evidence, then what to keep, test and stop. Regular answers can also arrive on a schedule you choose.'],
     ],
     faq: [
       ['How do you measure whether a trailer sold tickets?', 'We line up trailer views, comments and title searches with tickets by market and day. Search and comments move first, tickets follow. When you need proof of cause, we hold media back in a few markets and compare.'],
-      ['Can you measure streaming sign-ups from a campaign?', 'Yes. We match each sign-up an agency claims against your own records and count it once. We also split new viewers from people returning, because a show often brings back viewers who drifted away.'],
+      ['Can you measure streaming sign-ups from a campaign?', 'Yes. We match every sign-up a channel reports against your own records and count each one once. We also split new viewers from people returning, because a show often brings back viewers who drifted away.'],
       ['What if we license a title and don’t see the viewing data?', 'We work with what you have. Search interest, review sites and fan conversation become the signal, and we say plainly where the data is too thin to call.'],
       ['Is social listening worth it for film and TV?', 'Yes, if it counts. Fans leave detailed notes under trailers, on Reddit and on review sites. We count the topics and the words they use and line them up with tickets, sign-ups and viewing.'],
-      ['Should our brand account talk like the fans?', 'Usually not. In our audience report, one word in 62 was slang, and the most searched slang of the year barely appeared. The voice that worked replied to fans, stated a date, and let fans’ own lines lead.'],
     ],
   },
 
   'games-and-music': {
-    answer: 'Arcus answers the questions no single team can answer alone, because it sees wishlists, sales, players, streams and what fans say at once. Most game and music teams start with one of these:',
+    answer: 'Arcus answers the questions no single team can answer alone, because it sees wishlists, sales, players, streams and what fans say in one place you own. Most game and music teams start with one of these:',
+    pieces: ['Wishlists and sales', 'Players and sessions', 'Streams and saves', 'Email and fan lists', 'Ad accounts', 'Creator and agency reports'],
     intro: [
       'Games and music launch into crowds that already have opinions, and the results come from everywhere. Wishlists and sales sit in storefront dashboards. Players, sessions and return rates sit in your own game data. Streams and saves come from music services, tickets from promoters, and email and fan lists from CRM. Each reports on its own schedule, in its own format, and often with its own idea of what counts. Players and fans, meanwhile, talk on Steam, Discord, Twitch, Kick, Reddit, Roblox, TikTok and YouTube.',
-      'Creators sit in the middle of all of it. A streamer plays your game, a creator uses your track, and a campaign report says it worked. Sometimes it did. Sometimes the stream landed on the same day a sale started, or the track was already climbing. Codes and links catch a slice of buyers, and wishlists and streams carry no code at all. With every piece in a different place, nobody can check which it was.',
-      'Arcus connects those pieces into one layer you own, inside your own setup: wishlists, sales, player data, streams, CRM, ad accounts and creator recaps, plus what players and fans say. Checking a creator recap is usually the first question. Then you can ask the bigger ones: which creators bring players who stay, which wishlists turn into launch-day sales, and whether the loudest fans in your Discord are the ones who buy.',
+      'Creators sit in the middle of all of it. A streamer plays your game, a creator uses your track, and the recap says it worked. Sometimes it did. Sometimes the stream landed on the same day a sale started, or the track was already climbing. Codes and links catch a slice of buyers, and wishlists and streams carry no code at all. With every piece in a different place, nobody can see which spend is working. Each ad platform gives itself credit, and two channels can count the same player.',
+      'Arcus connects those pieces into one place you own, inside your own setup: wishlists, sales, player data, streams, CRM, ad accounts and creator recaps, plus what players and fans say. The first question is usually simple: what worked at launch? Then you can ask the bigger ones: which creators bring players who stay, which wishlists turn into launch-day sales, and whether the loudest fans in your Discord are the ones who buy.',
     ],
     pains: [
       ['Results come from platform holders', 'Storefronts, console platforms, music services and promoters each hold a piece. Their reports arrive on their own schedule and rarely line up by day or region.'],
-      ['Creators are hard to grade', 'Streams and videos drive attention, but most players and listeners never use a code. A creator’s recap can show views and chat activity with no way to see whether any of it became a wishlist, a sale or a stream.'],
-      ['Launch weeks blur everything', 'Launches, updates, sales events and tour dates stack up. Every channel looks good in launch week, and every agency claims the spike.'],
+      ['Creators are hard to measure', 'Streams and videos drive attention, but most players and listeners never use a code. A creator’s recap can show views and chat activity with no way to see whether any of it became a wishlist, a sale or a stream.'],
+      ['Launch weeks blur everything', 'Launches, updates, sales events and tour dates stack up. Every channel looks good in launch week, and every report counts the spike as its own.'],
       ['Communities move faster than reports', 'A Discord server or a Steam review section can turn in a weekend. By the time a monthly recap arrives, the conversation has moved on.'],
     ],
     measures: [
@@ -154,11 +157,11 @@ export const IND_DEEP = {
       ['Steam review volume and topics', 'From Steam. Review counts and the topics in negative reviews often explain a drop in sales faster than any media report.'],
     ],
     agencyQuestions: [
-      'Which wishlists, sales or streams in this report come from our own platform data, and which are estimates?',
-      'Which creators streamed or posted during a sale or a launch spike, and how did you separate the two?',
-      'If another agency claims the same sale or stream, who gets it?',
+      'Which wishlists, sales or streams in our recaps come from our own platform data, and which are estimates?',
+      'Which creators streamed or posted during a sale or a launch spike, and how do we separate the creator from the sale?',
+      'If a creator and an ad both report the same sale or stream, which one gets it?',
       'How many code uses came from coupon or key-reseller sites?',
-      'What did chat and comments say during the creator streams you’re crediting?',
+      'What did chat and comments say during the creator streams we’re paying for?',
       'Can we hold a creator push back in a few regions and compare?',
     ],
     listen: [
@@ -182,47 +185,47 @@ export const IND_DEEP = {
       body: 'This comes from an audience report we made for a streaming service, about the same young men who buy and stream games. We counted how men 18 to 24 talk across TikTok, Reddit, YouTube, X and Instagram. Of 4,283 questions they asked each other on a large men’s subreddit, 1.9% were about hobbies, games and entertainment, while four trailers drew 78,682 comments. Across 6,622 comments, one word in 62 was slang, and the glossary words brands love barely appeared. For games and music, that points your listening at the rooms tied to your title or artist, and it is a reason to keep slang out of your captions.',
     },
     start: [
-      ['Bring us one question', 'A creator or agency recap from your last launch is a good start. So is “which creators bring players who stay?” We answer it with your own wishlists, sales, players or streams, and send back a few slides, free.'],
+      ['Try it free', 'Pick a question, like “which creators bring players who stay?” We answer it with your own wishlists, sales, players or streams, plus what fans say online. You get a few slides with the answer on top. No card.'],
       ['Walk through it together', 'We go through it on a 30-minute call, including which numbers your storefronts and partners hold and where the data is too thin to call.'],
-      ['We connect everything', 'If you go ahead, we connect your storefront dashboards, game or streaming data, CRM, ad accounts and social accounts into one layer you own, plus the listening. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
+      ['We build it for you', 'If you go ahead, we connect your storefront dashboards, game or streaming data, CRM, ad accounts and social accounts, plus what players and fans say online. It all goes into one place you own, inside your own setup: your own data lake. We build it around your releases, with your launch dates, platforms and creators written in, so every answer knows your business. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
       ['Ask anything, around your launches', 'Ask before a launch, an update, a drop or a tour, and the answer sees the whole picture. Each one is a few slides: the answer on top, the evidence, then what to keep, test and stop. Regular answers can also arrive on a schedule you choose.'],
     ],
     faq: [
-      ['How do you measure which streamers sold copies?', 'We line up each creator’s streams and posts with wishlists, sales and activations by day, check codes and links against your own numbers, and separate streams that landed on sale days. When you need proof of cause, we hold a push back in some regions and compare.'],
       ['Can you track Steam wishlists against marketing?', 'Yes. Wishlist adds by day are one of the clearest early signals in games. We match them to trailers, creator streams and campaigns, then check which wishlists became sales at launch.'],
       ['How do you measure music marketing when most listening happens on streaming services?', 'We use the data the services give you: streams, saves, playlist adds and listener locations. We line those up with campaign dates and regions, and read the conversation on TikTok, YouTube and Reddit around the track.'],
-      ['Do you read Discord and stream chat?', 'Yes. We read public Discord servers and Twitch and Kick chat, count the topics and words that come up, and line them up with your own numbers. [Confirm: how private or brand-owned servers are accessed, and with whose permission.]'],
+      ['Can you read our own Discord server, or only public ones?', 'We read public Discord servers and Twitch and Kick chat. [Confirm: how private or brand-owned servers are accessed, and with whose permission.]'],
       ['Should our game or artist account use gamer slang?', 'Usually not. In our audience report, one word in 62 was slang, and the most searched slang of the year barely appeared. Players can hear a script. Reply to their lines, and let a fan’s words lead.'],
     ],
   },
 
   'fashion-and-beauty': {
-    answer: 'Arcus answers the questions no single team can answer alone, because it sees site, marketplace and retail sales, your customers and what reviewers say at once. Most fashion and beauty teams start with one of these:',
+    answer: 'Arcus answers the questions no single team can answer alone, because it sees site, marketplace and retail sales, your customers and what reviewers say in one place you own. Most fashion and beauty teams start with one of these:',
+    pieces: ['Online and marketplace sales', 'Retail sell-through', 'Customers and repeat buyers', 'Email and CRM', 'Ad accounts', 'Agency reports'],
     intro: [
       'Fashion and beauty marketing moves in drops, shades, seasons and creators. A launch sells through on your site in hours, a creator video sends people to a retailer you don’t control, and the same product gets reviewed on three listings in three different ways. So the results arrive in pieces: direct sales on your site, marketplace sales, retail sell-through you see weeks later, and the repeat purchases and email list that sit with CRM.',
-      'With every piece in a different place, agency numbers drift and nobody can check them. A creator agency counts codes. A paid social agency counts clicks and views on its platform. A retail partner counts what scanned at the register. A drop that sells out in a day would have sold to your best customers anyway, and a campaign that ran that week can still claim it.',
-      'Arcus connects those pieces into one layer you own, inside your own setup: site and marketplace sales, retail data, CRM and email, ad accounts, social accounts and agency recaps, plus what reviews and comments say. Checking a creator or agency recap is usually the first question. Then you can ask the bigger ones: who your best customers really are, which shades and products reviewers keep asking for, and which spend found new buyers instead of selling to your regulars.',
+      'With every piece in a different place, nobody can see which spend is working. Each ad platform gives itself credit, and two channels can count the same buyer. Creator reports count codes. Social ads count clicks and views on their own platform. A retail partner counts what scanned at the register. And a drop that sells out in a day would have sold to your best customers anyway, while every campaign that ran that week still gets credit for it.',
+      'Arcus connects those pieces into one place you own, inside your own setup: site and marketplace sales, retail data, CRM and email, ad accounts, social accounts and agency reports, plus what reviews and comments say. The first question is usually simple: what worked on the last drop? Then you can ask the bigger ones: who your best customers really are, which shades and products reviewers keep asking for, and which spend found new buyers instead of selling to your regulars.',
     ],
     pains: [
-      ['Drops sell out either way', 'Your best customers buy a launch the day it lands. Every channel that ran that week can claim those sales, even when the buyers were already on your list.'],
+      ['Drops sell out either way', 'Your best customers buy a launch the day it lands. Every channel that ran that week can take credit for those sales, even when the buyers were already on your list.'],
       ['Creators send people elsewhere', 'A creator video can send viewers to a retailer, a marketplace or your site. Codes only catch the ones who buy direct and type them in.'],
       ['Retail changes what your site numbers mean', 'When you move into stores, the share of sales on your site shifts. It is easy to read that as decline when the online business is still growing.'],
-      ['Reviews live everywhere', 'Reviews and comments sit on your site, retailer listings, Amazon, TikTok and Reddit. A complaint about a shade, a fit or a claim can spread across all of them before anyone reads them together.'],
+      ['Reviews live everywhere', 'Reviews and comments sit on your site, retailer listings, Amazon, TikTok and Reddit. A complaint about a shade, a fit or an ingredient can spread across all of them before anyone reads them together.'],
     ],
     measures: [
       ['Repeat purchase', 'From your own sales data and CRM. Repeat tells you whether a campaign found customers or one-time buyers, and it is one of the four numbers retail buyers manage to.'],
       ['Retail sell-through and velocity', 'Units per store per week, from retailer portals or scan data. It shows whether media moved product off a specific shelf.'],
-      ['Creator code use, cleaned', 'From your own sales data, checked against coupon sites. Each sale is counted once, even when a creator, an affiliate and an ad all claim it.'],
-      ['New and returning buyers on each drop', 'From your own sales data. It shows how much of a launch came from people who already buy from you, before any campaign takes credit for it.'],
+      ['Creator code use, cleaned', 'From your own sales data, checked against coupon sites. Each sale is counted once, even when a creator, an affiliate and an ad all report it.'],
+      ['New and returning buyers on each drop', 'From your own sales data. It shows how much of a launch came from people who already buy from you, before any campaign gets credit for it.'],
       ['Search interest for products and shades', 'From Google Search and Pinterest. Searches by product name or shade often rise before sales do, and show which retailer people pair with your name.'],
       ['Review volume and themes by listing', 'From your site, Amazon reviews, Trustpilot and retailer listings. Counting themes across every listing shows a problem once, before it shows up everywhere.'],
     ],
     agencyQuestions: [
-      'How many of the sales you’re crediting came from customers who had bought from us before?',
-      'Which of these sales show up in our own numbers, and which are platform estimates?',
-      'If a creator, an affiliate and a paid ad all touched this sale, who did you give it to?',
+      'How many of the sales we credit to the campaign came from customers who had bought from us before?',
+      'Which of the reported sales show up in our own numbers, and which are platform estimates?',
+      'If a creator, an affiliate and a paid ad all touched the same sale, how many of their reports count it?',
       'How many creator code uses came from coupon sites?',
-      'Did this campaign move sell-through at a named retailer, and how do you know?',
+      'Did the campaign move sell-through at a named retailer, and how do we know?',
       'Can we hold the next push back in a few regions and compare?',
     ],
     listen: [
@@ -235,10 +238,10 @@ export const IND_DEEP = {
       ['YouTube', 'Long reviews and side-by-side comparisons where shoppers decide between you and a competitor.'],
     ],
     patterns: [
-      ['Drops claimed by everyone', 'We check how much of a launch came from returning customers and your own email list. Those sales get counted once and set aside before agency credit. In our sample agency check (Example numbers), 740 of the claims came from the brand’s own emails.'],
+      ['Drops every channel counts', 'We check how much of a launch came from returning customers and your own email list. Those sales get counted once and set aside before any channel gets credit.'],
       ['Codes on coupon sites', 'We look for creator codes on coupon and deal sites. A leaked code credits the creator for buyers who never saw the video.'],
       ['Online sales near new doors', 'When you add retail, we compare your online sales in regions with new doors against regions without. Our market report cites industry research showing a store opening lifts online sales nearby, so a smaller site share can be a healthy sign.'],
-      ['Claims that follow the product', 'We read reviews across every listing for complaints about a claim or an ingredient. In our market report, one of the five brands studied paid $8.9 million over a product claim, and the advice was to check claims before the media runs.'],
+      ['Complaints that follow the product', 'We read reviews across every listing for complaints about an ingredient or what the label promises. In our market report, one of the five brands studied paid $8.9 million over a product claim, and the advice was to check product claims before the media runs.'],
     ],
     proof: {
       report: 'market-report',
@@ -246,16 +249,15 @@ export const IND_DEEP = {
       body: 'For a skincare brand moving into retail, we studied five direct-to-consumer brands that made the same move, with 157 sources behind ten slides. At all five, the share of sales shifted toward retail and the online business kept growing. Industry research the report cites found a store opening lifts online sales nearby by 6.9%, and by 13.9% for direct-to-consumer brands. For a beauty brand, that changes the media plan: point launch media at one retailer’s shelf in its launch week, and report the four numbers buyers manage to: distribution reach, units per store per week, household penetration and repeat.',
     },
     start: [
-      ['Bring us one question', 'The recap from your last drop is a good start. So is “who are our best customers, really?” We answer it with your own numbers, and send back a few slides, free.'],
+      ['Try it free', 'Pick a question, like “who are our best customers, really?” We answer it with your own numbers, plus what reviews and comments say. You get a few slides with the answer on top. No card.'],
       ['Walk through it together', 'We go through it on a 30-minute call, including how much of the result came from customers you already had and where retail data is too thin to call.'],
-      ['We connect everything', 'If you go ahead, we connect your site, marketplace and retail data, email and CRM, ad accounts and social accounts into one layer you own, plus the listening. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
+      ['We build it for you', 'If you go ahead, we connect your site, marketplace and retail data, email and CRM, ad accounts and social accounts, plus what reviews and comments say. It all goes into one place you own, inside your own setup: your own data lake. We build it around your brand, with your drops, shades, seasons and retailers written in, so every answer knows your business. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
       ['Ask anything, around your drops', 'Ask before a launch or after it, and the answer sees the whole picture. Each one is a few slides: the answer on top, the evidence, then what to keep, test and stop. Regular answers can also arrive on a schedule you choose.'],
     ],
     faq: [
       ['How do you measure creator marketing for a beauty brand?', 'We check each creator’s codes and links against your own numbers, remove uses from coupon sites, and count each sale once. Because many viewers buy at a retailer without a code, we also line up creator posts with retail sell-through and search, and run a regional test when you need proof of cause.'],
       ['Will moving into retail hurt our online sales?', 'In our market report, none of the five brands studied saw retail eat their online business. The share shifted toward stores and online kept growing. The cost that is real is margin: the retailer’s cut, trade spend and fees.'],
       ['What numbers do retail buyers look at?', 'Our market report found four: distribution reach, units per store per week against the category, household penetration and repeat. Door counts matter less. Reporting those four after a launch helps sell the next retailer.'],
-      ['How do you know if a drop sold because of the campaign?', 'We split the drop’s sales into returning customers, your own email list and new buyers, then match agency claims against what is left. When budget depends on the answer, we run the campaign in some regions and not others and compare.'],
       ['Can you read reviews across retailer sites and Amazon?', 'Yes. We read reviews across your site, Amazon, Trustpilot and retailer listings, count the themes, and line them up with sales. [Confirm: which retailer review pages are covered.]'],
     ],
   },
@@ -273,7 +275,7 @@ export const PLATFORMS = {
   'Facebook groups': { goodFor: 'Local communities, hobby groups and older audiences planning events and swapping tips.', weCount: 'Posts and comments that mention your brand or category in public groups, and the topics that come up.', ask: 'How do people outside the younger social crowd talk about us?', bestFor: ['spirits-and-beverage', 'fashion-and-beauty'] },
   Discord: { goodFor: 'Where the most committed fans and players organize, report problems and react first.', weCount: 'Messages in public community servers about your game, title or artist, sorted by topic.', ask: 'What are our most committed fans upset or excited about this week?', bestFor: ['games-and-music', 'studios-and-streaming'] },
   Twitch: { goodFor: 'Live chat during creator streams, which shows what viewers notice and ask in the moment.', weCount: 'Chat messages during the streams you’re paying for, sorted by whether they are about the game or about the creator.', ask: 'Did viewers care about our game, or were they there for the creator?', bestFor: ['games-and-music'] },
-  Kick: { goodFor: 'Live chat from creators who stream there or on both Kick and Twitch.', weCount: 'Chat messages during credited streams, read the same way as Twitch.', ask: 'Does the Kick audience react to our game the way the Twitch audience does?', bestFor: ['games-and-music'] },
+  Kick: { goodFor: 'Live chat from creators who stream there or on both Kick and Twitch.', weCount: 'Chat messages during the streams you’re paying for, read the same way as Twitch.', ask: 'Does the Kick audience react to our game the way the Twitch audience does?', bestFor: ['games-and-music'] },
   'Google Search': { goodFor: 'What people look for by name, by region and by day, often before any sale shows up.', weCount: 'Search interest for your brand, products, titles and competitors, by region and week.', ask: 'Did people start looking for us where the campaign ran?', bestFor: ['spirits-and-beverage', 'studios-and-streaming', 'games-and-music', 'fashion-and-beauty'] },
   Goodreads: { goodFor: 'Readers’ ratings, reviews and shelves for books and the adaptations made from them.', weCount: 'Ratings, reviews and shelf adds for the books behind your titles.', ask: 'How do readers of the book feel about the adaptation?', bestFor: ['studios-and-streaming'] },
   Fable: { goodFor: 'Book clubs and reader reviews, where groups read and discuss together.', weCount: 'Club discussions and reviews that mention the books behind your titles.', ask: 'Which book clubs are reading the source material right now?', bestFor: ['studios-and-streaming'] },

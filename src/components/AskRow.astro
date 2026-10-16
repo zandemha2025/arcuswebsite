@@ -1,0 +1,16 @@
+---
+// An ask in the page's flow, after a persuasive block: the primary and the secondary, nothing else. The header hides
+// while reading down, so long pages need these between the hero and the Close. One per screen: never right beside
+// another primary. `start` pre-picks the question on the Try it free form (?start=…).
+import Arrow from './Arrow.astro';
+import { BOOK_URL } from '../data/site.js';
+interface Props { loc: string; start?: string; note?: string; class?: string }
+const { loc, start = '', note = '', class: cls = '' } = Astro.props;
+---
+<div class:list={['askrow', cls]}>
+  <div class="btnrow l">
+    <a href={`/free-report${start ? `?start=${start}` : ''}`} class="jb k" data-jelly data-loc={loc}><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
+    <a href={BOOK_URL} class="jb ln" data-jelly data-loc={`${loc}-2`}><span class="bg"></span><span class="lb">Book a call</span></a>
+  </div>
+  {note && <p class="small muted">{note}</p>}
+</div>

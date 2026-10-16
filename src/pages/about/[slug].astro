@@ -3,10 +3,12 @@ import Site from '../../layouts/Site.astro';
 import Crumbs from '../../components/Crumbs.astro';
 import Close from '../../components/Close.astro';
 import Arrow from '../../components/Arrow.astro';
+import * as site from '../../data/site.js';
 import { TEAM, SITE } from '../../data/site.js';
 import { ALL_ARTICLES as ARTICLES } from '../../data/all.js';
 export function getStaticPaths() { return TEAM.map((t) => ({ params: { slug: t.slug }, props: { t } })); }
 const { t } = Astro.props;
+const { BOOK_URL } = site;
 const posts = ARTICLES.filter((a) => a.author === t.slug);
 const crumbs = [{ name: 'About', href: '/about' }, { name: t.name, href: `/about/${t.slug}` }];
 const schema = [{ '@type': 'ProfilePage', url: `${SITE}/about/${t.slug}`, mainEntity: { '@type': 'Person', '@id': `${SITE}/about/${t.slug}#person`, name: t.name, jobTitle: t.title, worksFor: { '@id': `${SITE}/#org` }, description: t.line, url: `${SITE}/about/${t.slug}`, ...(t.photo ? { image: `${SITE}${t.photo}` } : {}), ...(t.linkedin ? { sameAs: [t.linkedin] } : {}), ...(t.knowsAbout?.length ? { knowsAbout: t.knowsAbout } : {}), ...(t.credentials?.length ? { hasCredential: t.credentials.map((c) => ({ '@type': 'EducationalOccupationalCredential', name: c })) } : {}) } }];
@@ -16,7 +18,7 @@ const schema = [{ '@type': 'ProfilePage', url: `${SITE}/about/${t.slug}`, mainEn
     <Crumbs items={crumbs} />
     <div class="person" style="gap:28px">{t.photo ? <img src={t.photo} alt={t.name} width="120" height="120" style="border-radius:50%;width:120px;height:120px;object-fit:cover" /> : <span class="av lg2">{t.initials}</span>}<div><h1 class="dh d96">{t.name}</h1><p class="h3 muted">{t.title}, Arcus</p></div></div>
   </header>
-  <section class="wrap" style="padding-bottom:96px">
+  <section class="wrap blk">
     <div class="split">
       <div class="prose"><p style="font-weight:600">{t.line}</p><p>{t.bio}</p></div>
       <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px">
@@ -27,5 +29,5 @@ const schema = [{ '@type': 'ProfilePage', url: `${SITE}/about/${t.slug}`, mainEn
       </div>
     </div>
   </section>
-  <Close variant="ink" lines={['Talk to', `${t.name.split(' ')[0]}.`]} primary={['Book a call', '/book']} secondary={['Bring us one question', '/free-report']} body="30 minutes, no pitch. Bring your questions." loc="person-close" />
+  <Close variant="navy" lines={['Talk to', `${t.name.split(' ')[0]}.`]} primary={['Book a call', BOOK_URL]} secondary={['Try it out for free', '/free-report']} body="30 minutes, no pitch. Bring your questions." loc="person-close" />
 </Site>

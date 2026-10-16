@@ -18,18 +18,18 @@ const schema = [{ '@type': 'Dataset', name: s.title, description: s.short, url: 
   <header class="phero l">
     <Crumbs items={crumbs} />
     {!s.published && <span class="tag t-o">[Pending client OK: not indexed until approved]</span>}
-    <h1 class="dh d96">{s.title}</h1>
+    <h1 id="study-h1" class="dh d96">{s.title}</h1>
     <QuickAnswer q="What did the study find?" a={s.short} />
   </header>
-  <section class="wrap" style="padding-bottom:96px">
-    <div class="tbl"><table><thead><tr><th scope="col">Measure</th><th scope="col">Value</th><th scope="col">Note</th></tr></thead><tbody>{s.measures.map(([a, b, c]) => <tr><th scope="row">{a}</th><td class="num"><b>{b}</b></td><td>{c}</td></tr>)}</tbody></table></div>
+  <section class="wrap blk">
+    <div class="tbl" tabindex="0" role="region" aria-label="Measures, table"><table><thead><tr><th scope="col">Measure</th><th scope="col">Value</th><th scope="col">Note</th></tr></thead><tbody>{s.measures.map(([a, b, c]) => <tr><th scope="row">{a}</th><td class="num" data-label="Value"><b>{b}</b></td><td data-label="Note">{c}</td></tr>)}</tbody></table></div>
     <div class="btnrow l" style="margin-top:16px"><a class="arrow" href={csv} download data-track="dataset_downloaded" data-props={JSON.stringify({ study: s.slug })}>Download the table (CSV) <Arrow /></a><a class="arrow" href={`/reports/${r.slug}`}>See the full answer <Arrow /></a></div>
   </section>
-  <section class="wrap" style="padding-bottom:96px">
+  <section class="wrap blk">
     <div class="honest">
       <div><h2 class="h3">Method</h2><p class="muted">{s.method}</p></div>
-      <div><h2 class="h3">How to cite</h2><p class="muted">Arcus, “{s.title}” ({new Date().getFullYear()}), {SITE}/research/{s.slug}. Free to cite and reuse with credit (CC BY 4.0).</p></div>
+      <div><h2 class="h3">How to cite</h2><p class="muted cite">Arcus, “{s.title}” ({new Date().getFullYear()}), {SITE}/research/{s.slug}. Free to cite and reuse with credit (CC BY 4.0).</p></div>
     </div>
   </section>
-  <Close variant="or" lines={['Check your', 'own numbers.']} loc="study-close" />
+  <Close variant="paper" lines={['Now try it on', 'your numbers.']} loc="study-close" />
 </Site>

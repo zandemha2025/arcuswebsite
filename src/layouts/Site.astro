@@ -1,9 +1,10 @@
 ---
+import fs from 'node:fs';
 import '../styles/site.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import AskArcus from '../components/AskArcus.astro';
-import { SITE, ENTITY, TEAM, DOMAIN, SAME_AS } from '../data/site.js';
+import { SITE, ENTITY, TEAM, DOMAIN, SAME_AS, BOOK_URL } from '../data/site.js';
 
 interface Crumb { name: string; href?: string }
 interface Props {
@@ -18,18 +19,29 @@ interface Props {
   og?: string;
   article?: { published: string; modified: string; author: string; section: string };
   footer?: boolean;
+  ogTitle?: string;
+  navCta?: boolean;
+  heroCta?: boolean; // the hero has its own primary, so the header's CTA stays unlit until it scrolls away
+  heroSurface?: 'photo' | 'light'; // what the header floats over at the top: the homepage photo, or paper
 }
-const { title, description, path, active = 'none', page = 'page', schema = [], crumbs = [], noindex = false, og, article, footer = true, md } = Astro.props;
+const { title, description: rawDescription, path, active = 'none', page = 'page', schema = [], crumbs = [], noindex = false, og, article, footer = true, md, ogTitle, navCta = true, heroCta = path === '/', heroSurface = path === '/' ? 'photo' : 'light' } = Astro.props;
+// Placeholders stay on the page ([Check on their site], [Confirm: …]) but never in a search or share snippet.
+const description = String(rawDescription || '').replace(/\s*\[[^\]]*\]/g, '').replace(/\s{2,}/g, ' ').trim();
+// Share cards lead with the page's own line where it has one (the homepage: its H1); otherwise the title, without "| Arcus".
+const shareTitle = ogTitle || title.replace(/ \| Arcus$/, '');
 const canonical = new URL(path, SITE).href.replace(/\/$/, path === '/' ? '/' : '');
-const ogImage = new URL(og || `/og/${path === '/' ? 'home' : path.replace(/^\//, '').replace(/\//g, '-')}.png`, SITE).href;
+// Each page's share image comes from `npm run og`. Pages it skips (noindex: thanks pages, 404, research drafts) or that
+// are new since the last run fall back to the homepage image instead of pointing at a missing file.
+const ogName = path === '/' ? 'home' : path.replace(/^\//, '').replace(/\/$/, '').replace(/\//g, '-');
+const ogImage = new URL(og || (fs.existsSync(`public/og/${ogName}.png`) ? `/og/${ogName}.png` : '/og/home.png'), SITE).href;
 
 const org = {
   '@type': 'Organization', '@id': `${SITE}/#org`, name: 'Arcus', url: `${SITE}/`,
   logo: { '@type': 'ImageObject', url: `${SITE}/logo-512.png`, width: 512, height: 512 },
   description: ENTITY,
-  disambiguatingDescription: `Arcus (${DOMAIN}) is the truth layer for marketing leaders, founders and executives at entertainment and lifestyle brands. It is not a biotech, investment or infrastructure firm.`,
+  disambiguatingDescription: `Arcus (${DOMAIN}) shows marketing leaders, founders and executives at entertainment and lifestyle brands where their marketing money is working. It is not a biotech, investment or infrastructure firm.`,
   slogan: 'If it can’t be checked, it doesn’t count.',
-  knowsAbout: ['marketing measurement', 'agency reporting', 'double counting', 'incrementality', 'holdout testing', 'first-party data', 'social listening', 'audience research', 'creator marketing'],
+  knowsAbout: ['marketing measurement', 'marketing data', 'double counting', 'incrementality', 'holdout testing', 'first-party data', 'social listening', 'audience research', 'creator marketing'],
   areaServed: 'US',
   employee: TEAM.map((t) => ({ '@id': `${SITE}/about/${t.slug}#person` })),
   contactPoint: { '@type': 'ContactPoint', contactType: 'sales', url: `${SITE}/book` },
@@ -57,6 +69,7 @@ const cfg = {
   sentryLoader: import.meta.env.PUBLIC_SENTRY_LOADER || '',
   speedInsights: import.meta.env.PUBLIC_SPEED_INSIGHTS === 'true',
   contactEmail: 'hello@usearcus.ai',
+  bookUrl: BOOK_URL,
 };
 ---
 <!doctype html>
@@ -71,13 +84,13 @@ const cfg = {
     <meta property="og:type" content={article ? 'article' : 'website'} />
     <meta property="og:site_name" content="Arcus" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:title" content={title.replace(/ \| Arcus$/, '')} />
+    <meta property="og:title" content={shareTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={title.replace(/ \| Arcus$/, '')} />
+    <meta property="og:image:alt" content={shareTitle} />
     {article && <>
       <meta property="article:published_time" content={article.published} />
       <meta property="article:modified_time" content={article.modified} />
@@ -86,12 +99,16 @@ const cfg = {
     </>}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="theme-color" content="#F4F4F4" />
+    <meta name="theme-color" content="#F7F6F2" />
     {import.meta.env.PUBLIC_GSC_VERIFICATION && <meta name="google-site-verification" content={import.meta.env.PUBLIC_GSC_VERIFICATION} />}
     {import.meta.env.PUBLIC_BING_VERIFICATION && <meta name="msvalidate.01" content={import.meta.env.PUBLIC_BING_VERIFICATION} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title="Arcus Library" href="/rss.xml" />
     {md && <link rel="alternate" type="text/markdown" href={md} />}
+    {/* html.js before first paint (styles that only apply with JS, like the unlit header CTA), and html.still for
+        ?still (every end state, for shots). The CSP allows exactly this script by its hash (vercel.json, script-src):
+        change one character here and update the hash there (npm run check verifies it). */}
+    <script is:inline>document.documentElement.classList.add('js');if(/[?&]still\b/.test(location.search))document.documentElement.classList.add('still')</script>
     <link rel="preload" href="/fonts/anton.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/geist.woff2" as="font" type="font/woff2" crossorigin />
     <script type="application/ld+json" set:html={JSON.stringify(graph)} />
@@ -100,20 +117,21 @@ const cfg = {
   </head>
   <body data-page={page}>
     <a class="skip" href="#main">Skip to content</a>
-    <Nav active={active} />
+    {/* First in the tab order after the skip link, so keyboard and screen-reader users meet it first. It's fixed, so
+        where it sits in the page doesn't change where it shows. */}
+    <aside class="consent" data-consent hidden aria-label="Cookie choices">
+      <p class="small"><a class="ul" href="/cookies">Cookies</a> for stats and ads? Your call.</p>
+      <div class="btnrow">
+        <button class="jb ln sm" type="button" data-consent-choice="all"><span class="bg"></span><span class="lb">Accept all</span></button>
+        <button class="jb ln sm" type="button" data-consent-choice="necessary"><span class="bg"></span><span class="lb">Only necessary</span></button>
+      </div>
+    </aside>
+    <Nav active={active} cta={navCta} wait={heroCta ? heroSurface : false} />
     <main id="main" tabindex="-1">
       <slot />
     </main>
     {footer && <Footer />}
     {import.meta.env.PUBLIC_ASK_ENABLED !== 'false' && <AskArcus />}
-    <aside class="consent" data-consent hidden aria-label="Cookie choices">
-      <p class="h3">Cookies, briefly.</p>
-      <p class="small muted">We use cookies to see which pages help people, and to measure our ads. You can say no and the site works the same. <a class="ul" href="/cookies">Cookie policy</a></p>
-      <div class="btnrow">
-        <button class="jb k sm" type="button" data-consent-choice="all"><span class="bg"></span><span class="lb">Accept all</span></button>
-        <button class="jb ln sm" type="button" data-consent-choice="necessary"><span class="bg"></span><span class="lb">Only necessary</span></button>
-      </div>
-    </aside>
     <script>import '../scripts/site.js';</script>
   </body>
 </html>

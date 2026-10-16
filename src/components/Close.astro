@@ -1,16 +1,25 @@
 ---
-// Closing call to action. Three looks so pages don't end the same way.
-interface Props { variant?: 'ink' | 'or' | 'gr'; title: string; lines?: string[]; body?: string; primary?: [string, string]; secondary?: [string, string]; loc?: string }
-const { variant = 'ink', title, lines, body = 'Bring the question you’re least sure about: whether an agency’s results really happened, which posts work, what your audience says, or anything else. We answer it with your own numbers and what people say online, then walk you through it in 30 minutes. Free, no card.', primary = ['Bring us one question', '/free-report'], secondary = ['Book a call', '/book'], loc = 'close' } = Astro.props;
+// Closing call to action. Two looks so pages don't end the same way: 'navy' is the navy chapter with a lit top edge (the
+// periwinkle primary with its light edge, the ghost secondary); 'paper' is the white slab (periwinkle primary, outline
+// secondary), a light beat before the navy footer. A navy Close keeps a wider band of paper under it, so it and the
+// navy footer read as two beats, not one block. `photo` (navy only; the homepage passes its hero photo) lays that
+// graded photo under a heavy navy scrim: one photo field per page, bookends only. The heading is static.
+import Arrow from './Arrow.astro';
+import Pic from './Pic.astro';
+import { BOOK_URL } from '../data/site.js';
+interface Props { variant?: 'navy' | 'paper'; title?: string; lines?: string[]; body?: string; primary?: [string, string]; secondary?: [string, string]; loc?: string; photo?: string }
+const { variant = 'navy', title = '', lines, body = 'Pick the question you’re least sure about. We answer it with your own numbers and what people say online, then walk you through it in 30 minutes. Free, no card.', primary = ['Try it out for free', '/free-report'], secondary = ['Book a call', BOOK_URL], loc = 'close', photo = '' } = Astro.props;
 const ls = lines || [title];
+const dark = variant === 'navy';
 ---
-<section class={`slab s-${variant} close${variant === 'ink' ? ' on-dark' : ''}`} aria-labelledby={`${loc}-h`}>
+<section class={`slab close ${dark ? 's-ink on-dark close-navy' : 's-paper'}`} aria-labelledby={`${loc}-h`}>
+  {dark && photo && <div class="close-ph" aria-hidden="true"><Pic name={photo} widths={[800, 1200, 1600]} width={1600} height={1200} sizes="(max-width:900px) 100vw, 1416px" /></div>}
   <div class="close-in">
-    <h2 id={`${loc}-h`} class="dh d96 wipe" data-reveal>{ls.map((l) => <span class="ln">{l}</span>)}</h2>
+    <h2 id={`${loc}-h`} class="dh d96">{ls.map((l) => <span class="ln">{l}</span>)}</h2>
     <p class="lead">{body}</p>
     <div class="btnrow">
-      <a href={primary[1]} class={`jb ${variant === 'ink' ? 'st' : 'k'}`} data-jelly data-loc={loc}><span class="bg"></span><span class="lb">{primary[0]}</span></a>
-      {secondary && <a href={secondary[1]} class={`jb ${variant === 'ink' ? 'gh' : 'ln'}`} data-jelly data-loc={`${loc}-2`}><span class="bg"></span><span class="lb">{secondary[0]}</span></a>}
+      <a href={primary[1]} class="jb k" data-jelly data-loc={loc}><span class="bg"></span><span class="lb">{primary[0]}</span><Arrow /></a>
+      {secondary && <a href={secondary[1]} class={`jb ${dark ? 'gh' : 'ln'}`} data-jelly data-loc={`${loc}-2`}><span class="bg"></span><span class="lb">{secondary[0]}</span></a>}
     </div>
   </div>
 </section>

@@ -17,14 +17,14 @@ const shown = preview ? STUDIES : live;
     <p class="lead">Original studies, with the method and the numbers published so you can check our work and cite it.</p>
     <QuickAnswer q="What research does Arcus publish?" a="Studies built from public conversation and public sources, counted by hand and by script, with every number traced to a source. Each one ships with its method, its limits and a summary table you can cite." />
   </header>
-  <section class="wrap" style="padding-bottom:96px">
+  <section class="wrap blk">
     {shown.length ? shown.map((s) => (
       <a href={`/research/${s.slug}`} class="listrow">
         <span class="tag t-k">{s.published ? 'Study' : '[Pending client OK]'}</span>
-        <span style="display:flex;flex-direction:column;gap:6px"><span class="h3">{s.title}</span><span class="muted small">{s.short}</span></span>
+        <span class="stack-6"><span class="h3">{s.title}</span><span class="muted small">{s.short}</span></span>
         <span class="go"><Arrow /></span>
       </a>
     )) : <p class="empty">New studies are on the way. Get them first in <a class="ul" href="/newsletter">The Receipts</a>.</p>}
   </section>
-  <Close variant="ink" lines={['Your audience,', 'counted.']} body="These studies use public sources only. Your answer puts what people say next to your own numbers. Bring us one question, free, with a 30-minute walkthrough." loc="research-close" />
+  <Close variant="navy" lines={['Your audience,', 'counted.']} body="These studies use public sources only. Your answer puts what people say next to your own numbers. Try it free, with a 30-minute walkthrough. No card." loc="research-close" />
 </Site>

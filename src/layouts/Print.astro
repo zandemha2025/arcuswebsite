@@ -20,8 +20,25 @@ const { title } = Astro.props;
       .pp .lab { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--faint); }
       .pp ul, .pp ol { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
       .pp .row { display: flex; justify-content: space-between; align-items: center; }
-      .pp .cta { background: var(--ink); color: #FFF; border-radius: 10px; padding: 14px 16px; break-inside: avoid; }
-      .pp .n { font-family: var(--display); font-size: 30px; color: var(--stamp); line-height: 1; }
+      .pp, .pp * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      /* The action is periwinkle in print too: white on #5B67A6 is 5.34. */
+      .pp .cta { background: var(--peri); color: #FFFFFF; border-radius: 10px; padding: 14px 16px; break-inside: avoid; }
+      /* A label with its data code: what you know (teal), worked or flopped (split), what people say (periwinkle),
+         the next dollar (amber). The word carries the meaning; the dot only codes it. */
+      .pp .lab { display: inline-flex; align-items: center; gap: 6px; }
+      .pp .lab .dot { width: 7px; height: 7px; }
+      /* Keep, Test and Stop wear the triad as on the site (.todo): teal-soft, amber-soft, coral-wash with their dark text. */
+      .pp .v { display: inline-block; padding: 0 .4em; border-radius: 4px; font-size: .86em; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: var(--amber-soft); color: var(--ink); }
+      .pp .v-keep { background: var(--teal-soft); color: var(--teal-text); }
+      .pp .v-test { background: var(--amber-soft); color: var(--amber-text); }
+      .pp .v-stop { background: var(--coral-wash); color: var(--coral-text); }
+      .pp .fig { position: relative; isolation: isolate; font-weight: 700; padding: 0 .1em; }
+      .pp .fig::before { content: ""; position: absolute; left: 0; right: 0; bottom: .06em; height: .45em; border-radius: 3px; background: var(--amber-soft); z-index: -1; }
+      /* Report figures: ink on the amber-soft highlighter, lower half only (13.21:1), the same mark as the report
+         figures on the site (.fig-hl). Amber text on white would be 1.71. scripts/pdf.mjs prints backgrounds; if they
+         ever drop, the figure is still ink. */
+      .pp .n { position: relative; isolation: isolate; justify-self: start; align-self: flex-start; font-family: var(--display); font-size: 30px; color: var(--ink); line-height: 1; padding: .06em .08em 0; }
+      .pp .n::before { content: ""; position: absolute; left: 0; right: 0; bottom: .02em; height: .42em; border-radius: 4px; background: var(--amber-soft); z-index: -1; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
       .pp .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
       .pp a { text-decoration: none; }
     </style>

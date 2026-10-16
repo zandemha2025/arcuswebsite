@@ -1,17 +1,44 @@
 ---
-// Still logo wall. The site's one moving banner is the tools marquee, so this one never moves.
+// Logo row: a still hairline wall (six cells, 3 x 2 on smaller screens), no hover, no motion; nothing on the site loops.
+// Each logo is drawn as a mask filled with --muted, so the marks share the page's navy cast instead of turning
+// charcoal. Illustrative numbers (the sample insight) never sit next to or under this row. Heights are set by eye so the marks read as equal weight (a wordmark is short and wide; Paramount's
+// emblem needs more height): px at desktop, then phone. `bare` renders it without its own <section>, for use
+// inside another section (the homepage hero's foot).
+import fs from 'node:fs';
+import path from 'node:path';
 import { CLIENTS, CLIENT_SLOTS } from '../data/site.js';
 const preview = import.meta.env.PUBLIC_PREVIEW === 'true' || import.meta.env.DEV;
 const slots = CLIENTS.length ? CLIENTS : (preview ? Array.from({ length: CLIENT_SLOTS }, (_, i) => ({ name: `Client logo ${i + 1}`, logo: '' })) : []);
-const { title = 'Trusted by teams at' } = Astro.props;
+// small: a compact 3 x 2 wall for a side column (Try it free, under the receipt).
+const { title = 'Brands we’ve worked with', bare = false, small = false } = Astro.props;
+const SIZE = { 'starface.svg': [22, 18], 'paramount.svg': [42, 34], 'truly.svg': [24, 20], 'mrbeast.svg': [20, 17], 'amazon.svg': [26, 22], 'hardees.svg': [30, 26] };
+// Aspect ratio from the file itself (viewBox, else width/height), so a new logo needs no measuring.
+const ratio = (file) => {
+  try {
+    const head = fs.readFileSync(path.join(process.cwd(), 'public/logos/clients', file), 'utf8').slice(0, 4000);
+    const svg = (head.match(/<svg[\s\S]*?>/) || [''])[0];
+    const vb = svg.match(/viewBox="\s*[\d.-]+[\s,]+[\d.-]+[\s,]+([\d.]+)[\s,]+([\d.]+)/);
+    if (vb) return +vb[1] / +vb[2];
+    const w = svg.match(/\swidth="([\d.]+)/), h = svg.match(/\sheight="([\d.]+)/);
+    if (w && h) return +w[1] / +h[1];
+  } catch {}
+  return 3;
+};
+const items = slots.map((c) => {
+  if (!c.logo) return { ...c };
+  const [d, m] = SIZE[c.logo] || [Math.round((c.h || 32) * 0.6), Math.round((c.h || 32) * 0.5)];
+  const src = `/logos/clients/${c.logo}`;
+  return { ...c, style: `--h:${d}px;--hm:${m}px;aspect-ratio:${ratio(c.logo).toFixed(3)};-webkit-mask-image:url(${src});mask-image:url(${src})` };
+});
+const Tag = bare ? 'div' : 'section';
 ---
-{slots.length > 0 && (
-<section class="wrap clients" aria-labelledby="clients-h">
-  <h2 id="clients-h" class="tiny faint clients-h">{title}</h2>
+{items.length > 0 && (
+<Tag class:list={['clients', !bare && 'wrap', small && 'clients-sm']} role={bare ? 'region' : undefined} aria-labelledby="clients-h">
+  <h2 id="clients-h" class="clients-h">{title}</h2>
   <ul class="clients-w">
-    {slots.map((c) => (
-      <li>{c.logo ? <img src={`/logos/clients/${c.logo}`} alt={c.name} style={`height:${c.h || 32}px`} loading="lazy" /> : (CLIENTS.length ? <span class="cw">{c.name}</span> : <span class="slot-ph">[{c.name}]</span>)}</li>
+    {items.map((c) => (
+      <li>{c.logo ? <span class="cl" role="img" aria-label={c.name} style={c.style}></span> : (CLIENTS.length ? <span class="cw">{c.name}</span> : <span class="slot-ph">[{c.name}]</span>)}</li>
     ))}
   </ul>
-</section>
+</Tag>
 )}

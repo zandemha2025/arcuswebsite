@@ -1,7 +1,8 @@
 ---
 // Ask Arcus: a small chat that answers only from this site, then points to a page or a call.
+import { BOOK_URL } from '../data/site.js';
 ---
-<div class="ask" data-ask>
+<div class="ask away" data-ask>
   <button type="button" class="ask-btn" data-ask-open aria-expanded="false" aria-controls="ask-panel" aria-label="Ask Arcus a question">
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h12v9H8l-4 3z"/></svg>
     <span>Ask Arcus</span>
@@ -12,9 +13,9 @@
       <button type="button" class="ask-x" data-ask-close aria-label="Close"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg></button>
     </header>
     <div class="ask-log" data-ask-log aria-live="polite">
-      <p class="ask-m a">Ask anything about Arcus: what we check, what the free first question needs, how listening works. I answer from this website only.</p>
+      <p class="ask-m a">Ask anything about Arcus: what we connect, how trying it free works, where we listen. I answer from this website only.</p>
       <div class="ask-sugg">
-        <button type="button" class="chip" data-ask-q>What do I get from the free question?</button>
+        <button type="button" class="chip" data-ask-q>What do we get when we try it free?</button>
         <button type="button" class="chip" data-ask-q>Do you work with brands that don’t sell online?</button>
         <button type="button" class="chip" data-ask-q>Where do you listen?</button>
       </div>
@@ -24,6 +25,6 @@
       <input id="ask-in" name="q" autocomplete="off" maxlength="600" placeholder="Type a question" required />
       <button type="submit" class="jb k sm"><span class="bg"></span><span class="lb">Ask</span></button>
     </form>
-    <p class="tiny faint ask-note">Answers come from this website and can be wrong. For anything important, <a class="ul" href="/book">ask the team</a>.</p>
+    <p class="tiny faint ask-note">Answers come from this website and can be wrong. For anything important, <a class="ul" href={BOOK_URL}>ask the team</a>.</p>
   </section>
 </div>

@@ -1,10 +1,13 @@
 ---
 import Arrow from './Arrow.astro';
+// Each tile ends on what the link does, so it reads on its own ("See pricing", not "Go"). A fourth item overrides it.
 const { items = [], title = 'Keep reading' } = Astro.props;
+const VERBS = { '/pricing': 'See pricing', '/compare': 'See all comparisons', '/security': 'See how we handle data', '/how-it-works': 'See how it works', '/make-the-case': 'Get the one-pager', '/listening': 'See where we listen', '/reports': 'See real answers', '/faq': 'Read the FAQ', '/free-report': 'Try it out for free' };
+const verb = (h) => VERBS[h] || (/^\/compare\/./.test(h) ? 'See the comparison' : /^\/for\/./.test(h) ? 'See how we help them' : /^\/library\/./.test(h) ? 'Read the guide' : /^\/glossary\/./.test(h) ? 'Read the definition' : 'Read more');
 ---
-<section class="wrap" style="padding-bottom:96px" aria-labelledby="rel-h">
-  <h2 id="rel-h" class="h2s" style="margin-bottom:20px">{title}</h2>
+<section class="wrap blk" aria-labelledby="rel-h">
+  <h2 id="rel-h" class="h2s mb20">{title}</h2>
   <div class="tiles" style={`--n:${Math.min(3, items.length)}`}>
-    {items.map(([t, d, h]) => <a class="tile" href={h}><span class="h3">{t}</span><span class="muted small">{d}</span><span class="arrow">Go <Arrow /></span></a>)}
+    {items.map(([t, d, h, v]) => <a class="tile" href={h}><span class="h3">{t}</span><span class="muted small">{d}</span><span class="arrow">{v || verb(h)} <Arrow /></span></a>)}
   </div>
 </section>

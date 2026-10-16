@@ -3,10 +3,12 @@ import Site from '../layouts/Site.astro';
 import Crumbs from '../components/Crumbs.astro';
 import QuickAnswer from '../components/QuickAnswer.astro';
 import ClientWall from '../components/ClientWall.astro';
-import { ENTITY, SHORT, TEAM } from '../data/site.js';
+import * as site from '../data/site.js';
+const { ENTITY, SHORT, TEAM } = site;
+const { BOOK_URL } = site;
 const crumbs = [{ name: 'Press', href: '/press' }];
 const topics = [
-  ['Checking agency reports', 'Why agency reports often add up to more results than a brand had, and how to count each result once.'],
+  ['Finding the spend that isn’t working', 'How brands see which marketing pays off, using data they already have, with each result counted once.'],
   ['Proof of cause without the math', 'What a regions-on, regions-off test is, when a brand needs one, and what it can and can’t tell you.'],
   ['How audiences talk, counted', 'Reading thousands of public comments and counting what people say, instead of skimming a word cloud.'],
   ['Watched or shared', 'Why some posts get watched and others get passed on, and why a platform average can mislead.'],
@@ -17,23 +19,23 @@ const topics = [
 <Site title="Press | Arcus" description="Press resources for Arcus: boilerplate, team, topics our people can speak on, logo files and a press contact." path="/press" page="press" crumbs={crumbs}>
   <header class="phero l">
     <Crumbs items={crumbs} />
-    <h1 class="dh d120">Press.</h1>
-    <p class="lead">Writing about whether marketing works, how audiences talk, or brands moving into retail? We check marketing claims for a living, and we’re happy to show our work.</p>
+    <h1 class="dh d96">Press.</h1>
+    <p class="lead">Writing about whether marketing works, how audiences talk, or brands moving into retail? We connect a brand’s data, count what people say about it online, and show where every number came from. We’re happy to show our work.</p>
     <QuickAnswer q="What is Arcus?" a={ENTITY} points={['Press contact: [press@usearcus.ai]', 'We reply within [Confirm: one business day]']} />
   </header>
-  <section class="wrap" style="padding-bottom:96px">
+  <section class="wrap blk">
     <div class="honest">
-      <div><h2 class="h3">Boilerplate (50 words)</h2><p class="muted">Arcus is the truth layer for marketing. It connects a brand’s data, from sales and viewers to agency reports, into one layer the brand owns, adds what people say online, and checks every claim. Teams at entertainment and lifestyle brands use it to answer any question with the whole picture. Learn more at usearcus.ai.</p></div>
-      <div><h2 class="h3">One-liner</h2><p class="muted">{SHORT}</p><h2 class="h3" style="margin-top:12px">Fast facts</h2><ul class="dash"><li>Website: usearcus.ai</li><li>Start: one question, answered free, with a 30-minute walkthrough</li><li>Setup: about three months to connect everything into one layer inside the brand’s own setup, and the brand owns it</li><li>Founded: [Confirm: year] · HQ: [Confirm: city]</li></ul></div>
+      <div><h2 class="h3">Boilerplate (50 words)</h2><p class="muted">Arcus helps entertainment and lifestyle brands see where their marketing money is working. It connects the data a brand’s teams have, from sales and CRM to ad accounts and agency reports, with what people say online, in one place the brand owns, and answers any question with the whole picture.</p></div>
+      <div><h2 class="h3">One-liner</h2><p class="muted">{SHORT}</p><h2 class="h3" style="margin-top:12px">Fast facts</h2><ul class="dash"><li>Website: usearcus.ai</li><li>Start: try it free on one question, with a 30-minute walkthrough</li><li>Setup: about three months to connect everything into one place inside the brand’s own setup, and the brand owns it</li><li>Founded: [Confirm: year] · HQ: [Confirm: city]</li></ul></div>
     </div>
   </section>
-  <section class="wrap" style="padding-bottom:96px">
-    <h2 class="dh d56" style="margin-bottom:20px">Who to talk to.</h2>
-    <div class="tbl"><table><thead><tr><th scope="col">Name</th><th scope="col">Title</th><th scope="col">Ask them about</th></tr></thead><tbody>
-      {TEAM.map((t, n) => <tr><th scope="row"><a class="ul" href={`/about/${t.slug}`}>{t.name}</a></th><td>{t.title}</td><td>{['How Arcus uses AI to count conversation, and the limits on what it can do', 'Agency relationships, renewals, and what brand teams ask before they sign', 'What goes in an Arcus report: content and audience findings', 'Connecting a brand’s own data, security, privacy, and tracing every number to a source'][n]}</td></tr>)}
+  <section class="wrap blk">
+    <h2 id="talk-h" class="dh d56" style="margin-bottom:20px">Who to talk to.</h2>
+    <div class="tbl" tabindex="0" role="region" aria-label="Who to talk to, table"><table><thead><tr><th scope="col">Name</th><th scope="col">Title</th><th scope="col">Ask them about</th></tr></thead><tbody>
+      {TEAM.map((t, n) => <tr><th scope="row"><a class="ul" href={`/about/${t.slug}`}>{t.name}</a></th><td data-label="Title">{t.title}</td><td data-label="Ask them about">{['How Arcus uses AI to count conversation, and the limits on what it can do', 'Budget decisions, and what to test before moving money', 'What goes in an Arcus report: content and audience findings', 'Connecting a brand’s own data, security, privacy, and tracing every number to a source'][n]}</td></tr>)}
     </tbody></table></div>
   </section>
-  <section class="wrap" style="padding-bottom:96px">
+  <section class="wrap blk">
     <h2 class="dh d56" style="margin-bottom:20px">What we can talk about.</h2>
     <div class="tiles" style="--n:3">{topics.map(([t, d]) => <div class="tile"><p class="h3">{t}</p><p class="muted">{d}</p></div>)}</div>
     <p class="small muted" style="margin-top:16px">Client research is shared only with the client’s written approval. We don’t comment on specific clients’ results.</p>
@@ -42,7 +44,7 @@ const topics = [
   <section class="wrap sec">
     <div class="honest">
       <div><h2 class="h3">Logo</h2><p class="muted">Download: [Confirm: link to logo pack (SVG and PNG, light and dark)]. Use as supplied. Write the name as “Arcus”.</p></div>
-      <div><h2 class="h3">Contact</h2><p class="muted">Interviews, data requests and materials: [press@usearcus.ai]. Anything else: <a class="ul" href="/book">book a call</a>.</p></div>
+      <div><h2 class="h3">Contact</h2><p class="muted">Interviews, data requests and materials: [press@usearcus.ai]. Anything else: <a class="ul" href={BOOK_URL}>book a call</a>.</p></div>
     </div>
   </section>
 </Site>

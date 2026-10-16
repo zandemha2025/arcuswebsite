@@ -1,21 +1,24 @@
 ---
 // Deck viewer. Without JS every slide is in the page, one after another (and that's what search engines read).
 // With JS the slides stack like a deck: flick, click or use arrow keys.
+import Arrow from './Arrow.astro';
 import { SITE } from '../data/site.js';
 const { report, endCard = true } = Astro.props;
 const r = report;
+// KEEP, TEST and STOP speak the triad: worked (teal), the next dollar (amber), flopped (coral). site.css .todo.
+const VERB = { keep: 'v-keep', test: 'v-test', stop: 'v-stop' };
 const total = r.slides.length + (endCard ? 1 : 0);
-const mail = `mailto:?subject=${encodeURIComponent(`Worth a look: an Arcus ${r.kind.toLowerCase()}`)}&body=${encodeURIComponent(`${r.example ? 'This is an example Arcus answer (made-up numbers).' : `This is a real answer Arcus gave ${r.who.toLowerCase()} (names removed).`} They answer one question about our marketing for free, with a 30-minute walkthrough.\n\n${SITE}/reports/${r.slug}\n`)}`;
+const mail = `mailto:?subject=${encodeURIComponent(`Worth a look: an Arcus ${r.kind.toLowerCase()}`)}&body=${encodeURIComponent(`${r.example ? 'This is an example Arcus answer (made-up numbers).' : `This is a real answer Arcus gave ${r.who.toLowerCase()} (names removed).`} We can try it free: we pick a question about our marketing, they answer it with our own numbers, then walk us through it in 30 minutes.\n\n${SITE}/reports/${r.slug}\n`)}`;
 ---
-<div class="deck" data-deck aria-roledescription="slide deck" aria-label={`${r.kind}: ${r.who}`}>
+<div class="deck" data-deck role="region" aria-roledescription="slide deck" aria-label={`${r.kind}: ${r.who}`} aria-keyshortcuts="ArrowLeft ArrowRight">
   <ol class="deck-s">
     {r.slides.map((s, i) => (
       <li class="slide" aria-roledescription="slide" aria-label={`${i + 1} of ${total}`} data-slide>
         <div class="meta"><span>{r.kind}{r.example ? ' · Example numbers' : ` · ${r.who}`}</span><span class="num">{String(i + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span></div>
-        <div style="display:flex;flex-direction:column;gap:16px">
-          <p class="tiny faint" style="text-transform:uppercase;letter-spacing:.08em;font-weight:600">{s.label}</p>
+        <div class="slide-c">
+          <p class="tiny faint slide-l">{s.label}</p>
           {s.big && <p class="big">{s.big}</p>}
-          {s.list && <ul class="todo">{s.list.map(([k, v]) => <li><b>{k}</b><span>{v}</span></li>)}</ul>}
+          {s.list && <ul class="todo">{s.list.map(([k, v]) => <li><b class={VERB[k.toLowerCase()]}>{k}</b><span>{v}</span></li>)}</ul>}
         </div>
         {s.body ? <p class="body">{s.body}</p> : <span></span>}
       </li>
@@ -25,8 +28,8 @@ const mail = `mailto:?subject=${encodeURIComponent(`Worth a look: an Arcus ${r.k
         <div class="meta"><span>That’s the answer</span><span class="num">{String(total).padStart(2, '0')} / {String(total).padStart(2, '0')}</span></div>
         <p class="big">What’s your question?</p>
         <div class="btnrow l">
-          <a href={`/free-report?from=${r.slug}`} class="jb k" data-jelly data-loc="deck-end"><span class="bg"></span><span class="lb">Bring us one question</span></a>
-          <a href={mail} class="jb ln" data-track="report_shared" data-props={JSON.stringify({ report: r.slug, via: 'email' })}><span class="bg"></span><span class="lb">Send this to your boss</span></a>
+          <a href={`/free-report?from=${r.slug}`} class="jb k" data-jelly data-loc="deck-end"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
+          <a href={mail} class="jb gh" data-track="report_shared" data-props={JSON.stringify({ report: r.slug, via: 'email' })}><span class="bg"></span><span class="lb">Send this to your boss</span></a>
         </div>
       </li>
     )}

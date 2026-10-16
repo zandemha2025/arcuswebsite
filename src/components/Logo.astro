@@ -1,11 +1,17 @@
 ---
-// Inline a Simple Icons SVG from public/logos so it takes the text color. No file: the name is set as a wordmark.
+// A tool's mark and name. The mark is a Simple Icons SVG from public/logos: an <img>, or inlined with img={false} so it
+// takes the text color, or tint so it is drawn as a mask in the surrounding --muted (the tools strip, DEPTH §B.7: the
+// marks recede, the names stay ink). Brands whose only mark is a wordmark (it shrinks to a smudge in a 22px square)
+// and brands with no file show their name alone: no stand-in letter tile, so a row never mixes real marks with
+// placeholders.
 import fs from 'node:fs';
 import path from 'node:path';
-interface Props { name: string; logo?: string; size?: number; label?: boolean }
-const { name, logo = '', size = 22, label = true, img = true } = Astro.props;
+interface Props { name: string; logo?: string; size?: number; label?: boolean; img?: boolean; tint?: boolean }
+const { name, logo = '', size = 22, label = true, img = true, tint = false } = Astro.props;
+const WORDMARK = new Set(['ticketmaster', 'walmart', 'roku']);
+const mark = !!logo && !WORDMARK.has(logo);
 let svg = '';
-if (logo && !img) {
+if (mark && !img && !tint) {
   try {
     svg = fs.readFileSync(path.join(process.cwd(), 'public/logos', `${logo}.svg`), 'utf8')
       .replace(/<title>.*?<\/title>/, '')
@@ -13,9 +19,9 @@ if (logo && !img) {
   } catch { svg = ''; }
 }
 ---
-<span class={`lg${svg || (img && logo) ? '' : ' wm'}`}>
-  {img && logo && <img src={`/logos/${logo}.svg`} alt="" width={size} height={size} loading="lazy" decoding="async" class="lg-i" />}
+<span class:list={['lg', !mark && 'lg-n-only']}>
+  {mark && tint && <span class="lg-i lg-t" aria-hidden="true" style={`width:${size}px;height:${size}px;-webkit-mask-image:url(/logos/${logo}.svg);mask-image:url(/logos/${logo}.svg)`}></span>}
+  {mark && img && !tint && <img src={`/logos/${logo}.svg`} alt="" width={size} height={size} loading="lazy" decoding="async" class="lg-i" />}
   {svg && <Fragment set:html={svg} />}
-  {(label || !(svg || (img && logo))) && <span class="lg-n">{name}</span>}
-  {!label && (svg || (img && logo)) && <span class="sr-only">{name}</span>}
+  {label ? <span class="lg-n">{name}</span> : <span class="sr-only">{name}</span>}
 </span>

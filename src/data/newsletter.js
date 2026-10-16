@@ -1,6 +1,7 @@
-// The Receipts: the Arcus monthly newsletter. One thing agencies get wrong, and how to check it.
+// The Receipts: the Arcus monthly newsletter. One number marketing gets wrong each month, and how to check it.
 // Numbers come only from real Arcus reports (anonymized) or are clearly labeled as example numbers.
 // Links are site-relative; prefix with https://usearcus.ai when sending by email.
+// `archived: true` keeps an issue live at its URL but out of the issue list, the sitemap and the keyword map.
 
 export const NEWSLETTER = {
   name: 'The Receipts',
@@ -13,6 +14,7 @@ export const ISSUES = [
     slug: 'issue-1-add-up-your-agencies',
     n: 1,
     date: '2026-10-02',
+    archived: true,
     subject: 'Your agencies may have claimed more sales than you had',
     preview: 'Add the claims together. The total shows something no single report will.',
     title: 'Add up your agencies’ claims before you read any of them',
@@ -49,10 +51,10 @@ export const ISSUES = [
 <p>A total above your own number proves overlap. It doesn’t say which agency counts most generously, or by how much. For that, each claim gets matched against your own list, one result at a time. That’s the slow part, and it’s where most teams stop.</p>
 <p>It also doesn’t prove any ad caused a sale. Cause takes a test: run the ads in some regions and not others for a few weeks, then compare your own numbers between the two groups.</p>
 <p>And a big gap is no reason to fire anyone. It almost always comes from platform rules. Lead with curiosity. Send each agency two questions before your next review: what counts as a result (a click, or a view too), and over how many days?</p>
-<p>The full walkthrough, with the questions to ask and the mistakes to skip, is in our guide: <a href="/library/agency-double-counting-sales">Is your agency double counting your sales?</a></p>
+<p>The definition, with an example and a question to ask, is in our glossary: <a href="/glossary/double-counting">What is double counting?</a></p>
 
 <h2>If you’d rather not do the matching</h2>
-<p>Make it your first question. Send us one agency report, and we’ll check it against your own numbers and walk you through what held up on a 30-minute call. It’s free, and you keep the slides. <a href="/free-report">Bring us one question</a>.</p>
+<p>Want to see what worked for your brand? <a href="/free-report">Try it free</a>: pick a question, and we answer it with your own numbers and what people say online. No card.</p>
 <p>See you next month.</p>
 <p>Brendon Ghaderi<br>Chief Technology Officer, Arcus</p>`,
   },
@@ -66,7 +68,7 @@ export const ISSUES = [
     short: 'A view means someone watched; a share means someone picked a person and sent your post to them, which is the closest thing a social dashboard has to word of mouth. In a real Arcus content report, the most-watched post on either platform got zero shares, and the most-shared post had about average views.',
     author: 'devin-min',
     body: `
-<p>This month’s thing: agency recaps lead with views and impressions, because they are the biggest numbers on the page. A view tells you a post got watched. It says nothing about whether anyone cared enough to send it on.</p>
+<p>This month’s thing: most recaps lead with views and impressions, because they are the biggest numbers on the page. A view tells you a post got watched. It says nothing about whether anyone cared enough to send it on.</p>
 <p>A share does. When someone shares a post, they pick a specific person and decide it’s worth that person’s time. That’s word of mouth, and it’s the one number on a social dashboard that behaves like it.</p>
 
 <h2>What it looks like in real data</h2>
@@ -94,7 +96,7 @@ export const ISSUES = [
 <p>The full math, including the hosting hack pattern, is in our guide: <a href="/library/watched-vs-shared-share-rate">Watched or shared? The share-rate math</a>.</p>
 
 <h2>Where to start with us</h2>
-<p>“Which of our posts work?” is a good first question. Bring it to us with your social export, and we’ll answer it against your own numbers, free, with a 30-minute walkthrough. Or start with an agency report. <a href="/free-report">Bring us one question</a>.</p>
+<p>“Which of our posts work?” is a good place to start. <a href="/free-report">Try it free</a> with that question, and we answer it with your own numbers, then walk you through it in 30 minutes. No card.</p>
 <p>Until next month,</p>
 <p>Devin Min<br>Chief Product Officer, Arcus</p>`,
   },
@@ -108,13 +110,13 @@ export const ISSUES = [
     short: 'Often not your brand name. In a real Arcus audience report for a streaming service, viewers left 78,682 comments under four of its trailers and talked about the shows, bringing up the service mostly when it got in the way, so listening that tracks brand mentions alone misses most of the conversation.',
     author: 'min-kwak',
     body: `
-<p>This month’s thing: most listening reports, from agencies and from software, start by tracking mentions of your brand name. Your audience may rarely say it. They talk about the show, the flavor, the character, the moment. Count only your name and you hear a small, grumpy slice of the room.</p>
+<p>This month’s thing: most listening reports, from vendors and from software, start by tracking mentions of your brand name. Your audience may rarely say it. They talk about the show, the flavor, the character, the moment. Count only your name and you hear a small, grumpy slice of the room.</p>
 
 <h2>What it looks like in real data</h2>
 <p>These numbers come from a real Arcus audience report for a streaming service, built on what men 18 to 24 post and comment on TikTok, Reddit, YouTube, X and Instagram.</p>
 <ul>
 <li><b>They talk about the shows.</b> Under the service’s own trailers for four shows, they left 78,682 comments on 53.5 million views. The same four moves showed up in every one: the callback, the lore, the cadence (“At last. A show that comes out every year rather than making us wait 2-3.”, 15,000 likes) and the return (“Guys we are back”, 5,200 likes).</li>
-<li><b>The service comes up when it gets in the way.</b> Ads, the app, a cancelled show. One Reddit comment counting five ad breaks in a single episode took 46 upvotes. When they said “cancel,” they mostly meant a show.</li>
+<li><b>The service comes up when it gets in the way.</b> Ads, the app, a canceled show. One Reddit comment counting five ad breaks in a single episode took 46 upvotes. When they said “cancel,” they mostly meant a show.</li>
 <li><b>They don’t call it what brands guess they’d call it.</b> A glossary word like “unc” appeared in five comments out of 6,622, and none of them were about the service. The words they do use are verdicts on the work: “bro” in 40 of every 1,000 comments, “peak” in 8.3, “real” in 7.9.</li>
 <li><b>Their tone fools a sentiment score.</b> A top reply under a brand post called the trailer bad and promised to watch anyway. It’s deadpan, and it means “I’m in.”</li>
 </ul>
@@ -134,8 +136,8 @@ export const ISSUES = [
 <p>Ninety comments show you what to count. They don’t tell you how often each thing happens across every platform, or whether the conversation lines up with your sales, tickets, sign-ups or viewing. That takes counting thousands of comments the same way, then putting them in one picture with your own numbers.</p>
 <p>The full answer, with the four voice rules that came out of it, is here: <a href="/reports/audience-report">the audience report for a streaming service</a>.</p>
 
-<h2>Start with one question</h2>
-<p>You don’t need a listening study to start. Bring us one question, like “What does our audience actually call us?”, and we’ll answer it with what people say and your own numbers, free, with a 30-minute walkthrough. <a href="/free-report">Bring us one question</a>.</p>
+<h2>Start with a question</h2>
+<p>You don’t need a listening study to start. <a href="/free-report">Try it free</a> with a question like “What does our audience actually call us?” We answer it with what people say online and your own numbers, then walk you through it in 30 minutes. No card.</p>
 <p>Talk soon,</p>
 <p>Min Kwak<br>Chief Revenue Officer, Arcus</p>`,
   },

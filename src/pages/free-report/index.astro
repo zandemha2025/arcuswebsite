@@ -4,132 +4,105 @@ import Crumbs from '../../components/Crumbs.astro';
 import LeadForm from '../../components/LeadForm.astro';
 import QuickAnswer from '../../components/QuickAnswer.astro';
 import PageFAQ from '../../components/PageFAQ.astro';
+import InsightCard from '../../components/InsightCard.astro';
 import Arrow from '../../components/Arrow.astro';
-import { SITE, TBD } from '../../data/site.js';
-const crumbs = [{ name: 'One free question', href: '/free-report' }];
-const schema = [{ '@type': 'Offer', name: 'First question, answered free', price: '0', priceCurrency: 'USD', url: `${SITE}/free-report`, seller: { '@id': `${SITE}/#org` }, description: 'Bring Arcus one marketing question. We answer it with your own numbers and what your audience says, and walk you through it.' }];
+import ClientWall from '../../components/ClientWall.astro';
+import { SITE, TBD, BOOK_URL } from '../../data/site.js';
+const crumbs = [{ name: 'Try it free', href: '/free-report' }];
+const schema = [{ '@type': 'Offer', name: 'First question, answered free', price: '0', priceCurrency: 'USD', url: `${SITE}/free-report`, seller: { '@id': `${SITE}/#org` }, description: 'Pick one marketing question. Arcus answers it with your own numbers and what your audience says, then walks you through it.' }];
+// Three outcomes, worded apart from the homepage hero (spine §3.3). Each wears the triad with its own shape, so color
+// is never the only cue: paid off (teal, up), fell flat (coral, down), the next dollar (amber, right).
+const ARROW = { tw: 'M8 13V3M4 7l4-4 4 4', tf: 'M8 3v10M4 9l4 4 4-4', tn: 'M3 8h10M9 4l4 4-4 4' };
+const OUTCOMES = [['Which spend paid off', 'tw'], ['What fell flat', 'tf'], ['Where to put the next dollar', 'tn']];
+// The receipt itemizes a $0 total, so it stays a receipt (an insight card answers; a receipt itemizes).
+const GET = ['The answer, on top', 'Where every number came from', 'What to keep, test and stop', 'A 30-minute walkthrough'];
+// What the sample shows, in the order the markers sit on the card. Note 2 marks "Next: test paying them…", so it says
+// "what to do next" (the card has a test, not keep and stop lines).
+const ANNOS = ['The answer, on top', 'What to do next', 'Where every number came from'];
+const STEPS = [
+  ['You pick a question', 'Send the form. It takes about a minute.'],
+  ['We answer it', 'We connect the accounts your question needs, then answer it with your own numbers and what people say online. A few slides, the answer on top.'],
+  ['We walk you through it', 'A 30-minute call. The slides are yours to keep and share.'],
+];
 ---
-<Site title="Bring us one question, answered free | Arcus" description="Bring Arcus the marketing question you’re least sure about. We line up your own numbers with what your audience says, check every claim, and walk you through the answer. Free, no card." path="/free-report" page="free-report" crumbs={crumbs} schema={schema}>
-  <section class="split-hero" style="align-items:start">
-    <div style="display:flex;flex-direction:column;gap:24px">
+<Site title="Try Arcus free: pick a question, get the answer | Arcus" description="Pick the marketing question you’re least sure about. We answer it with your own numbers and what your audience says, then walk you through it. Free, no card." path="/free-report" page="free-report" crumbs={crumbs} schema={schema} navCta={false}>
+  {/* Grid areas, not order: phones read crumbs, H1, lead, the form, then what you get. */}
+  <section class="frh" aria-labelledby="frh-h">
+    <div class="frh-copy">
       <Crumbs items={crumbs} />
-      <h1 class="dh d96" data-exp="free_report_h1:numbers" data-exp-text="Does your agency’s report add up?">Bring us one question. We’ll answer it free.</h1>
-      <p class="lead">Pick the question you’re least sure about: did an agency’s results actually happen, which of your posts work, what your audience says about you, or anything else. We answer it with your own numbers and what people say online, check every claim, and walk you through it in 30 minutes. No card.</p>
-      <div class="rc wide" aria-label="What you get">
-        <div class="hd">What you get</div>
-        <div class="r"><span>The answer, on top</span><span>✓</span></div>
-        <div class="r"><span>Every claim checked against your own numbers</span><span>✓</span></div>
-        <div class="r"><span>What people say, counted</span><span>✓</span></div>
-        <div class="r"><span>What to keep, test and stop</span><span>✓</span></div>
-        <div class="r"><span>A 30-minute walkthrough call</span><span>✓</span></div>
-        <div class="r tot"><span>Total</span><span>$0</span></div>
-        <div class="bar"></div>
-      </div>
+      <h1 id="frh-h" class="dh d72">Try it out for free</h1>
+      <p class="lead frh-lead">Pick the question you’re least sure about. We answer it with your own numbers and what people say online, then walk you through it in 30 minutes. No card.</p>
     </div>
-    <div id="form" style="position:sticky;top:110px">
+    <div class="frh-form" id="form">
       <LeadForm id="fr" loc="free-report-form" />
     </div>
+    <div class="frh-get">
+      <ul class="ticks" aria-label="What you’ll find out">
+        {OUTCOMES.map(([o, k]) => <li><span class={`tick ${k}`} aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d={ARROW[k]}/></svg></span>{o}</li>)}
+      </ul>
+      <div class="bill" role="group" aria-labelledby="bill-h">
+        <p id="bill-h" class="bill-h">What you get</p>
+        <ul class="bill-l">{GET.map((t) => <li><span>{t}</span><span>$0</span></li>)}</ul>
+        <p class="bill-tot"><span>Total</span><span>$0</span></p>
+        <div class="bill-f"><p>Turnaround: {TBD.turnaround}</p><span class="bill-stamp">No card</span></div>
+      </div>
+      {/* Proof beside the ask, as on the homepage: still, uncropped. "What happens next" sits between it and the
+          sample answer further down, so no illustrative number is next to or under a client logo. */}
+      <ClientWall bare small />
+    </div>
   </section>
 
-  <section class="wrap" style="padding-bottom:96px">
-    <QuickAnswer q="What is the free first question?" a="You bring Arcus one marketing question, like whether an agency’s results actually happened, which posts work, or what your audience says about you. It’s how every brand starts with Arcus, before we connect the rest of its data. We answer it with your own numbers and what people say across the internet, check every claim, and send back a few slides with the answer on top and what to do next. Then we walk you through it on a call. It costs nothing and there’s no card." />
-  </section>
-
-  <section class="wrap" style="padding-bottom:96px" aria-labelledby="next-h">
-    <div class="sec-h"><h2 id="next-h" class="dh d72">What happens next.</h2></div>
-    <ol class="steps" style="--n:4;padding:0;list-style:none">
-      <li class="step"><span class="n">01</span><p class="h3">You send the form</p><p class="muted">Pick a time for the walkthrough on the next page.</p></li>
-      <li class="step"><span class="n">02</span><p class="h3">We set up access</p><p class="muted">We email you a short list and walk you through connecting the accounts your question needs.</p></li>
-      <li class="step"><span class="n">03</span><p class="h3">We answer it</p><p class="muted">Your numbers, lined up with what people say, and every claim checked. Turnaround: {TBD.turnaround}.</p></li>
-      <li class="step"><span class="n">04</span><p class="h3">We walk you through it</p><p class="muted">30 minutes. The slides are yours to keep and share.</p></li>
+  <section class="wrap frs" aria-labelledby="next-h">
+    <h2 id="next-h" class="dh d56">What happens next</h2>
+    <ol class="steps chain fr-steps" style="--n:3" data-once>
+      {STEPS.map(([t, d], i) => <li class="step"><span class="n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><p class="h3">{t}</p><p class="muted">{d}</p></li>)}
     </ol>
   </section>
 
-  <section class="wrap" style="padding-bottom:96px" aria-labelledby="inside-h">
-    <div class="sec-h">
-      <h2 id="inside-h" class="dh d72">One answer, slide by slide.</h2>
-      <p class="lead muted">Here’s the most common first question: did our agencies’ results actually happen? Five slides you can forward to your boss as-is, plus the walkthrough. Example numbers.</p>
-    </div>
-    <ol class="tiles" style="--n:3;padding:0;list-style:none">
-      {[
-        ['The headline', 'They said 4,200. We found 1,380.', 'What the agency claimed, next to what held up in your own numbers. One line you can say out loud in a meeting.'],
-        ['Where the rest went', '2,820 didn’t hold up.', 'Split into reasons: counted twice by another agency, came from your own email, came from people already searching your name.'],
-        ['Agency by agency', 'Who claimed what.', 'If more than one agency is in the report, each one gets its own line, so you can see whose numbers hold up best.'],
-        ['What we’d test', 'One test, written out.', 'Where it’s worth proving cause, the regions-on, regions-off test we’d run, and what each result would mean for your budget.'],
-        ['Questions for your agency', 'Bring these to the next review.', 'Specific questions tied to the claims that didn’t hold up. A good agency will welcome them.'],
-        ['The walkthrough', '30 minutes, your questions.', 'We take you through every slide, show where each number came from, and tell you what we’d look at next.'],
-      ].map(([k, t, d], i) => <li class="tile"><span class="small faint">{String(i + 1).padStart(2, '0')} · {k}</span><p class="h2s" style="font-size:24px">{t}</p><p class="muted">{d}</p></li>)}
-    </ol>
-  </section>
-
-  <section class="wrap" style="padding-bottom:96px" aria-labelledby="fit-h">
-    <div class="honest">
-      <div>
-        <h2 id="fit-h" class="h3">It’s a good fit if</h2>
-        <ul class="nolist yeslist">
-          <li>There’s a marketing question your team keeps arguing about</li>
-          <li>A renewal, budget review or launch is coming up</li>
-          <li>Your reports feel too good, or don’t add up with what you see</li>
-          <li>You can get your own numbers for the same dates, even as a spreadsheet</li>
-        </ul>
+  {/* The page's one periwinkle stage: the sample answer, a back card the stage crops (more answers behind it), and
+      three numbered markers tied to notes. On wide screens straight leaders join each note to its marker (anchor
+      positioning); elsewhere the notes are a numbered list that pairs by number. No label on the card: it names no
+      brand and never claims a result; its accessible name says it is a sample. */}
+  <section class="wrap frs" aria-labelledby="ex-h">
+    <div class="s-peri on-peri fr-ex" data-once>
+      <div class="fr-ex-copy">
+        <h2 id="ex-h" class="dh d56">The kind of answer you get</h2>
+        <p class="lead">Short, sourced, and ending on what to do next.</p>
+        <a href="/reports" class="arrow">See real answers <Arrow /></a>
+        <ol class="annos" aria-label="What the sample shows">
+          {ANNOS.map((t, i) => <li class={`anno n${i + 1}`}><span class="nb" aria-hidden="true">{i + 1}</span>{t}<span class="ld" aria-hidden="true"></span></li>)}
+        </ol>
       </div>
-      <div>
-        <h2 class="h3">You’ll walk away with</h2>
-        <ul class="nolist yeslist">
-          <li>An answer you can trust, with every number traced</li>
-          <li>What to keep, test and stop</li>
-          <li>The next questions worth asking</li>
-          <li>A clear picture of what you could ask once all your data is connected</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="slab s-or" aria-labelledby="ex-h">
-    <div class="split mid">
-      <div class="sec-h" style="margin:0">
-        <h2 id="ex-h" class="dh d72">Flip through the whole thing.</h2>
-        <p class="lead">The agency check from above, as the full deck you’d get, with example numbers.</p>
-        <a href="/reports/agency-check" class="jb k" data-jelly data-loc="fr-example" style="align-self:flex-start"><span class="bg"></span><span class="lb">Flip through the example</span></a>
-      </div>
-      <div class="rc wide">
-        <span class="ex">Example</span>
-        <div class="hd">Agency report, checked</div>
-        <div class="r"><span>They said</span><span>4,200</span></div>
-        <div class="r"><span>We found</span><span>1,380</span></div>
-        <div class="r x"><span>Didn’t hold up</span><span>2,820</span></div>
-        <div class="bar"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="wrap sec" aria-labelledby="why-h">
-    <div class="honest">
-      <div>
-        <h2 id="why-h" class="h3">Why is it free?</h2>
-        <p class="muted">Because the fastest way to show you what we do is with your own numbers. If the answer is useful, we’ll talk about connecting all your data so you can ask the next one, and the one after that. If it isn’t, you keep the slides.</p>
-      </div>
-      <div>
-        <h2 class="h3">What if the answer is “it’s fine”?</h2>
-        <p class="muted">Then you have proof, and that’s worth having before a renewal or a budget review. Worst case, you were right.</p>
+      <div class="ex-card">
+        <InsightCard surface="stage" marks />
       </div>
     </div>
   </section>
 
   <PageFAQ id="fr-faq" title="Before you send it" items={[
-    ['What do you need from us?', 'Your question, and access to the numbers it needs from your own systems (sales, tickets, sign-ups or viewing). For an agency question, also the agency report and the ad accounts it covers. We walk you through connecting them.'],
-    ['Is it really free?', 'Yes. No card, and no contract.'],
-    ['How long does it take?', `${TBD.turnaround}`],
+    ['What do you need from us?', 'Your question, access to the accounts it touches, and 30 minutes for the walkthrough. Usually that means your own numbers (sales, tickets, sign-ups or viewing) and any ad accounts involved. We show you how to connect them.'],
+    ['Is it really free?', 'Yes. No card, and no contract. If you want everything connected afterward, we talk about that then.'],
+    ['How long does it take?', `${TBD.turnaround} from access to answer.`],
+    ['Does it have to be one of the questions in the form?', 'No. Pick “Something else” and tell us what you want to know. Same free answer, same walkthrough.'],
     ['Who sees our data?', '[Confirm: only the Arcus team working with you.] Details are on the Security page.'],
-    ['Will our agency be told?', '[Confirm with the team before publishing an answer.]'],
-    ['Can we check a report from a creator or influencer agency?', 'Yes. Any report that claims sales, sign-ups or tickets can be checked against your own numbers.'],
-    ['Does the question have to be about an agency?', 'No. Pick the posts or audience question in the form, or pick “Something else” and bring your own. Same free answer, same walkthrough.'],
-  ]} />
+    ['Do our partners need to be involved?', '[Confirm: Arcus does not contact your partners when you try it free, and whether to share the answer is your call.]'],
+    ['Why is it free?', 'Because the fastest way to show you what we do is with your own numbers. If the answer is useful, we talk about connecting all your data so you can ask the next one. If it isn’t, you keep the slides.'],
+    ['What if the answer is “it’s working”?', 'Then you walk into the next budget review knowing it. Worst case, you were right.'],
+  ]}>
+    {/* Answering the doubts ends on the ask, right under the last one: back up to the form, focus on its first question
+        (site.js initHashLinks). */}
+    <a href="#form" class="jb k" data-jelly data-loc="free-report-faq"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
+  </PageFAQ>
 
-  <section class="wrap" style="padding-bottom:96px">
-    <div class="card" style="padding:28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap">
+  {/* The short answer stays on the page for search and AI assistants, as quiet prose: the first screen already says it. */}
+  <section class="wrap blk-s">
+    <QuickAnswer quiet q="How does trying Arcus free work?" a="You pick one marketing question, like which spend paid off, what your audience says about you, or where your next dollar should go. We answer it with your own numbers and what people say online, in a few slides: the answer on top, ending on what to keep, test and stop. Then we walk you through it on a 30-minute call. It’s a free marketing analysis with no card, and it’s how every brand starts with Arcus." />
+  </section>
+
+  <section class="wrap frs fr-talk">
+    <div class="card fr-talk-in">
       <p class="h3">Rather talk first?</p>
-      <div class="btnrow l"><a href="/book" class="arrow">Book a call <Arrow /></a><a href="/make-the-case" class="arrow">Get your boss on board <Arrow /></a></div>
+      <div class="btnrow l"><a href={BOOK_URL} class="arrow">Book a call <Arrow /></a><a href="/make-the-case" class="arrow">Get your boss on board <Arrow /></a></div>
     </div>
   </section>
 </Site>

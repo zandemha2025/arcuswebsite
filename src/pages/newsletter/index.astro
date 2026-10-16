@@ -6,20 +6,21 @@ import Arrow from '../../components/Arrow.astro';
 import { ISSUES, NEWSLETTER } from '../../data/newsletter.js';
 const crumbs = [{ name: 'The Receipts', href: '/newsletter' }];
 const today = new Date('2026-10-02');
-const out = ISSUES.filter((i) => new Date(i.date) <= today);
+// Archived issues stay live at their URL (noindex) but leave this list.
+const out = ISSUES.filter((i) => !i.archived && new Date(i.date) <= today);
 ---
 <Site title="The Receipts: a monthly email for brand marketers | Arcus" description="One number marketing gets wrong each month, and how to check it yourself in 15 minutes. Free, monthly, from the Arcus team." path="/newsletter" page="newsletter" crumbs={crumbs}>
   <section class="split-hero" style="align-items:start">
-    <div style="display:flex;flex-direction:column;gap:24px">
+    <div class="stack-24">
       <Crumbs items={crumbs} />
-      <h1 class="dh d120">The Receipts.</h1>
+      <h1 class="dh d96">The Receipts.</h1>
       <p class="lead">One number marketing gets wrong each month, and how to check it yourself in 15 minutes. Every number comes from a real Arcus answer with the names taken out, or is labeled as an example.</p>
       <QuickAnswer q="What is The Receipts?" a={`${NEWSLETTER.description || 'A monthly email from Arcus for in-house brand marketers.'} One issue a month. Unsubscribe any time.`} />
     </div>
     <form class="form paper" data-lead="newsletter" novalidate aria-labelledby="nl-h">
-      <div data-body style="display:flex;flex-direction:column;gap:16px">
+      <div class="stack-16" data-body>
         <h2 id="nl-h" class="h3">Get the next issue</h2>
-        <div class="fld"><label for="nl-email">Work email</label><input id="nl-email" name="email" type="email" required autocomplete="email" placeholder="you@yourbrand.com" /></div>
+        <div class="fld"><label for="nl-email">Work email</label><input id="nl-email" name="email" type="email" required data-req="Enter your email to subscribe." autocomplete="email" placeholder="you@yourbrand.com" /></div>
         <div class="fld"><label for="nl-name">First name <span class="hint">(optional)</span></label><input id="nl-name" name="name" autocomplete="given-name" /></div>
         <span class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off" /></span>
         <button type="submit" class="jb k" data-jelly data-loc="newsletter-page"><span class="bg"></span><span class="lb">Subscribe</span></button>
@@ -29,12 +30,13 @@ const out = ISSUES.filter((i) => new Date(i.date) <= today);
       <p data-ok hidden tabindex="-1" role="status" class="ok"><b>You’re on the list.</b> The next issue lands at the start of the month.</p>
     </form>
   </section>
-  <section class="wrap" style="padding-bottom:120px" aria-labelledby="iss-h">
+  <section class="wrap blk-l" aria-labelledby="iss-h">
     <h2 id="iss-h" class="h2s" style="margin-bottom:12px">Past issues</h2>
+    {out.length === 0 && <p class="muted">No past issues yet. The next one lands at the start of the month.</p>}
     {out.map((i) => (
       <a href={`/newsletter/${i.slug}`} class="listrow">
         <span class="tag t-k">Issue {i.n}</span>
-        <span style="display:flex;flex-direction:column;gap:6px"><span class="h3">{i.title}</span><span class="muted small">{i.short}</span></span>
+        <span class="stack-6"><span class="h3">{i.title}</span><span class="muted small">{i.short}</span></span>
         <span class="go"><Arrow /></span>
       </a>
     ))}

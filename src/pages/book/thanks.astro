@@ -1,13 +1,18 @@
 ---
 import Site from '../../layouts/Site.astro';
 import Arrow from '../../components/Arrow.astro';
+import HeardAsk from '../../components/HeardAsk.astro';
 import { TBD } from '../../data/site.js';
+// With a scheduling link set in site.js (TBD.calLink), initPrefill puts the calendar in [data-cal] with the name and
+// email filled in. Until then the slot shows the placeholder and the way to get times today. The header carries no
+// "Try it out for free" here: this visitor just chose the call.
+const calLive = !TBD.calLink.startsWith('[');
 ---
-<Site title="Pick a time | Arcus" description="Pick a time for your call with Arcus." path="/book/thanks" page="thanks" noindex>
+<Site title="Pick a time | Arcus" description="Pick a time for your call with Arcus." path="/book/thanks" page="thanks" noindex navCta={false}>
   <section class="split-hero" data-prefill style="align-items:start">
     <div style="display:flex;flex-direction:column;gap:24px;position:relative">
       <h1 class="dh d96">Almost booked, <span data-lead-name>thanks</span>.</h1>
-      <p class="lead">Pick a time and you’ll get an invite right away. Add anyone you want on the call.</p>
+      <p class="lead">{calLive ? 'Pick a time and you’ll get an invite right away. Add anyone you want on the call.' : 'We’ll email you times for the call. Add anyone you want to the invite.'}</p>
       <div class="rc wide" style="position:relative">
         <div class="hd">Call with Arcus</div>
         <div class="r"><span>Length</span><span>30 minutes</span></div>
@@ -16,11 +21,15 @@ import { TBD } from '../../data/site.js';
         <div class="bar"></div>
       </div>
       <div class="card" style="padding:24px;display:flex;flex-direction:column;gap:10px">
-        <p class="h3">While you wait</p>
+        <p class="h3">Before the call</p>
         <a href="/reports" class="arrow">Flip through real answers <Arrow /></a>
-        <a href="/tools/agency-math" class="arrow">Try the agency math calculator <Arrow /></a>
+        <a href="/library/incrementality-without-the-math" class="arrow">Read how to test before you move budget <Arrow /></a>
       </div>
+      <HeardAsk />
     </div>
-    <div data-cal={TBD.calLink} class="card ph" style="min-height:560px;padding:24px">[Cal.com booking embed: set the booking link in site.js]</div>
+    <div data-cal={TBD.calLink} class="card ph bk-cal">
+      <p>[Confirm: booking link]</p>
+      <p class="small">Or email us at <a class="ul" href="mailto:hello@usearcus.ai">hello@usearcus.ai</a> and we’ll send times.</p>
+    </div>
   </section>
 </Site>

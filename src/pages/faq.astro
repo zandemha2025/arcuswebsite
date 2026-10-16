@@ -2,21 +2,28 @@
 import Site from '../layouts/Site.astro';
 import Crumbs from '../components/Crumbs.astro';
 import Close from '../components/Close.astro';
+import Arrow from '../components/Arrow.astro';
 import QuickAnswer from '../components/QuickAnswer.astro';
-import { FAQ_ALL as FAQ } from '../data/all.js';
-import { SHORT } from '../data/site.js';
+import { FAQ_ALL } from '../data/all.js';
+import * as site from '../data/site.js';
+const { SHORT } = site;
+const { BOOK_URL } = site;
 const crumbs = [{ name: 'FAQ', href: '/faq' }];
+// These two answers are shown as the lists in #honest below (moved here from the homepage), so the accordion skips
+// them. They stay in FAQ_ALL, which also feeds the FAQPage data, llms-full.txt and Ask Arcus.
+const HONEST = ['Who isn’t Arcus for?', 'What won’t Arcus claim?'];
+const FAQ = FAQ_ALL.filter(([, q]) => !HONEST.includes(q));
 const cats = [...new Set(FAQ.map(([c]) => c))];
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-const schema = [{ '@type': 'FAQPage', mainEntity: FAQ.filter(([, , a]) => !a.includes('[')).map(([, q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }];
+const schema = [{ '@type': 'FAQPage', mainEntity: FAQ_ALL.filter(([, , a]) => !a.includes('[')).map(([, q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }];
 ---
-<Site title="Arcus FAQ: the first question, pricing, data and more | Arcus" description="Answers about Arcus: what it is, who it’s for, the free first question, setup, pricing, listening, and how we handle your data." path="/faq" page="faq" crumbs={crumbs} schema={schema}>
+<Site title="Arcus FAQ: trying it free, pricing, data and more | Arcus" description="Answers about Arcus: what it is, who it’s for, trying it free, setup, pricing, listening, and how we handle your data." path="/faq" page="faq" crumbs={crumbs} schema={schema}>
   <header class="phero l">
     <Crumbs items={crumbs} />
     <h1 class="dh d96">Fair questions.</h1>
-    <QuickAnswer q="What does Arcus do, in one sentence?" a={SHORT} />
+    <QuickAnswer q="What does Arcus do, in one sentence?" a={SHORT.split('. ')[0] + '.'} />
   </header>
-  <section class="wrap" style="padding-bottom:96px">
+  <section class="wrap blk">
     <div class="side">
       <div class="toc" style="gap:12px">
         <div class="btnrow l" data-filter="#faq-list" data-live="#faq-live" role="group" aria-label="Filter questions">
@@ -34,23 +41,37 @@ const schema = [{ '@type': 'FAQPage', mainEntity: FAQ.filter(([, , a]) => !a.inc
             </div>
           </section>
         ))}
-        <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px">
+        {/* The footer already carries The Receipts sign-up, so this card keeps one action: a call. */}
+        <div class="card end-card">
           <p class="h3">Didn’t see yours?</p>
-          <p class="muted">Ask us on a call, or get The Receipts, our monthly email.</p>
-          <form data-lead="newsletter" novalidate style="display:flex;gap:8px;flex-wrap:wrap" aria-label="Newsletter">
-            <div data-body style="display:flex;gap:8px;flex-wrap:wrap;width:100%">
-              <label class="sr-only" for="faq-news">Email</label>
-              <input id="faq-news" class="fld" name="email" type="email" required placeholder="you@yourbrand.com" style="flex:1;min-width:220px;min-height:48px;border:1.5px solid #8A8A8A;border-radius:10px;padding:0 14px;font:16px var(--text)" />
-              <span class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off" /></span>
-              <button class="jb k sm" type="submit" data-jelly data-loc="faq-news"><span class="bg"></span><span class="lb">Subscribe</span></button>
-              <a href="/book" class="jb ln sm" data-jelly data-loc="faq-book"><span class="bg"></span><span class="lb">Book a call</span></a>
-            </div>
-            <p data-status class="form-err" hidden tabindex="-1" role="alert"></p>
-            <p data-ok hidden tabindex="-1" role="status" class="small">You’re on the list.</p>
-          </form>
+          <p class="muted">Ask us on a call: 30 minutes, no pitch.</p>
+          <div class="btnrow l"><a href={BOOK_URL} class="jb ln sm" data-jelly data-loc="faq-book"><span class="bg"></span><span class="lb">Book a call</span></a></div>
         </div>
       </div>
     </div>
   </section>
-  <Close variant="or" lines={['Still curious?', 'Try it free.']} loc="faq-close" />
+  <section id="honest" class="wrap" style="padding-bottom:96px;scroll-margin-top:110px" aria-labelledby="honest-h">
+    <div class="sec-h"><h2 id="honest-h" class="dh d72">What we won’t claim. Who it’s not for.</h2></div>
+    <div class="honest">
+      <div>
+        <h3 class="h3">What we won’t claim</h3>
+        <ul class="nolist">
+          <li>That an ad caused a sale, unless we tested it</li>
+          <li>Numbers we can’t trace back to a source</li>
+          <li>Quotes or results we don’t have permission to show</li>
+          <li>That anyone’s numbers are wrong before we’ve checked</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="h3">Who it’s not for</h3>
+        <ul class="nolist">
+          <li>Teams whose analysts already connect every system, count each result once and read every comment</li>
+          <li>Teams that can’t share any of their own numbers with us</li>
+          <li>Teams that want a tool to set up and run on their own</li>
+        </ul>
+        <a href="/compare" class="arrow" style="margin-top:auto">How Arcus compares <Arrow /></a>
+      </div>
+    </div>
+  </section>
+  <Close variant="paper" lines={['Still curious?', 'Try it free.']} loc="faq-close" />
 </Site>

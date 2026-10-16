@@ -4,6 +4,10 @@
 import { PROSPECTS as TARGET_DOMAINS } from '../src/data/targets.js';
 const json = (status, body) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 const seen = new Map(); // de-dupe per instance: one alert per account per 6 hours
+// Pages that signal buying intent, matched as whole path segments so /free-report-terms or a slug that contains
+// "book" (facebook) doesn't count. /book stays: "Book a call" still goes to the /book form (BOOK_URL in src/data/site.js).
+const HOT = /^\/(free-report|pricing|book|make-the-case)(\/|$)/;
+const pathOf = (p) => String(p).replace(/^https?:\/\/[^/]+/, '').split(/[?#]/)[0] || '/';
 
 function pick(payload) {
   // Normalize the common shapes: { company: { domain, name }, pages: [...] } or { domain, company_name, page_views: [{ url }] }
@@ -27,8 +31,8 @@ export async function POST(request) {
   seen.set(v.domain, Date.now());
   const hook = process.env.SLACK_ABM_WEBHOOK_URL || process.env.SLACK_WEBHOOK_URL;
   if (hook) {
-    const hot = v.pages.some((p) => /free-report|pricing|book|make-the-case/.test(p));
-    const text = `${hot ? ':fire: ' : ''}Target account on the site: *${target.company}* (${target.segment.replace(/-/g, ' ')}, priority ${target.priority})${v.person ? `\nVisitor: ${v.person}` : ''}\nRead: ${v.pages.slice(0, 8).map((p) => p.replace(/^https?:\/\/[^/]+/, '')).join(', ') || 'not reported'}\nSuggested page to send: https://usearcus.ai/for/${target.segment}`;
+    const hot = v.pages.some((p) => HOT.test(pathOf(p)));
+    const text = `${hot ? ':fire: ' : ''}Target account on the site: *${target.company}* (${target.segment.replace(/-/g, ' ')}, priority ${target.priority})${v.person ? `\nVisitor: ${v.person}` : ''}\nRead: ${v.pages.slice(0, 8).map(pathOf).join(', ') || 'not reported'}\nSuggested page to send: https://usearcus.ai/for/${target.segment}`;
     await fetch(hook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) }).catch(() => {});
   }
   return json(200, { ok: true, matched: true });

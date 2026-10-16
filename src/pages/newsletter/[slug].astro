@@ -10,13 +10,13 @@ const t = TEAM.find((x) => x.slug === i.author);
 const crumbs = [{ name: 'The Receipts', href: '/newsletter' }, { name: `Issue ${i.n}`, href: `/newsletter/${i.slug}` }];
 const schema = [{ '@type': 'Article', headline: i.title, datePublished: i.date, dateModified: i.date, author: t ? { '@type': 'Person', '@id': `${SITE}/about/${t.slug}#person`, name: t.name } : { '@id': `${SITE}/#org` }, publisher: { '@id': `${SITE}/#org` }, isPartOf: { '@type': 'Periodical', name: 'The Receipts' } }];
 ---
-<Site title={`${i.title} | The Receipts by Arcus`} description={i.short} path={`/newsletter/${i.slug}`} page="issue" crumbs={crumbs} schema={schema}>
+<Site title={`${i.title} | The Receipts by Arcus`} description={i.short} path={`/newsletter/${i.slug}`} page="issue" crumbs={crumbs} schema={schema} noindex={!!i.archived}>
   <header class="phero l" style="padding-bottom:32px">
     <Crumbs items={crumbs} />
     <span class="tag t-k">The Receipts · Issue {i.n}</span>
     <h1 class="dh d96">{i.title}</h1>
     {t && <a class="person" href={`/about/${t.slug}`}><span class="av">{t.initials}</span><span><b>{t.name}</b>, {t.title}<br/><span class="small faint"><time datetime={i.date}>{i.date}</time></span></span></a>}
   </header>
-  <section class="wrap" style="padding-bottom:96px"><article class="prose" set:html={i.body} /></section>
-  <Close variant="ink" lines={['Get the', 'next one.']} primary={['Subscribe', '/newsletter']} secondary={['Bring us one question', '/free-report']} body="One number marketing gets wrong each month, and how to check it." loc="issue-close" />
+  <section class="wrap blk"><article class="prose" set:html={i.body} /></section>
+  <Close variant="navy" lines={['Get the', 'next one.']} primary={['Subscribe', '/newsletter']} secondary={['Try it out for free', '/free-report']} body="One number marketing gets wrong each month, and how to check it." loc="issue-close" />
 </Site>

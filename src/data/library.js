@@ -1,246 +1,39 @@
 // Library articles. Answer first. Only numbers from real Arcus reports (anonymized) or clearly labeled example numbers.
 const D = '2026-10-02';
 const g = (slug, text) => `<a href="/glossary/${slug}">${text}</a>`;
-const fr = (text = 'bring us one question') => `<a href="/free-report">${text}</a>`;
+const fr = (text = 'try it free') =>`<a href="/free-report">${text}</a>`;
 
 export const ARTICLES = [
-  {
-    slug: 'agency-double-counting-sales', topic: 'Agency reports', author: 'brendon-ghaderi', date: D,
-    title: 'Is your agency double counting your sales?',
-    dek: 'Add up every agency’s claims and you can get more results than you had. Here’s why, and how to check yours in an afternoon.',
-    short: 'If you use more than one agency, probably. Every ad platform credits itself when its ad touched a buyer, so one sale can show up in two or three agency reports. To check, add up every agency’s claims for one month and compare the total with your own numbers for the same month.',
-    body: `
-<h2 id="why">Why it happens</h2>
-<p>Your agency probably isn’t doing it on purpose. Each agency reports from the platforms it buys on, and each platform gives itself credit whenever its ad was somewhere on the path to a sale. That rule is called ${g('attribution', 'attribution')}, and every platform runs its own version of it.</p>
-<p>Picture one buyer. She sees a creator’s video on Monday. On Thursday she clicks an ad in her feed. On Saturday she types your brand name into a search bar, clicks the top result and buys. The creator agency counts that sale. The social agency counts it. The search agency counts it. Each report is honest about what its platform saw. Put the three reports on one table and you have three sales where there was one. That’s ${g('double-counting', 'double counting')}.</p>
-<p>It gets bigger with two settings most reports never mention. The first is the ${g('conversion-window', 'conversion window')}: how many days after an ad a sale can still be credited to it. The second is the ${g('view-through-conversion', 'view-through conversion')}: a sale credited to an ad someone saw but never clicked. Long windows and view-throughs let every platform reach further back and claim more of the same buyers.</p>
-<p>Why it matters: budgets, renewals and bonuses are set on these numbers. If three agencies each claim the same buyer, each one’s ${g('roas', 'ROAS')} looks better than it is, and the total suggests your marketing drove more than it could have. Decisions made on the inflated number tend to put more money behind whichever channel counts most generously. That’s often the one closest to the purchase, like search, which catches people at the last step whether or not anything else brought them there.</p>
-
-<h2 id="example">A worked example</h2>
-<p><b>Example numbers.</b> These figures show how a check reads. They are not from a client.</p>
-<p>A brand works with three agencies. For one quarter, the agencies claim 4,200 results between them. The brand’s own numbers are the starting point: every sale, ticket or sign-up, with a date, a product or title, and the channel it came through. Each claim is matched against that list, and each result can be matched once.</p>
-<table><thead><tr><th>Agency</th><th>Claimed</th><th>Held up</th><th>Main reason the rest fell out</th></tr></thead><tbody>
-<tr><td>Social</td><td>2,100</td><td>820</td><td>Also claimed by another agency</td></tr>
-<tr><td>Search</td><td>1,300</td><td>310</td><td>People already searching the brand’s name</td></tr>
-<tr><td>Creators</td><td>800</td><td>250</td><td>Codes that spread to coupon sites</td></tr>
-<tr><td><b>Total</b></td><td><b>4,200</b></td><td><b>1,380</b></td><td></td></tr>
-</tbody></table>
-<p>So 2,820 claims didn’t hold up. Here is where they went:</p>
-<ul>
-<li><b>1,610 were counted twice.</b> Two agencies claimed the same result. Neither gets it until a test says which one earned it.</li>
-<li><b>740 came from the brand’s own emails.</b> The buyer clicked an email and bought. An ad was somewhere in the path, so a platform claimed it.</li>
-<li><b>470 came from people already searching the name.</b> See ${g('brand-search', 'brand search')}. Those buyers were on their way.</li>
-</ul>
-<p>Nobody in this example lied. Three reasonable reports added up to roughly three times what the evidence supports. That gap is what you’re paying against.</p>
-
-<h2 id="check">How to check yours in an afternoon</h2>
-<ol>
-<li><b>Pick one month</b> you have every agency’s report for. A month with one big push is best.</li>
-<li><b>Write down each agency’s claimed results</b> for that month. Use the number they report to you, the one they put on the slide.</li>
-<li><b>Pull your own numbers</b> for the same dates: sales, tickets, sign-ups, streams or viewing, whatever your team counts.</li>
-<li><b>Add the claims together</b> and set the total next to your own number.</li>
-<li><b>Read the gap.</b> If the claims add up to more than you had in total, some results are being counted more than once. If they add up to most of what you had, ask what happened to email, word of mouth and people who already knew you.</li>
-<li><b>Ask each agency two things</b>: what counts as a sale (a click, or a view too) and over how many days.</li>
-</ol>
-<p>Want the arithmetic done for you? Paste your numbers into the <a href="/tools/agency-math">agency math calculator</a>. Nothing you type leaves your browser.</p>
-<p>What the gap tells you, and what it doesn’t: a total above your own number proves overlap. It doesn’t tell you which agency is overcounting, or by how much each. For that you need the detail behind each claim, matched one result at a time against your own list. That’s the slow part, and it’s where most teams stop. It’s also the part that turns an awkward conversation into a useful one, because you can point at specific results instead of a total.</p>
-
-<h2 id="mistakes">Common mistakes</h2>
-<ul>
-<li><b>Comparing each agency to your total one at a time.</b> Each one looks fine alone. The problem only shows when you add them up.</li>
-<li><b>Mixing date ranges.</b> One agency reports by calendar month, another by flight dates. Line them up first.</li>
-<li><b>Forgetting your own channels.</b> Email, your own social accounts and press drive results too. If the agencies’ claims leave no room for them, something is off.</li>
-<li><b>Treating the gap as fraud.</b> It almost always comes from platform rules. Lead with curiosity and you’ll get better answers.</li>
-<li><b>Cutting the agency with the biggest gap.</b> A big gap can mean generous counting, not weak work. Test before you cut.</li>
-</ul>
-
-<h2 id="ask">Questions to ask your agencies</h2>
-<ol>
-<li>Do you count a sale on a click, a view, or both? Can you split them?</li>
-<li>What are your click and view windows, in days?</li>
-<li>How much of what you claimed came from people searching our name?</li>
-<li>Can you share the dates and IDs behind each claimed result?</li>
-<li>If we added up every agency’s claims, would you expect the total to match our own numbers?</li>
-</ol>
-<p>Our list of <a href="/library/questions-before-you-renew">12 questions to ask before you renew</a> goes further, with what a good answer sounds like.</p>
-
-<h2 id="limits">What this doesn’t prove</h2>
-<p>Matching claims against your own numbers removes double counting. It tells you which claims are possible. It doesn’t prove an ad caused a sale. Some of the 1,380 results in the example would have happened anyway. For cause, run a ${g('holdout-test', 'holdout test')}: show the ads in some regions and not others for a few weeks, then compare. Our guide to <a href="/library/incrementality-without-the-math">incrementality</a> walks through it.</p>
-<p>If you’d rather see it on your own numbers first, ${fr('bring us one question')}. “Do our agencies’ claims add up to more than we sold?” is a good one. We check every claim against your own numbers and walk you through what held up in 30 minutes. Free, no card. [Confirm: whether agencies are told about the check.]</p>`,
-    faq: [
-      ['Is double counting the agency’s fault?', 'Usually not on purpose. It comes from each platform crediting itself. It’s still worth fixing, because budgets and renewals are decided on those numbers.'],
-      ['How big is the gap usually?', 'It depends on how many agencies you use and how they count. The only way to know yours is to add up the claims and compare them with your own numbers.'],
-      ['Can my analytics tool fix this?', 'Sometimes, if someone sets it up to start from your own numbers and applies one rule to every channel. That takes time most brand teams don’t have.'],
-      ['Does this work if most of our sales happen in retail?', 'Yes, with the data you have from retail partners or marketplaces. Where that data is too thin to match, the answer should say so.'],
-    ],
-  },
-  {
-    slug: 'read-an-agency-report', topic: 'Agency reports', author: 'devin-min', date: D,
-    title: 'How to read an agency report in 10 minutes',
-    dek: 'Five numbers that matter, the ones you can skip, and the questions that make a recap honest.',
-    short: 'Skip the impressions and engagement totals. Find the results the agency claims, how it counted them (clicks or views, and over how many days), what it spent, and how much credit went to people already searching your name. Then compare the claims with your own numbers for the same dates.',
-    body: `
-<h2 id="five">The five numbers that matter</h2>
-<p>Most agency recaps run 20 to 40 slides. Five numbers in them decide whether the money worked. The rest is context: what ran, where, with which creative. Useful, but it can wait until you know whether the headline claim stands up. Find these first and write them on one page.</p>
-<table><thead><tr><th>Number</th><th>Why it matters</th><th>What to ask</th></tr></thead><tbody>
-<tr><td>Results claimed</td><td>Sales, tickets, sign-ups or streams: this is what you’re paying for</td><td>Can you share the dates and IDs behind each claim?</td></tr>
-<tr><td>How a result was counted</td><td>Counting views as well as clicks claims far more results</td><td>Clicks only, or ${g('view-through-conversion', 'view-throughs')} too? Can you split them?</td></tr>
-<tr><td>Counting window</td><td>A long window claims results from weeks later</td><td>What’s the ${g('conversion-window', 'window')}, for clicks and for views?</td></tr>
-<tr><td>Spend</td><td>Needed for any cost per result or ${g('roas', 'ROAS')}</td><td>Does it include fees and production?</td></tr>
-<tr><td>Brand search share</td><td>People searching your name were already coming</td><td>How much credit went to ${g('brand-search', 'brand search')}?</td></tr>
-</tbody></table>
-
-<h2 id="routine">The 10-minute routine</h2>
-<ol>
-<li><b>Minutes 1 to 2: find the claim.</b> Skip to the slide with results. Write down the number and the dates it covers.</li>
-<li><b>Minutes 3 to 4: find the rule.</b> Look in the footnotes or the appendix for how a result was counted. If you can’t find it, that’s your first question.</li>
-<li><b>Minutes 5 to 6: find the spend.</b> Note whether fees are in it.</li>
-<li><b>Minutes 7 to 8: put it next to your own numbers.</b> Same dates. Your sales, tickets, sign-ups or viewing. Is the claim a small share of your total, or most of it?</li>
-<li><b>Minutes 9 to 10: write three questions.</b> One about the rule, one about the window, one about brand search.</li>
-</ol>
-<p>Here’s the one-page sheet to fill in. Keep it, and fill in a new row every month. After a quarter you’ll see each agency’s pattern without opening a deck.</p>
-<table><thead><tr><th>Field</th><th>What to write</th></tr></thead><tbody>
-<tr><td>Agency and dates</td><td>Who reported, and the exact dates covered</td></tr>
-<tr><td>Results claimed</td><td>The number on the results slide</td></tr>
-<tr><td>Counting rule</td><td>Clicks only, or clicks and views</td></tr>
-<tr><td>Windows</td><td>Days for clicks, days for views</td></tr>
-<tr><td>Spend</td><td>With or without fees</td></tr>
-<tr><td>Brand search share</td><td>The share of credit from people searching your name, if they give it</td></tr>
-<tr><td>Your own number</td><td>Your sales, tickets, sign-ups or viewing for the same dates</td></tr>
-<tr><td>Open questions</td><td>The three you’ll ask at the review</td></tr>
-</tbody></table>
-<p>Where to look: the results slide is usually near the front. The counting rules are usually in an appendix, a footnote, or a “methodology” slide near the back. If a recap has no rules anywhere, ask for them in writing before the review, so the meeting is spent on what they mean.</p>
-
-<h2 id="example">A worked example</h2>
-<p><b>Example numbers.</b> These show how a check reads. They are not from a client.</p>
-<p>A search agency’s recap says it drove 1,300 results in a quarter. On its own, that slide looks like a great quarter. Run the routine and three things come up. The counting rule includes people who searched the brand’s name. The brand’s own numbers show other agencies claim some of the same buyers. And when each claim is matched against the brand’s own list, one result at a time, 310 hold up, and most of those 310 came through brand search.</p>
-<p>That doesn’t mean the agency did bad work. It means the recap answered a different question from the one the brand was asking. The recap answered “what did our platform see?” The brand wanted “what would we lose if we stopped?” Only a test answers that. You can see the full example in our <a href="/reports/agency-check">agency check</a>.</p>
-<p>The same routine works for any agency. A creator agency’s claim depends on whether ${g('creator-code', 'codes')} spread to coupon sites. A social agency’s claim depends on view-throughs and the window. A media agency’s claim depends on whether it counted results its partners also reported. Each question takes a minute to ask and saves a quarter of guessing.</p>
-
-<h2 id="skip">What you can skip</h2>
-<p>Impressions, reach, engagement rate, “estimated lift” and anything labeled “modeled.” These describe activity. They’re useful to the creative team, and they can tell you whether people watched. They can’t tell you whether anyone bought.</p>
-<p>There’s one exception. If you want to know which creative worked, views and shares per post are worth keeping, read by what’s on screen. Our guide to <a href="/library/which-posts-actually-work">telling which posts work</a> shows how.</p>
-<p>Be careful with “engaged” audiences and “attention” scores too. They measure how people interacted with an ad. They don’t tell you whether those people bought, and they can’t tell you whether they would have bought anyway.</p>
-
-<h2 id="mistakes">Common mistakes</h2>
-<ul>
-<li><b>Reading the summary slide only.</b> The rules that change the number are in the footnotes.</li>
-<li><b>Comparing ROAS across agencies.</b> Two agencies with different windows and view rules are measuring different things. Put them on the same rule first.</li>
-<li><b>Reading one agency at a time.</b> The overlap only shows when you add them up. See <a href="/library/agency-double-counting-sales">double counting</a>.</li>
-<li><b>Taking “industry benchmark” as a grade.</b> A benchmark tells you how other brands’ reports look. It doesn’t tell you about your results.</li>
-<li><b>Asking for more slides.</b> Ask for the detail behind the one slide that matters.</li>
-<li><b>Reading the recap in the meeting.</b> Read it the day before. In the room, you want to be asking, not finding.</li>
-<li><b>Losing last quarter’s answers.</b> Keep the one-page sheet. Rules quietly change between quarters.</li>
-</ul>
-
-<h2 id="limits">What this doesn’t prove</h2>
-<p>Ten minutes tells you what to ask. It won’t tell you whether the campaign caused sales. A claim that matches your own numbers is possible, not proven. For proof, you need a ${g('holdout-test', 'holdout test')}: run the campaign in some regions and not others, and compare.</p>
-<p>It also won’t tell you whether the agency is good at its job. A report with generous counting can sit on top of strong work, and a careful report can describe a weak quarter. The routine separates the counting from the work, so you can judge each on its own.</p>
-<p>Bring your three questions to the next review. If you’d rather have the matching done for you, ${fr('bring us one question')}: did this recap hold up? We check it against your own numbers and walk you through what held up in 30 minutes.</p>`,
-    faq: [
-      ['What is a good ROAS?', 'It depends on your margins, and it’s only as honest as the results behind it. Check what’s counted before you compare it to anything.'],
-      ['Should I ask the agency to change its report?', 'Ask for the detail behind the results slide and the counting rules in writing. That’s usually enough.'],
-      ['What if the agency won’t share the detail?', 'Ask why. Most platforms let an agency export results by date. If they still can’t, weigh the claim accordingly.'],
-    ],
-  },
-  {
-    slug: 'questions-before-you-renew', topic: 'Agency reports', author: 'min-kwak', date: D,
-    title: '12 questions to ask your agency before you renew',
-    dek: 'What to ask, what a good answer sounds like, and the warning signs to write down.',
-    short: 'Ask how they count a sale, over how many days, how much credit goes to brand search and view-throughs, whether their results overlap with your other agencies, and what they would test if the budget were cut. Good agencies answer clearly, share the detail behind each claim, and welcome a test.',
-    body: `
-<h2 id="list">The questions, and what good sounds like</h2>
-<table><thead><tr><th>#</th><th>Question</th><th>A good answer</th><th>A warning sign</th></tr></thead><tbody>
-<tr><td>1</td><td>How do you count a sale?</td><td>Clicks only, or clicks and views reported separately</td><td>“The platform handles that”</td></tr>
-<tr><td>2</td><td>Over how many days?</td><td>A short ${g('conversion-window', 'window')}, and results at a shorter one on request</td><td>Nobody knows the window</td></tr>
-<tr><td>3</td><td>How much of the credit is view-through?</td><td>A number</td><td>A shrug, or “it’s standard”</td></tr>
-<tr><td>4</td><td>How much went to people searching our name?</td><td>A number, and a plan to test it. See ${g('brand-search', 'brand search')}</td><td>Brand search folded into the total</td></tr>
-<tr><td>5</td><td>Can you share the detail behind each claim?</td><td>Yes, with dates</td><td>Only a summary slide</td></tr>
-<tr><td>6</td><td>Do your results overlap with our other agencies?</td><td>“Let’s check together”</td><td>“Ours are separate”</td></tr>
-<tr><td>7</td><td>Which creator codes showed up on coupon sites?</td><td>A list. See ${g('creator-code', 'creator codes')}</td><td>Never looked</td></tr>
-<tr><td>8</td><td>What did you test this quarter, and what did you stop?</td><td>Something specific they stopped</td><td>Everything is working</td></tr>
-<tr><td>9</td><td>What would you cut first if the budget dropped 20%?</td><td>A clear first cut</td><td>“Everything is essential”</td></tr>
-<tr><td>10</td><td>Which result are you least sure about?</td><td>An honest pick</td><td>None</td></tr>
-<tr><td>11</td><td>Would you run a holdout test before we increase spend?</td><td>Yes, with a design. See ${g('holdout-test', 'holdout test')}</td><td>Reasons it can’t be done</td></tr>
-<tr><td>12</td><td>Who on your team reads our data, and how often?</td><td>A name and a cadence</td><td>“The platform reports it”</td></tr>
-</tbody></table>
-<p>Questions 1 to 4 are about the counting rules. Questions 5 to 7 are about overlap. Questions 8 to 12 tell you how the agency thinks. You need all three.</p>
-<p>A note on tone. These questions work best framed as housekeeping: you’re putting every agency on the same rules so you can compare them fairly. That’s true, and it’s easier for an agency to answer than a question that sounds like an audit. Agencies that do good work usually like this framing, because fair rules make their results easier to defend inside your company.</p>
-
-<h2 id="example">A worked example</h2>
-<p><b>Example numbers.</b> These show how a renewal conversation can go. They are not from a client.</p>
-<p>A creator agency reports 800 results for the quarter and asks for a bigger budget. The brand asks question 7. The agency hasn’t checked coupon sites. When the codes are matched against the brand’s own numbers, many of the uses come from coupon sites, where people who were already buying pick up a discount on the way. After matching, 250 of the 800 hold up.</p>
-<p>The brand still renews. The creators who drove the 250 are clearly working. What changes is the brief: new codes for each flight, a list of the creators whose codes held up, and a holdout test before the budget grows. The answers turned a yes-or-no renewal into a better contract.</p>
-<p>Notice what didn’t happen. Nobody accused the agency of anything. The 550 results that fell out were mostly coupon-site uses, which the platform counted by its own rules. The conversation was about the rule, and the agency left with a clearer brief than it came in with.</p>
-
-<h2 id="three">If you only have time for three</h2>
-<p>Some renewals happen fast. If you get one meeting and ten minutes, ask these three, in this order.</p>
-<ol>
-<li><b>Can you share the detail behind each claim, with dates?</b> This one opens up everything else. If the answer is yes, you can check the rest yourself, or have it checked.</li>
-<li><b>How much of the credit went to people searching our name, and to view-throughs?</b> These are the two places counting gets most generous. A clear number for each tells you how much of the total to look at twice.</li>
-<li><b>Would you run a holdout test before we increase spend?</b> A confident agency says yes and starts sketching regions. That answer tells you more about how they think than any case study.</li>
-</ol>
-<p>Write down the answers word for word. Vague answers read very differently a week later on paper.</p>
-<p>If you can add a fourth, ask question 6, about overlap with your other agencies. It’s the one that explains why claims add up to more than you had. Our guide to <a href="/library/agency-double-counting-sales">double counting</a> shows the arithmetic.</p>
-<h2 id="meeting">How to run the meeting</h2>
-<ol>
-<li><b>Send the questions a week ahead.</b> You want considered answers, and a good agency will appreciate the notice.</li>
-<li><b>Ask the same questions of every agency.</b> Different counting rules are the most common reason claims add up to more than you sold.</li>
-<li><b>Write the answers in one table</b>, one column per agency. The differences jump out.</li>
-<li><b>Agree on one follow-up.</b> Usually the detail behind one claim, or a test design.</li>
-<li><b>Decide after the follow-up arrives</b>, not in the room.</li>
-</ol>
-
-<h2 id="mistakes">Common mistakes</h2>
-<ul>
-<li><b>Asking only at renewal.</b> By then the decision feels urgent. Ask quarterly and renewals get easy.</li>
-<li><b>Accepting “industry standard.”</b> A standard window is still a window. Ask what it is.</li>
-<li><b>Treating every warning sign as a reason to leave.</b> One weak answer is a conversation. A pattern of them is a decision.</li>
-<li><b>Grading on creative alone.</b> Great work and generous counting can live in the same agency. Judge each separately.</li>
-<li><b>Forgetting to ask what they’re proud of.</b> The answer tells you what they’ll fight to keep.</li>
-<li><b>Letting the agency pick the month.</b> Choose the period yourself, ideally one with a big push, so the answers cover the work that mattered.</li>
-</ul>
-
-<h2 id="limits">What the answers don’t prove</h2>
-<p>Good answers mean an agency counts carefully. They don’t mean its work caused your results. Clear counting rules remove ${g('double-counting', 'double counting')}. Only a test shows cause. If an agency’s answers are strong and you’re about to give it more money, that’s the moment to run a ${g('holdout-test', 'holdout test')}, so the bigger budget is backed by proof.</p>
-<p>And a strong agency on paper can still be the wrong fit for where you’re going. If your next year is a retail launch, a new market or a new audience, ask what the agency has done there. The answers above tell you how it counts. They don’t tell you whether it can do the next job.</p>
-<p>If you want the numbers checked before you sign, ${fr('bring us one question')}: did this agency’s results hold up? You’ll get a few slides on what held up and a walkthrough you can take into the renewal.</p>`,
-    faq: [
-      ['Will asking these upset our agency?', 'A good agency expects them. The questions are about the data, not the people.'],
-      ['Should we ask in writing or on a call?', 'Both. Send them ahead in writing, discuss them on the call, and ask for the follow-up in writing.'],
-      ['What if two agencies give different counting rules?', 'That’s common, and it’s why claims add up to more than you had. Ask both to report on the same rule for one month.'],
-    ],
-  },
   {
     slug: 'first-party-data-for-brand-marketers', topic: 'Your data', author: 'nazeem-ahmed', date: D,
     title: 'What is first-party data, and what do I do with mine?',
     dek: 'You already have it. Here’s what it can tell you, where it lives, and the one question to start with.',
-    short: 'First-party data is what your company collects itself: sales, tickets, sign-ups, viewing, customers, email, your own social accounts and site visits. It tells you which posts, campaigns and agencies line up with what actually happened, without relying on what platforms or agencies say. Start with one question and the data you already hold that touches it.',
+    short: 'First-party data is what your company collects itself: sales, tickets, sign-ups, viewing, customers, email, your own social accounts and site visits. It tells you which posts, campaigns and channels line up with what actually happened, in your own records, not just in any one platform’s report. Start with one question and the data you already hold that touches it.',
     body: `
 <h2 id="what">What counts</h2>
-<p>${g('first-party-data', 'First-party data')} is anything your company collects directly. ${g('third-party-data', 'Third-party data')} comes from outside: public conversation, search trends, reviews and research. Most brand teams have more of the first kind than they think. It’s just in pieces: sales with finance, email with the CRM team, social stats with an agency, each in a tool that doesn’t talk to the others.</p>
-<p>A useful test: if your company could hand the data to an auditor and say “we recorded this ourselves,” it’s first-party. If you’d have to say “a platform told us” or “a vendor estimated it,” treat it with more care. Agency reports sit in between. You received them directly, but they describe what the platforms saw, which is why they’re worth checking against the rest.</p>
+<p>${g('first-party-data', 'First-party data')} is anything your company collects directly. ${g('third-party-data', 'Third-party data')} comes from outside: public conversation, search trends, reviews and research. Most brand teams have more of the first kind than they think. It’s just in pieces: sales with finance, email with the CRM team, social stats with a partner, each in a tool that doesn’t talk to the others.</p>
+<p>A useful test: if your company could hand the data to an auditor and say “we recorded this ourselves,” it’s first-party. If you’d have to say “a platform told us” or “a vendor estimated it,” treat it with more care. Agency and partner reports sit in between. You received them directly, but they describe what the platforms saw, which is why they belong next to your own numbers.</p>
 <table><thead><tr><th>Data</th><th>What it can tell you</th><th>Where it usually lives</th></tr></thead><tbody>
 <tr><td>Sales, tickets, sign-ups, viewing</td><td>What happened, when, and through which channel</td><td>Finance, ticketing, retail partner reports, app or platform dashboards</td></tr>
 <tr><td>Customers</td><td>Who buys again, and who your best customers are</td><td>Your CRM or customer list</td></tr>
 <tr><td>Email</td><td>Which messages drive results, and how many results came from email</td><td>Your email tool</td></tr>
 <tr><td>Your social accounts</td><td>Which posts get watched and which get shared</td><td>Platform exports or your social tool</td></tr>
-<tr><td>Ad accounts</td><td>What ran, when, where, and what it cost</td><td>The ad platforms, often run by agencies</td></tr>
-<tr><td>Agency reports</td><td>What each agency says it drove</td><td>Decks and spreadsheets in your inbox</td></tr>
+<tr><td>Ad accounts</td><td>What ran, when, where, and what it cost</td><td>The ad platforms, run by your team or a partner</td></tr>
+<tr><td>Agency reports</td><td>What each partner reports it drove</td><td>Decks and spreadsheets in your inbox</td></tr>
 </tbody></table>
 
 <h2 id="questions">Questions it can answer</h2>
 <ul>
 <li><b>Which posts work?</b> In a real Arcus content report for a hard seltzer brand, the brand’s own social export showed one type of post, a trick with the can you could copy tonight, got a median of 19,188 views on Instagram against an account average of 8,148. That’s 2.4 times the average, read from data the brand already had. See the <a href="/reports/content-report">content report</a>.</li>
-<li><b>Did the campaign line up with results?</b> Your own numbers are the ground truth agency reports should be checked against.</li>
-<li><b>How much came from email?</b> Email results are often claimed by an ad platform that was somewhere in the path. Your email tool knows better.</li>
+<li><b>Did the campaign line up with results?</b> Your own numbers are what every channel’s report should be lined up against.</li>
+<li><b>How much came from email?</b> An ad platform often credits itself with a sale that came from email, because one of its ads was somewhere in the path. Your email tool knows better.</li>
 <li><b>Who are our best customers?</b> Usually a small group drives a big share of results. Knowing who they are changes who you write for.</li>
 </ul>
-<p>Notice what these questions have in common. Each one is about a decision: what to make, what to fund, who to renew, who to talk to. First-party data earns its keep when it’s pointed at a decision someone has to make this quarter. Pointed at nothing in particular, it turns into a dashboard nobody opens.</p>
+<p>Notice what these questions have in common. Each one is about a decision: what to make, what to fund, what to stop, who to talk to. First-party data earns its keep when it’s pointed at a decision someone has to make this quarter. Pointed at nothing in particular, it turns into a dashboard nobody opens.</p>
 
 <h2 id="example">A worked example</h2>
-<p><b>Example numbers.</b> These show how first-party data checks a claim. They are not from a client.</p>
-<p>A brand’s agencies claim 4,200 results in a quarter. The brand matches every claim against its own list of sales, one result at a time. 1,380 hold up. Of the 2,820 that don’t, 740 trace back to the brand’s own emails: the buyer clicked an email and bought, and an ad platform claimed the sale because the buyer had seen an ad that week. Without the email data, nobody could have told.</p>
+<p class="small muted">Made up to show how it reads, not from a client.</p>
+<p>Your sales are up 18% in week 3, and your team wants to know why. Your first-party data shows what happened: sales by day from finance, and which buyers were new from the CRM. It doesn’t show why. What people said online that week points to a reason: 1,240 TikTok and Reddit posts about one creator you never paid. The next step is to test it: pay that creator in half your regions, and compare sales with the other half.</p>
 <p>That’s the job first-party data does best. It isn’t glamorous. It’s the list of what happened, which every other number should agree with.</p>
 
 <h2 id="together">Better together</h2>
@@ -251,10 +44,10 @@ export const ARTICLES = [
 <h2 id="start">Where to start: a checklist</h2>
 <ol>
 <li><b>Write down one question</b> you’ve been asked and couldn’t answer. “Is the creator program working?” is a good one.</li>
-<li><b>List the data that touches it</b>: sales or sign-ups by day, creator codes, the creator agency’s report, your email sends.</li>
-<li><b>Find who owns each piece.</b> Finance, a partner, an agency, your own team.</li>
+<li><b>List the data that touches it</b>: sales or sign-ups by day, creator codes, the creator recap, your email sends.</li>
+<li><b>Find who owns each piece.</b> Finance, a partner, your own team.</li>
 <li><b>Check the dates line up.</b> Same days, same time zone, same definition of a result.</li>
-<li><b>Put the agency’s claim next to your own number</b> for the same dates.</li>
+<li><b>Put each report’s number next to your own number</b> for the same dates.</li>
 <li><b>Write down what you still can’t answer.</b> That list is your next step.</li>
 </ol>
 
@@ -265,13 +58,13 @@ export const ARTICLES = [
 <li><b>Collecting more instead of reading what you have.</b> Most teams already hold data nobody reads.</li>
 <li><b>Forgetting retail and partners.</b> If most of your results come through someone else, their reports are part of your first-party picture.</li>
 </ul>
-<p>Questions to ask your agencies: Can you share results by day so we can line them up with our own numbers? Which of our own channels, like email, could have driven the results you’re claiming? What do you need from our data to report more accurately?</p>
-<p>What it doesn’t prove: first-party data tells you what happened and lets you check claims. On its own it can’t tell you why. A spike in sign-ups the week a campaign ran lines up with the campaign. Proving it caused them takes a ${g('holdout-test', 'holdout test')}.</p>
-<p>If nobody on your team has time for the checklist, ${fr('bring us one question')}, the one from step 1. We answer it with the data that touches it and walk you through it in 30 minutes, so you see what your data can already tell you. After that, Arcus <a href="/how-it-works">connects every piece</a> into one layer you own, inside the tools you already use, adds what people say online, and answers the next question with the whole picture.</p>`,
+<p>Questions worth asking your team: Can we get every report’s results by day, so they line up with our own numbers? Which of our own channels, like email, could explain results an ad report counts? What’s missing from our data that would make the next answer easier?</p>
+<p>What it doesn’t prove: first-party data tells you what happened and lets you see which reported results held up. On its own it can’t tell you why. A spike in sign-ups the week a campaign ran lines up with the campaign. Proving it caused them takes a ${g('holdout-test', 'holdout test')}.</p>
+<p>If nobody on your team has time for the checklist, ${fr('try it free')} with the question from step 1. We answer it with your own numbers and what people say online, then walk you through it in 30 minutes, so you see what your data can already tell you. After that, we <a href="/how-it-works">connect every piece</a> into one place you own, inside your own setup, and answer the next question with the whole picture.</p>`,
     faq: [
       ['Is first-party data the same as zero-party data?', 'Zero-party data is information customers give you on purpose, like a quiz answer or a preference. It’s a kind of first-party data.'],
       ['Our sales happen through retailers. Do we have first-party data?', 'Yes. Retail partner reports, marketplace dashboards and your own social and email data all count. A good answer says where that data is too thin to call.'],
-      ['Do we need to move our data into a new tool?', 'No. The work is connecting what you already have and reading it together.'],
+      ['Do we have to change the tools we use?', 'No. We connect the ones you already have into one place you own, inside your own setup, and read them together.'],
     ],
   },
   {
@@ -286,9 +79,9 @@ export const ARTICLES = [
 <p>It works the same whatever you count. For a studio, the result might be tickets in each region. For a streaming service, sign-ups or hours viewed. For a drinks brand, sales through retail partners by region. As long as you can see the result by region, or by some other group you can split, you can run the test.</p>
 
 <h2 id="why">Why matching isn’t enough</h2>
-<p>Matching every agency claim to a result in your own numbers removes ${g('double-counting', 'double counting')}. That’s a big step. It tells you which claims are possible. It can’t tell you which ones the campaign caused.</p>
-<p><b>Example numbers.</b> In our example agency check, 470 claimed results came from people already searching the brand’s name. Those buyers clicked an ad on their way to a purchase they’d already decided on. Matching catches the obvious cases like that. It can’t catch the quieter ones: the fan who saw a trailer and would have watched anyway, or the regular who bought her usual case the week your ad ran. Only a comparison against people who didn’t see the campaign can.</p>
-<p>This matters most for the channels that sit closest to the purchase. ${g('brand-search', 'Brand search')}, retargeting and ${g('last-click', 'last-click')} credit all catch people at the final step. Their claimed results can look excellent while adding little, because the buyers were already on their way. Those are usually the first channels worth testing.</p>
+<p>Matching every reported result to one in your own numbers removes ${g('double-counting', 'double counting')}. That’s a big step. It tells you which results are possible. It can’t tell you which ones the campaign caused.</p>
+<p>Take people already searching your brand’s name. They click an ad on their way to a purchase they’d already decided on. Matching finds obvious cases like that. It can’t find the quieter ones: the fan who saw a trailer and would have watched anyway, or the regular who bought her usual case the week your ad ran. Only a comparison against people who didn’t see the campaign can.</p>
+<p>This matters most for the channels that sit closest to the purchase. ${g('brand-search', 'Brand search')}, retargeting and ${g('last-click', 'last-click')} credit all reach people at the final step. Their reported results can look excellent while adding little, because the buyers were already on their way. Those are usually the first channels worth testing.</p>
 
 <h2 id="test">The test, step by step</h2>
 <ol>
@@ -302,26 +95,25 @@ export const ARTICLES = [
 </ol>
 
 <h2 id="example">A worked example</h2>
-<p><b>Example.</b> This shows how a test reads. It is not from a client.</p>
-<p>A brand’s search agency claims a large share of results, and most of what holds up after matching came through brand search. The question: if we stopped paying for clicks on our own name, would those buyers still find us? The test pauses brand search in half the brand’s regions for three weeks and keeps it on in the other half.</p>
+<p class="small muted">Made up to show how a test reads, not from a client.</p>
+<p>Your search ads get credit for a large share of results, and most of what holds up after matching came through brand search. The question: if you stopped paying for clicks on your own name, would those buyers still find you? The test pauses brand search in half your regions for three weeks and keeps it on in the other half.</p>
 <ul>
-<li><b>If results hold in the paused regions</b>, people were finding the brand without the paid click. That budget can move somewhere that earns it.</li>
+<li><b>If results hold in the paused regions</b>, people were finding you without the paid click. That budget can move somewhere that earns it.</li>
 <li><b>If results drop</b>, the channel works, and the size of the drop tells you by how much.</li>
 </ul>
-<p>Either way the brand learns something it couldn’t learn from any report. And the test itself is cheap compared with a year of spending on a guess: three weeks, half the regions, and a comparison the whole team can read. You can see this example in our <a href="/reports/agency-check">agency check</a>.</p>
+<p>Either way you learn something no report could tell you. And the test itself is cheap compared with a year of spending on a guess: three weeks, half the regions, and a comparison the whole team can read.</p>
 
 <h2 id="when">When it’s worth running: a checklist</h2>
 <ul>
 <li>You’re about to move a meaningful amount of budget.</li>
-<li>You’re about to renew an agency on the strength of its claims.</li>
 <li>A channel’s numbers look too good, like ${g('brand-search', 'brand search')} or ${g('view-through-conversion', 'view-throughs')}.</li>
-<li>Two agencies claim the same results and you need to know which one earned them.</li>
+<li>Two channels report the same results and you need to know which one earned them.</li>
 <li>You can hold out regions without hurting a launch you can’t repeat.</li>
 </ul>
-<p>How long and how big: long enough for results to move and settle, and big enough that normal week-to-week swings don’t drown out the difference. For most brand campaigns that means a few weeks and a meaningful share of your regions. If your results are small or noisy, run longer rather than smaller. Agree all of this before the test starts, in writing, with the agency.</p>
-<p>Who should run it? The agency can set up the regions, since it controls the buying. Reading the result should start from your own numbers, and ideally be done by someone with no stake in the answer. That keeps the conversation afterward about what the numbers say.</p>
+<p>How long and how big: long enough for results to move and settle, and big enough that normal week-to-week swings don’t drown out the difference. For most brand campaigns that means a few weeks and a meaningful share of your regions. If your results are small or noisy, run longer rather than smaller. Agree all of this in writing before the test starts, with everyone who touches the campaign.</p>
+<p>Who should run it? Whoever buys your media can set up the regions. Reading the result should start from your own numbers, with the same counting rule for every channel. That keeps the conversation afterward about what the numbers say.</p>
 <p>Write the plan on one page: the question, the regions in each group, the dates, the result you’ll compare, and what you’ll do if results hold, rise or drop. Share it with everyone before the test starts.</p>
-<p>Questions to ask your agency: Would you run a holdout before we increase spend? Which regions would you hold out, and for how long? What result would make you recommend cutting the channel?</p>
+<p>Questions worth asking your team: Which channel should we test before we increase spend? Which regions would we hold out, and for how long? What result would make us cut the channel?</p>
 
 <h2 id="pitfalls">Common mistakes, and what a test doesn’t prove</h2>
 <ul>
@@ -332,7 +124,7 @@ export const ARTICLES = [
 <li><b>Testing during your one big launch.</b> Pick a period you can repeat.</li>
 </ul>
 <p>A test measures one campaign, in one set of regions, over one period. It doesn’t tell you what the campaign will do at twice the budget, in a different season, or with new creative. It also doesn’t replace a ${g('media-mix-modeling', 'media mix model')}, which estimates every channel at once from history. A test measures one channel directly, and it’s the best way to check what a model says.</p>
-<p>We design and read these tests as part of Arcus, on your own numbers. To start smaller, ${fr('bring us one question')}, like which of your agencies’ claims hold up before you test anything. If the answer points to a channel worth testing, we’ll say so.</p>`,
+<p>We design and read these tests as part of Arcus, on your own numbers. To start smaller, ${fr('try it free')} with a question like which spend paid off, before you test anything. If the answer points to a channel worth testing, we’ll say so.</p>`,
     faq: [
       ['Is media mix modeling the same thing?', 'No. A model estimates contribution from history. A holdout test measures it directly. They work well together: the test checks the model.'],
       ['Won’t we lose sales in the holdout regions?', 'Possibly, for a few weeks. That’s the price of knowing. If the channel turns out to do little, you save far more than the test cost.'],
@@ -385,11 +177,11 @@ export const ARTICLES = [
 <li><b>Name the rooms.</b> Where does this audience talk when you’re not posting?</li>
 <li><b>Name what you’ll count.</b> Views by format, likes on the top comment, words per 1,000 comments, topics per 100 questions.</li>
 <li><b>Count the brand the same way.</b> Same script, same measures, your own posts.</li>
-<li><b>Keep real quotes</b> with their like counts, so every claim has an example.</li>
+<li><b>Keep real quotes</b> with their like counts, so every finding has an example.</li>
 <li><b>Line it up with your own numbers.</b> Do the topics that spike in conversation show up in sales, sign-ups or viewing?</li>
 <li><b>End with keep, test, stop.</b></li>
 </ol>
-<p>Questions to ask your listening agency or vendor: Which rooms do you read beyond brand mentions? What do you count, and can we see the counts? Do you measure our own posts with the same rules? Can you show three real quotes, with like counts, for each finding? What did a client change because of your last report?</p>
+<p>Questions worth asking your team: Which rooms do we read beyond brand mentions? What do we count, and can we see the counts? Do we measure our own posts with the same rules? Can we show three real quotes, with like counts, for each finding? What did we change because of the last listening report?</p>
 
 <h2 id="mistakes">Common mistakes</h2>
 <ul>
@@ -403,7 +195,7 @@ export const ARTICLES = [
 
 <h2 id="limits">What it doesn’t prove</h2>
 <p>Listening tells you what people say and reward in public. It doesn’t tell you who buys. Public rooms skew: the forum in the example skews older than 24, so the report showed the 57 posters who stated an age of 18 to 24 separately. Some platforms hide counts: Instagram returns no like counts on comments. Lining it up with your own numbers can be as simple as a weekly table: the count of a topic in conversation next to sign-ups, sales or viewing by title for the same weeks. When the two move together more than once, you have something worth testing. ${g('social-listening', 'Listening')} gets useful when you line it up with your ${g('first-party-data', 'first-party data')}, and it becomes proof only with a test.</p>
-<p>Arcus plugs in the listening tool you already have, reads the rooms your audience uses, and lines what people say up with your own numbers. To see it on your audience, ${fr('bring us one question')}, like “Should our captions sound like our fans?”</p>`,
+<p>Arcus plugs in the listening tool you already have, reads the rooms your audience uses, and lines what people say up with your own numbers. To see it on your audience, ${fr('try it free')} with a question like “Should our captions sound like our fans?”</p>`,
     faq: [
       ['Which platforms do you read?', 'Reddit, TikTok, YouTube, X, Instagram, Facebook groups, Discord, Twitch, Kick, Google Search, Goodreads, Fable, reviews and more, depending on where your audience is.'],
       ['Is this the same as a social listening tool?', 'No. A listening tool is one of the pieces Arcus plugs into. Arcus reads the rooms your audience uses, counts specific things, and lines them up with your own numbers.'],
@@ -454,7 +246,7 @@ export const ARTICLES = [
 <li>Write three lines: keep, test, stop.</li>
 </ol>
 <p>Here are the three lines from the report, as an example of how specific they should be. <b>Keep</b> hosting hacks: more physical tricks with the can that someone could copy tonight. <b>Test</b> a friend-group frame on top of the formats that already get watched, and watch the share rate. <b>Retire</b> 3D animation, and the workday idea as written: keep the permission gag, drop “quit your job.”</p>
-<p>Questions to ask your social agency: How do you group posts, by brief or by what’s on screen? Which group would you stop? Which hit is carrying a weak group?</p>
+<p>Questions worth asking your team: Do we group posts by brief or by what’s on screen? Which group would we stop? Which hit is carrying a weak group?</p>
 
 <h2 id="limits">Common mistakes, and what this doesn’t prove</h2>
 <ul>
@@ -465,7 +257,7 @@ export const ARTICLES = [
 <li><b>Ignoring “other.”</b> In the report, “other” had higher median views than three of the four named groups, and the most shared post on the account came out of it.</li>
 <li><b>Forgetting test posts.</b> In the report, one post was a test cut at 212 views. It stayed in the data, labeled, and wasn’t read as a creative failure.</li>
 </ul>
-<p>This tells you which kinds of posts get watched and shared. It doesn’t tell you which ones sold. Lining posts up with your own sales, tickets or sign-ups is the next step, and a test is the step after that. Arcus does both once your social accounts and your sales sit in one layer. To start, ${fr('bring us one question')}, like “Which of our posts moved sales?”</p>`,
+<p>This tells you which kinds of posts get watched and shared. It doesn’t tell you which ones sold. Lining posts up with your own sales, tickets or sign-ups is the next step, and a test is the step after that. Arcus does both once your social accounts and your sales sit in one place you own. To start, ${fr('try it free')} with a question like “Which of our posts moved sales?”</p>`,
     faq: [
       ['How many posts do we need?', 'Four or more in a group before you call it. Fewer is directional.'],
       ['Why medians and not averages?', 'One viral post can drag an average up and hide a weak pattern. The median is the middle post, so one hit can’t move it much.'],
@@ -477,18 +269,18 @@ export const ARTICLES = [
     slug: 'do-you-need-a-data-team', topic: 'Your data', author: 'brendon-ghaderi', date: D,
     title: 'Do you need a data team? A checklist',
     dek: 'Ten questions to decide whether to hire, buy software or get help, and what each path takes.',
-    short: 'You need a dedicated data team if data is core to how your company competes and you have new questions every week. If you mainly need trustworthy answers about agencies, content and your audience a few times a month, a setup built inside the tools you already use, and owned by you, is usually faster than hiring and cheaper than a team.',
+    short: 'You need a dedicated data team if data is core to how your company competes and you have new questions every week. If you mainly need trustworthy answers about spend, content and your audience a few times a month, a setup built for you, in one place you own, is usually faster than hiring and cheaper than a team.',
     body: `
 <h2 id="three">The three paths</h2>
 <p>Brand teams that want better answers usually pick one of three paths.</p>
-<table><thead><tr><th></th><th>Hire a data team</th><th>Buy analytics software</th><th>Have it built in your own tools</th></tr></thead><tbody>
+<table><thead><tr><th></th><th>Hire a data team</th><th>Buy analytics software</th><th>Have it built for you</th></tr></thead><tbody>
 <tr><td>Who does the work</td><td>Your hires</td><td>Whoever on your team has time</td><td>An outside team</td></tr>
 <tr><td>Time to first answer</td><td>Months to hire, then months to build</td><td>Weeks to buy, then setup by your team</td><td>A first answer early, full setup in about three months</td></tr>
 <tr><td>What you manage</td><td>People, tools and the setup</td><td>The tool and the setup</td><td>The questions. The setup is yours.</td></tr>
 <tr><td>Best for</td><td>Data is core to how you compete</td><td>You already have analysts</td><td>You have questions, not analysts</td></tr>
 </tbody></table>
 <p>Our comparisons go deeper on <a href="/compare/hiring-a-data-team">hiring a team</a> and <a href="/compare/analytics-software">analytics software</a>.</p>
-<p>What a marketing data team needs, at minimum: someone to connect the data from agencies, partners and platforms; someone to analyze it and design tests; someone to read public conversation if that matters to you; and someone senior enough to turn findings into decisions. In a small team those can be two people. Rarely one.</p>
+<p>What a marketing data team needs, at minimum: someone to connect the data from your teams, partners and ad accounts; someone to analyze it and design tests; someone to read public conversation if that matters to you; and someone senior enough to turn findings into decisions. In a small team those can be two people. Rarely one.</p>
 <p>It also needs time. Connecting sources, agreeing definitions and checking the first numbers takes months before anyone answers the question you hired them for.</p>
 
 <h2 id="list">The checklist</h2>
@@ -496,31 +288,31 @@ export const ARTICLES = [
 <li><b>How often do you have questions?</b> Every week, or a few a month?</li>
 <li><b>Can you hire and keep analysts and data engineers</b> in your market, at your pay range?</li>
 <li><b>Who will manage them?</b> Someone who can judge their work, not only their output.</li>
-<li><b>Is your data already in one place,</b> or spread across agencies, partners and tools?</li>
+<li><b>Is your data already in one place,</b> or spread across teams, partners and tools?</li>
 <li><b>Do you need answers this quarter?</b></li>
 <li><b>Does anyone on the team read dashboards today,</b> or do they go unread?</li>
 <li><b>Do you need to read conversation online</b> as well as your own data?</li>
 <li><b>Would a few slides with the answer on top</b> be enough for your leadership?</li>
 <li><b>Do your questions change</b> with each launch, season or release?</li>
-<li><b>Is checking agencies a big part of the job?</b> An in-house team can find that awkward when the agencies are long-time partners.</li>
+<li><b>Do you need to see across every team and partner?</b></li>
 </ol>
 
 <h2 id="read">How to read your answers</h2>
 <p>Mostly “weekly, yes, we have someone, it’s already in one place”: build the team. You’ll get value from people who live in your data every day.</p>
 <p>Mostly “a few a month, not sure, no, it’s spread out”: get help first. You’ll get answers sooner, and you’ll learn which questions matter before you hire anyone to answer them.</p>
 <p>Mixed answers are common. Some teams get help now and hire later, once the setup is running and they know what kind of person they need.</p>
-<p>Two answers carry extra weight. If you need answers this quarter, hiring is unlikely to deliver them in time. And if checking agencies is a big part of the job, an outside team can do it without the relationships getting in the way.</p>
+<p>Two answers carry extra weight. If you need answers this quarter, hiring is unlikely to deliver them in time. And if you need to see across every team and partner, all their data has to be connected first, and that takes up most of a new hire’s first months.</p>
 
 <h2 id="example">A worked example</h2>
-<p><b>Example.</b> A composite to show how the checklist reads, not a client.</p>
-<p>A brand marketing lead at a beverage brand works with three agencies and a creator program. Her questions come in bursts: before each renewal, after each campaign, when the CMO asks whether summer worked. Her sales data sits with finance and retail partners. Social exports sit with the agencies. Nobody on her team writes queries, and she doesn’t want to learn.</p>
-<p>Her checklist reads: a few a month, hard to hire, nobody to manage them, spread out, needed this quarter, dashboards unread, yes to listening, yes to a few slides, questions change every season, checking agencies is central. That’s a clear “get help first.” Hiring would take months before her first answer, and her first hire would spend their first months connecting data before answering anything.</p>
-<p>What she does instead: she brings one question, whether her agencies’ summer claims held up against her sales data, sees the answer, and takes it into her next renewal. If that first answer earns its place, the setup follows. A few months later she has the answers she was missing, and a much better idea of whether she’ll ever need to hire.</p>
+<p class="small muted">A composite to show how the checklist reads, not a client.</p>
+<p>A brand marketing lead at a beverage brand runs paid social, search and a creator program, mostly through partners. Her questions come in bursts: before each budget decision, after each campaign, when the CMO asks whether summer worked. Her sales data sits with finance and retail partners. Social exports sit with whoever runs each account. Nobody on her team writes queries, and she doesn’t want to learn.</p>
+<p>Her checklist reads: a few a month, hard to hire, nobody to manage them, spread out, needed this quarter, dashboards unread, yes to listening, yes to a few slides, questions change every season, seeing across every team and partner is central. That’s a clear “get help first.” Hiring would take months before her first answer, and her first hire would spend their first months connecting data before answering anything.</p>
+<p>What she does instead: she tries Arcus free on one question, whether the summer push paid off. The answer comes from her own sales data and what people said online, and she takes it into her next budget meeting. If that first answer earns its place, the setup follows. A few months later she has the answers she was missing, and a much better idea of whether she’ll ever need to hire.</p>
 
 <h2 id="arcus">What getting help looks like with Arcus</h2>
-<p>Arcus is the third path for entertainment and lifestyle brands. The Arcus team connects every piece of your data, from sales and email to social accounts and agency reports, into one layer you own, inside the tools you already use, and adds what people say online. It takes about three months, and there’s no new software for your team to learn. Answers arrive as a few slides: the answer on top, the evidence, then what to keep, test and stop. [Confirm: read-only access to connected accounts, and where data is stored.]</p>
-<p>Once it’s connected, any leader can ask a question and get an answer that sees the whole picture: whether an agency’s claims held up, which posts work, who a launch is really for. See <a href="/how-it-works">how it works</a>.</p>
-<p>The way in is small on purpose. Your first question is free, with a 30-minute walkthrough. After that there’s a one-time setup fee of [$X] and a monthly fee of [$Y]. The <a href="/pricing">pricing page</a> has the details.</p>
+<p>Arcus is the third path for entertainment and lifestyle brands, and we build it for you. First we connect every piece of your data, from sales and email to social accounts and agency reports, into one place you own: your own data lake, inside your own setup. Then we add what people say online, and write down what we learn about your products, seasons, audiences and goals, so every answer starts from your business. That’s your context layer. It takes about three months. Answers arrive as a few slides: the answer on top, the evidence, then what to keep, test and stop. They land in Slack, email or Sheets. [Confirm: read-only access to connected accounts, and where data is stored.]</p>
+<p>Once it’s connected, any leader can ask a question and get an answer that sees the whole picture: whether the summer push paid off, which posts work, who a launch is really for. See <a href="/how-it-works">how it works</a>.</p>
+<p>The way in is small on purpose: you try it free first. After that there’s a one-time setup fee of [$X] and a monthly fee of [$Y]. The <a href="/pricing">pricing page</a> has the details.</p>
 
 <h2 id="mistakes">Common mistakes, and what this checklist doesn’t decide</h2>
 <ul>
@@ -531,9 +323,9 @@ export const ARTICLES = [
 <li><b>Treating it as forever.</b> The right answer this year may change next year.</li>
 </ul>
 <p>Questions to ask anyone offering to do it for you: Who owns the setup, and where does it live? Which of our existing tools do you connect to? Who reads the data, and how often? What do we get each month, and in what form? What happens to the setup if we stop? [Confirm: the answers Arcus gives to each.]</p>
-<p>The checklist tells you which path fits your questions today. It doesn’t tell you what any path will cost your company, or how good your data is until someone looks. The quickest way to see what your data can answer is to ${fr('bring us one question')}. We answer it with your own numbers and walk you through it in 30 minutes.</p>`,
+<p>The checklist tells you which path fits your questions today. It doesn’t tell you what any path will cost your company, or how good your data is until someone looks. The quickest way to see what your data can answer is to ${fr('try it free')}: pick a question, and we answer it with your own numbers and walk you through it in 30 minutes.</p>`,
     faq: [
-      ['Can Arcus work alongside a data team?', 'Yes. Some teams use Arcus while they hire, or for listening and agency checks their team doesn’t cover.'],
+      ['Can Arcus work alongside a data team?', 'Yes. Some teams use Arcus while they hire, or for listening and spend reports their team doesn’t cover.'],
       ['What happens to the setup if we stop?', '[Confirm: contract terms, and what the brand keeps from the setup in its own environment.]'],
       ['Do we need to hire anyone to work with Arcus?', 'No. A brand marketing lead who can say which questions matter is enough.'],
     ],
@@ -584,7 +376,7 @@ export const ARTICLES = [
 <li>Rewrite your next five captions with the four rules. No questions to the room. No slang. A time, if there is one.</li>
 <li>Compare medians after a month.</li>
 </ol>
-<p>Questions to ask your social agency: Which of our posts would you call a bit, and how did they do against the rest? Who on our side already writes in the audience’s voice? What would you reply to this week instead of posting?</p>
+<p>Questions worth asking your team: Which of our posts are bits, and how did they do against the rest? Who on our side already writes in the audience’s voice? What could we reply to this week instead of posting?</p>
 
 <h2 id="limits">Common mistakes, and what this doesn’t prove</h2>
 <ul>
@@ -594,7 +386,7 @@ export const ARTICLES = [
 <li><b>Reading averages.</b> One 22.5 million view post would swamp an average. Medians keep the comparison fair.</li>
 </ul>
 <p>The counts come from one audience, men 18 to 24, on public TikTok posts in eight formats, sorted by hand in September 2026. They show what gets watched and joined. They don’t show that a bit will move sign-ups or viewing for your brand. That needs your own numbers lined up against the posts, and a test. Listening that counts is covered in <a href="/library/social-listening-that-counts">this guide</a>.</p>
-<p>To run this count on your own audience, ${fr('bring us one question')}, like “What does our audience reward that we never post?” We line up what people say online with your own numbers and walk you through the answer in 30 minutes.</p>`,
+<p>To run this count on your own audience, ${fr('try it free')} with a question like “What does our audience reward that we never post?” We line up what people say online with your own numbers and walk you through the answer in 30 minutes.</p>`,
     faq: [
       ['Does this apply to audiences other than young men?', 'The numbers are from one audience. The method applies anywhere: sort posts by kind, compare medians, read the top comments. Your audience may reward something different.'],
       ['Should a brand post bits at all?', 'Brand attempts at the register did worst in this study. Replying to the audience’s bits, and letting a fan’s line be the caption, did better.'],
@@ -670,7 +462,7 @@ export const ARTICLES = [
 <li>Could a fan have written it? If not, find a fan’s line and use that.</li>
 <li>Read it aloud to someone in the audience. If they wince, start over.</li>
 </ul>
-<p>Questions to ask your social agency: How long are our captions compared with our audience’s comments? How many carry a hashtag? Which of our posts got a reply like “who wrote this”? Who on the team writes our best-performing lines?</p>
+<p>Questions worth asking your team: How long are our captions compared with our audience’s comments? How many carry a hashtag? Which of our posts got a reply like “who wrote this”? Who on the team writes our best-performing lines?</p>
 
 <h2 id="limits">Common mistakes, and what this doesn’t prove</h2>
 <ul>
@@ -679,7 +471,7 @@ export const ARTICLES = [
 <li><b>Measuring the audience and not the brand.</b> The gap only shows when both are counted the same way.</li>
 <li><b>Asking the room a question.</b> Questions were 3.9% of the top comments. A caption that asks “who’s watching tonight?” asks for something the audience rarely gives.</li>
 </ul>
-<p>The counts describe one audience, men 18 to 24, on public posts in September 2026. One reader labeled the 480 hand-sorted comments, and every label is filed. Instagram returns no like counts on comments, so Instagram examples carry none. The counts show how the audience writes and what it rewards. They don’t prove a caption change will move viewing. Lining your posts up with your own numbers comes next. To start on your own audience, ${fr('bring us one question')}.</p>`,
+<p>The counts describe one audience, men 18 to 24, on public posts in September 2026. One reader labeled the 480 hand-sorted comments, and every label is filed. Instagram returns no like counts on comments, so Instagram examples carry none. The counts show how the audience writes and what it rewards. They don’t prove a caption change will move viewing. Lining your posts up with your own numbers comes next. To see how your own audience writes, ${fr('try it free')}.</p>`,
     faq: [
       ['Should brands ever use slang?', 'In this study, the audience used slang to judge things, at about one word in 62. A brand adding it reads as decoration, and a cited 2025 study found it cost brands likes and sales.'],
       ['What is the crying-laughing emoji doing at the top?', 'It appears in 63 of every 1,000 comments, more than any word. It works as a reaction, so it tells you more about tone than vocabulary.'],
@@ -734,7 +526,7 @@ export const ARTICLES = [
 <li>On a platform where most posts get zero or one share, judge on views. Ignore share rate there.</li>
 <li>Try one format made for the platform that watches: a still, a how-to, a step people can repeat.</li>
 </ol>
-<p>Questions to ask your social agency: Do you report each platform against its own average? Which of our posts ran on one platform only, and why? Which format would you make only for Facebook?</p>
+<p>Questions worth asking your team: Do we read each platform against its own average? Which of our posts ran on one platform only, and why? Which format would we make only for Facebook?</p>
 
 <h2 id="limits">Common mistakes, and what this doesn’t prove</h2>
 <ul>
@@ -743,7 +535,7 @@ export const ARTICLES = [
 <li><b>Ranking Facebook by share rate.</b> With 24 of 29 posts at zero or one share, the rate ranks groups on single shares. It’s noise.</li>
 <li><b>Cross-posting everything.</b> Sixteen Facebook posts used the same video as an Instagram post. Some of the best Instagram posts never made it over, and some did nothing there.</li>
 </ul>
-<p>The samples are small. Every Facebook group is eight posts or fewer, and groups under four posts are directional. Three Facebook photo posts couldn’t be fetched and took their Instagram twin’s label on an exact caption match. Share counts come from the brand’s social tool; Instagram exposes no share count to any tool, so they can’t be checked against the platform. This is one brand, one summer. It shows what happened on each platform. It doesn’t show why, and it doesn’t show which posts sold. For that, posts need lining up with your own numbers. Our guide to <a href="/library/watched-vs-shared-share-rate">watched versus shared</a> covers the share math. To see what your own platforms do, ${fr('bring us one question')}.</p>`,
+<p>The samples are small. Every Facebook group is eight posts or fewer, and groups under four posts are directional. Three Facebook photo posts couldn’t be fetched and took their Instagram twin’s label on an exact caption match. Share counts come from the brand’s social tool; Instagram exposes no share count to any tool, so they can’t be checked against the platform. This is one brand, one summer. It shows what happened on each platform. It doesn’t show why, and it doesn’t show which posts sold. For that, posts need lining up with your own numbers. Our guide to <a href="/library/watched-vs-shared-share-rate">watched versus shared</a> covers the share math. To see what your own platforms do, ${fr('try it free')}.</p>`,
     faq: [
       ['Should we stop posting on Facebook?', 'Not on this evidence. Facebook gave the brand its single biggest post. It watched useful tricks and didn’t share, so plan it for reach.'],
       ['Is this true for every brand?', 'It’s one brand’s summer. The method transfers: read each platform against its own average and see which job it does for you.'],
@@ -815,7 +607,7 @@ export const ARTICLES = [
 <li>For your best reach format, write one version with the viewer’s friends in the joke and compare its share rate.</li>
 </ol>
 <p>That last step is the report’s own test. Run hosting hacks and the can posts with a friend-group frame on top, the kind of setup where the next move is to send it to someone, and watch whether the share rate moves while views hold.</p>
-<p>Questions to ask your social agency: Do you report shares per 1,000 views, by platform? Which posts got watched and which got sent? What would you change about our best-watched format to make it shareable?</p>
+<p>Questions worth asking your team: Do we track shares per 1,000 views, by platform? Which posts got watched and which got sent? What would we change about our best-watched format to make it shareable?</p>
 
 <h2 id="limits">Common mistakes, and what this doesn’t prove</h2>
 <ul>
@@ -824,7 +616,7 @@ export const ARTICLES = [
 <li><b>Treating shares as sales.</b> A share is a strong signal that someone cared. It’s not a purchase.</li>
 <li><b>Forgetting the platform.</b> The friends post took 409 shares on Instagram and one on Facebook. Rates belong to one platform at a time.</li>
 </ul>
-<p>Share counts here come from the brand’s social tool. Instagram exposes no share count to any tool, so they can’t be checked against the platform. The tournament group was three posts and directional, and the tournament is over: the real test is whether the next big shared moment does the same. None of this shows which posts sold. That takes lining posts up with your own numbers. To see that on your own posts, ${fr('bring us one question')}, like “Which of our shared posts moved sales?”</p>`,
+<p>Share counts here come from the brand’s social tool. Instagram exposes no share count to any tool, so they can’t be checked against the platform. The tournament group was three posts and directional, and the tournament is over: the real test is whether the next big shared moment does the same. None of this shows which posts sold. That takes lining posts up with your own numbers. To see that on your own posts, ${fr('try it free')} with a question like “Which of our shared posts moved sales?”</p>`,
     faq: [
       ['What is a good share rate?', 'It depends on the account. Compare each post with your own account’s rate, per platform, and always next to views.'],
       ['Should we optimize for views or shares?', 'Both, with different posts. In this report, tricks people could copy drove views, and jokes about friends or a shared moment drove shares.'],
@@ -879,7 +671,7 @@ export const ARTICLES = [
 <li><b>Report ACV, sales rate, penetration and repeat.</b> Publish a four-week read after the next launch, the way Harry’s did.</li>
 <li><b>Audit product claims before the media runs.</b> The comment section follows the product onto every retailer’s review tab. Poppi’s claim cost $8.9 million.</li>
 </ol>
-<p>Questions to ask your agency before a retail launch: Which retailer and which week is the launch media pointed at? How will you show that retailer’s sales rate moved? Is retail media coming from the trade budget or the brand budget? Which of our claims would hold up on a review tab?</p>
+<p>Questions worth asking your team before a retail launch: Which retailer and which week is the launch media pointed at? How will we show that retailer’s sales rate moved? Is retail media coming from the trade budget or the brand budget? Which of our product claims would hold up on a review tab?</p>
 
 <h2 id="limits">Common mistakes, and what this doesn’t prove</h2>
 <ul>
@@ -888,7 +680,7 @@ export const ARTICLES = [
 <li><b>Different prices on different channels.</b> The cases held one price and changed the count.</li>
 <li><b>Judging retail media on ROAS alone.</b> The cases bought it for rank and accepted a lower return.</li>
 </ul>
-<p>These are five brands that succeeded, studied from public filings, interviews, trade press, retailer media networks and marketplace listings. Brands that moved into retail and struggled are less likely to publish. The 824% figure is a vendor’s case study. The halo figures are averages across many brands, not a forecast for yours. The cases show what happened. Whether your launch media moves a retailer’s sales rate is something your own numbers can show, launch by launch, once retailer data, sales and media sit in one layer. To start, ${fr('bring us one question')}, like “Did our launch media move the retailer’s sales rate?”</p>`,
+<p>These are five brands that succeeded, studied from public filings, interviews, trade press, retailer media networks and marketplace listings. Brands that moved into retail and struggled are less likely to publish. The 824% figure is a vendor’s case study. The halo figures are averages across many brands, not a forecast for yours. The cases show what happened. Whether your launch media moves a retailer’s sales rate is something your own numbers can show, launch by launch, once retailer data, sales and media sit in one place you own. To start, ${fr('try it free')} with a question like “Did our launch media move the retailer’s sales rate?”</p>`,
     faq: [
       ['Will opening in retail hurt our online sales?', 'Not at any of the five brands studied. The online share shifted as retail grew, and research found online sales rise near a new retail location. The real cost is margin.'],
       ['What should launch media measure?', 'The lift in one retailer’s sales rate in the week the product lands on the shelf. Buyers read ACV, units per door per week, household penetration and repeat.'],
