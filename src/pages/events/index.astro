@@ -16,7 +16,7 @@ const schema = EPISODES.filter((e) => e.date).map((e) => ({ '@type': 'Event', na
       <Crumbs items={crumbs} />
       <h1 class="dh d96">{SERIES.name}.</h1>
       <p class="lead">{SERIES.lead}</p>
-      <QuickAnswer q="When is the next session?" a={next ? `${next.title}: ${new Date(next.date).toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'short', timeZone: 'America/New_York' })} ET. Free.` : 'Dates are being set. Save your seat and we’ll email you the date and the link.'} pointsLead="Each session covers:" points={['How to line up every channel’s recap with your own numbers', 'Three reasons a reported result may not hold up', 'Which questions to ask before you move budget', 'How a regions-on, regions-off test shows what a channel did']} />
+      <QuickAnswer q="When is the next session?" a={next ? `${next.title}: ${new Date(next.date).toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'short', timeZone: 'America/New_York' })} ET. Free.` : 'Save your seat and we’ll email you the date and the link. Free.'} pointsLead="Each session covers:" points={['How to line up every channel’s recap with your own numbers', 'Three reasons a reported result may not hold up', 'Which questions to ask before you move budget', 'How a regions-on, regions-off test shows what a channel did']} />
       <p class="small muted">Hosted by {hosts.map((h) => `${h.name} (${h.title})`).join(' and ')}. Every recap in this series is a made-up example built by Arcus. We never show a real brand’s data.</p>
     </div>
     <form class="form paper" data-lead="webinar" method="post" action="/api/lead" novalidate aria-labelledby="ev-h">
@@ -43,7 +43,7 @@ const schema = EPISODES.filter((e) => e.date).map((e) => ({ '@type': 'Event', na
   </section>
   <section class="wrap blk-l">
     <h2 class="dh d56" style="margin-bottom:20px">Episodes.</h2>
-    <div class="tiles" style="--n:3">{EPISODES.map((e) => <div class="tile"><span class="small faint">Episode {e.n}{e.date ? ` · ${new Date(e.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}` : ' · date to come'}</span><p class="h3">{e.title}</p><p class="muted">{e.body}</p><p class="small"><b>You leave with:</b> {e.take}</p></div>)}</div>
+    <div class="tiles" style="--n:3">{EPISODES.map((e) => <div class="tile"><span class="small faint">Episode {e.n}{e.date ? ` · ${new Date(e.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}` : ''}</span><p class="h3">{e.title}</p><p class="muted">{e.body}</p><p class="small"><b>You leave with:</b> {e.take}</p></div>)}</div>
   </section>
   <Close variant="navy" title="Or try it on yours." lines={['Or try it', 'on yours.']} body="The teardown shows the method on an example. Try it free: pick a real question and we answer it with your own numbers and what people say, then walk you through it in 30 minutes. No card." loc="events-close" />
 </Site>

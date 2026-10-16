@@ -8,6 +8,8 @@ import { TBD, CAL_URL } from '../../data/site.js';
 // filled in; without JavaScript the calendar is a plain link. Until then the card says what happens instead: we email
 // to set a time.
 const calLive = Boolean(CAL_URL);
+// The Turnaround row prints once TBD.turnaround holds a real time; filled() in site.js keeps a bracketed default out.
+const turnaround = TBD.turnaround;
 ---
 <Site title="Got it. Your question is in | Arcus" description="Your question is in. Next: a time for your walkthrough." path="/free-report/thanks" page="thanks" noindex navCta={false}>
   <section class="split-hero frt" data-prefill>
@@ -19,7 +21,7 @@ const calLive = Boolean(CAL_URL);
           <div class="hd">Your question</div>
           <div class="r"><span>Form</span><span>Received</span></div>
           <div class="r"><span>Access list</span><span>On its way</span></div>
-          <div class="r"><span>Turnaround</span><span>{TBD.turnaround}</span></div>
+          {turnaround && <div class="r"><span>Turnaround</span><span>{turnaround}</span></div>}
           <div class="r"><span>Walkthrough</span><span>{calLive ? 'Pick a time' : 'We’ll email you'}</span></div>
           <div class="r tot"><span>Total</span><span>$0</span></div>
           <div class="bar"></div>

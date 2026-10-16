@@ -3,6 +3,6 @@ import { mdResponse, footer } from '../../lib/md.js';
 export function getStaticPaths() { return COMPARE.map((c) => ({ params: { slug: c.slug }, props: { c } })); }
 export function GET({ props: { c } }) {
   const d = COMPARE_DEEP[c.slug] || {};
-  const nm = c.checked ? c.name : c.name.charAt(0).toLowerCase() + c.name.slice(1);
+  const nm = c.vendor ? c.name : c.name.charAt(0).toLowerCase() + c.name.slice(1);
   return mdResponse(`# ${c.h1}\n\n${d.summary || c.lead}\n\nCanonical: https://usearcus.ai/compare/${c.slug}\n\n| | ${c.name} | Arcus |\n|---|---|---|\n${c.rows.map(([k, a, b]) => `| ${k} | ${a} | ${b} |`).join('\n')}\n\n${(d.sections || []).map(([h, b]) => `## ${h}\n\n${b}`).join('\n\n')}\n\n## When ${nm} is the better pick\n\n${c.better}\n\n${(d.decide || []).map((x) => `- ${x}`).join('\n')}${footer}`);
 }

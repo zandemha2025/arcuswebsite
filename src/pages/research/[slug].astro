@@ -17,7 +17,6 @@ const schema = [{ '@type': 'Dataset', name: s.title, description: s.short, url: 
 <Site title={`${s.title} | Arcus research`} description={s.short} path={`/research/${s.slug}`} page="study" crumbs={crumbs} schema={schema} noindex={!s.published}>
   <header class="phero l">
     <Crumbs items={crumbs} />
-    {!s.published && <span class="tag t-o">[Pending client OK: not indexed until approved]</span>}
     <h1 id="study-h1" class="dh d96">{s.title}</h1>
     <QuickAnswer q="What did the study find?" a={s.short} />
   </header>

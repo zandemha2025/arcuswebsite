@@ -1,7 +1,8 @@
 // Deeper reference content: glossary detail, new glossary terms, compare pages and more FAQ.
 // Rules: only deck numbers (anonymized) or numbers clearly labeled as made-up examples.
-// Unconfirmed company facts are in [brackets]. Compare `sections` bodies hold two paragraphs split by a blank line ('\n\n').
-import { TBD } from './site.js';
+// Every line must read finished and true without founder input: no [brackets]. Copy that waits on a company fact is
+// logged in docs/PLACEHOLDERS-RESOLVED.md with the question that would make it specific.
+// Compare `sections` bodies hold two paragraphs split by a blank line ('\n\n').
 
 // ---------------------------------------------------------------------------
 // New glossary terms, same shape as GLOSSARY items
@@ -128,7 +129,7 @@ export const GLOSSARY_DEEP = {
     ],
     example: 'Example (made-up numbers): a drinks brand has weekly sales from its distributor, 20,000 email subscribers and its own Instagram stats. Lined up by week, the team sees that a jump in email sign-ups and a rise in sales landed in the same week as a widely shared post. That’s a lead worth testing, and a test is what would show whether the post caused it.',
     mistake: 'Assuming you need perfect data to start. Most brands already have enough to see which spend paid off, and the gaps are worth knowing about too.',
-    arcus: 'Arcus connects every piece of it, from sales to email to your social stats, into one place you own, inside your own setup. Every answer we give starts there. Where it’s too thin to call something, the answer says so. [Confirm: data stays in the brand’s environment and access is read-only.]',
+    arcus: 'Arcus connects every piece of it, from sales to email to your social stats, into one place you own, inside your own setup. Every answer we give starts there. Where it’s too thin to call something, the answer says so.',
     related: ['third-party-data', 'social-listening', 'sell-through', 'double-counting'],
   },
   'third-party-data': {
@@ -268,8 +269,8 @@ export const COMPARE_DEEP = {
     both: 'Your analytics software is one of the pieces Arcus plugs into. Your analysts keep their dashboards for daily monitoring, and Arcus answers the bigger questions, like which spend paid off or who a launch is for, with everything connected.',
     faq: [
       ['Where do the answers show up?', 'Answers land in Slack, email or Sheets. Everything we connect sits in one place you own, inside your own setup.'],
-      ['Can Arcus work with the analytics tools we already pay for?', 'Yes. We connect the tools you already use and build on top of them. [Confirm: list of supported tools and connectors.]'],
-      ['What happens if we hire analysts later?', 'Everything we connect is yours and lives inside your own setup, so they can pick it up and build on it. [Confirm: handover terms.]'],
+      ['Can Arcus work with the analytics tools we already pay for?', 'Yes. We connect the tools you already use and build on top of them. Tell us which ones you have, and we’ll tell you how each one connects before we start.'],
+      ['What happens if we hire analysts later?', 'Everything we connect is yours and lives inside your own setup, so they can pick it up and build on it.'],
       ['Isn’t a dashboard enough?', 'For monitoring, often it is. For deciding which channel, creator or type of content deserves more budget, someone still has to do the matching, the counting and the reading. That’s the part Arcus does.'],
     ],
   },
@@ -280,7 +281,7 @@ export const COMPARE_DEEP = {
       ['What a marketing data team needs', 'Answering the questions Arcus answers usually takes more than one person: someone to connect and clean the data, someone to analyze it, someone who knows marketing well enough to ask the right question, and more and more often someone who knows how to put AI to work safely.\n\nOne great hire rarely covers all of it. A first hire often spends months connecting data before anyone sees an answer, and leaves a gap when they move on.'],
       ['Time and management', 'Hiring takes months, and so does building. Then there are tools to pay for, priorities to set and careers to manage, often by a marketing lead who has never managed analysts.\n\nWe won’t guess at salaries here, because they vary too much by city and seniority. The useful comparison is time to the first answer you trust, and who carries the management load. With Arcus, the first answer is free, the full setup takes about three months, and you don’t manage anyone.'],
       ['When building your own team is right', 'If data is central to how your company competes, if questions come up every day, or if you need analysts in every planning meeting, build the team. People inside the company learn your business in ways an outside team can’t.\n\nMany brand teams aren’t there yet. They have a handful of big questions a quarter, a budget to spend well and an audience to understand. For them, a full team can be more than the work needs.'],
-      ['How Arcus works as a bridge', 'Arcus connects your data into one place you own, inside your own setup, so nothing is locked away if you hire later. Your new team inherits connected data and a record of every past answer.\n\nTeams that hire can shift Arcus toward listening, tests and the bigger brand-side questions, while their own people take on the day-to-day. [Confirm: how Arcus scopes work alongside an in-house data team.]'],
+      ['How Arcus works as a bridge', 'Arcus connects your data into one place you own, inside your own setup, so nothing is locked away if you hire later. Your new team inherits connected data and a record of every past answer.\n\nWhen your team arrives, we work out with them who does what. Arcus can keep the listening, tests and bigger brand-side questions while your own people take on the day-to-day.'],
     ],
     decide: [
       'Hire a team if data is core to how your company competes.',
@@ -293,7 +294,7 @@ export const COMPARE_DEEP = {
     both: 'Teams that are hiring use Arcus as the bridge: answers keep coming while recruiting runs, and everything Arcus connects lives inside the brand’s own setup, so the new team starts with connected data. Once the team is in place, Arcus can keep running the brand-side questions, listening and tests.',
     faq: [
       ['Would Arcus replace our analysts?', 'No. Arcus connects the pieces your analysts work from into one place they can use too. Teams with analysts often use Arcus for the spend reports and listening their people don’t have time for.'],
-      ['Can a team we hire later take over the setup?', 'It’s yours, inside your own setup and connected to tools you already use, so they can. [Confirm: handover and documentation terms.]'],
+      ['Can a team we hire later take over the setup?', 'It’s yours, inside your own setup and connected to tools you already use, so they can pick it up from there.'],
       ['How long until we see something useful?', 'Right away. Try it free: pick a question, and we answer it and walk you through it in 30 minutes. During the roughly three-month setup, answers arrive along the way.'],
       ['What does Arcus bring that one hire might not?', 'AI, data engineering and marketing together, plus listening across the places your audience talks. One person rarely covers all of that.'],
     ],
@@ -302,10 +303,10 @@ export const COMPARE_DEEP = {
   'haus': {
     summary: 'HAUS is an incrementality testing platform built for growth teams that want to run their own lift tests. Arcus is for marketing leaders at entertainment and lifestyle brands: it connects every piece of your data into one place you own, adds what people say online, counts each result once, and, when a decision needs proof of cause, designs a test that runs ads in some regions and pauses them in others. If your team runs paid media in-house and wants a testing tool, look at HAUS. If you want any question answered with the whole picture, in one place you own, look at Arcus.',
     sections: [
-      ['What HAUS is built for', 'From its public positioning, HAUS helps growth and performance marketing teams measure incrementality: run lift tests across regions, read the results, and decide where the next dollar should go. It’s software your team uses. [Check on their site for current features, channels covered and pricing.]\n\nThat’s a strong fit for a team with an in-house media buyer or growth lead who wants to test continuously and is comfortable reading the output.'],
+      ['What HAUS is built for', 'From its public positioning, HAUS helps growth and performance marketing teams measure incrementality: run lift tests across regions, read the results, and decide where the next dollar should go. It’s software your team uses. For current features and the channels it covers, see their site.\n\nThat’s a strong fit for a team with an in-house media buyer or growth lead who wants to test continuously and is comfortable reading the output.'],
       ['What Arcus is built for', 'Arcus is for in-house brand teams at studios, streamers, drinks, games, music, fashion and beauty brands, often without a data department. Arcus connects your sales, tickets, sign-ups or streams, your CRM, ad accounts and agency reports into one place you own, and adds what your audience says on Reddit, TikTok, YouTube, Discord, review sites and more. The Arcus team does the work and sends a few slides with the answer on top.\n\nTesting is one part of it. The first question is usually simple: what worked? Arcus answers it with each result counted once against your own numbers. After that, any question can be asked of the whole picture. A holdout test comes in when a decision needs proof of cause.'],
       ['Who does the work', 'With a testing platform, your team designs the tests, coordinates with whoever buys the media, keeps everything else steady and interprets the result. With Arcus, our team does that and you read the answer.\n\nNeither is better in general. It depends on whether someone on your team wants testing to be part of their job.'],
-      ['Results beyond online sales', 'Many entertainment and lifestyle brands measure success in tickets, streams, viewing, sign-ups or retail sell-through. Arcus works from whatever your own numbers are, and tells you where they’re too thin to call.\n\nIf your results come through theaters, streaming platforms, distributors or retailers, ask any vendor, HAUS included, how they handle that data. [Check on their site.]'],
+      ['Results beyond online sales', 'Many entertainment and lifestyle brands measure success in tickets, streams, viewing, sign-ups or retail sell-through. Arcus works from whatever your own numbers are, and tells you where they’re too thin to call.\n\nIf your results come through theaters, streaming platforms, distributors or retailers, ask any vendor, HAUS included, how they handle that data.'],
     ],
     decide: [
       'Pick HAUS if you have a growth team that wants to run its own lift tests in a platform.',
@@ -315,11 +316,11 @@ export const COMPARE_DEEP = {
       'Pick Arcus if what your audience says online matters as much to you as what your spend returns.',
       'Talk to both if you want continuous testing plus answers on the brand-side questions and what people say.',
     ],
-    both: 'A company with a growth team might use a testing platform for ongoing lift tests on paid channels, and Arcus for listening and the brand-side questions a testing tool isn’t set up to answer. Test results become one more piece Arcus connects, next to your own numbers. [Check on their site for how HAUS exports results.]',
+    both: 'A company with a growth team might use a testing platform for ongoing lift tests on paid channels, and Arcus for listening and the brand-side questions a testing tool isn’t set up to answer. Share the test results with us, and they become one more piece of the picture, next to your own numbers.',
     faq: [
       ['Does Arcus run incrementality tests like HAUS?', 'Arcus designs holdout tests when a decision needs proof of cause: ads run in some regions and pause in others, and we read the result on your own numbers. Our team does that work for you, alongside spend reports and listening.'],
-      ['Who is HAUS a better fit for?', 'Teams with an in-house growth or performance lead who wants a testing platform to use directly. [Check on their site for who they serve today.]'],
-      ['How do the costs compare?', 'We don’t publish other companies’ pricing. For HAUS: [Check on their site]. You can try Arcus free. After that, there’s a one-time setup fee and a monthly fee. The Pricing page has the details.'],
+      ['Who is HAUS a better fit for?', 'Going by its public positioning, teams with an in-house growth or performance lead who wants a testing platform to use directly. See their site for who they serve today.'],
+      ['How do the costs compare?', 'We don’t publish other companies’ pricing, so for HAUS, see their site or ask their team. Arcus is free to try. If you want everything connected after that, we scope the setup and the monthly work for your brand and quote it once you’ve seen your free answer. The Pricing page explains how it works.'],
       ['Can Arcus use results from a HAUS test?', 'If you share them, yes. Any test result is useful evidence, and we line it up with your other channels and your own numbers for the same period.'],
     ],
   },
@@ -327,7 +328,7 @@ export const COMPARE_DEEP = {
   'hex': {
     summary: 'Hex is a shared data workspace where analysts write queries (requests for data), build notebooks and share what they find. Arcus connects every piece of your data into one place you own, counts each result once, and answers your questions as a few slides with the answer on top. If you have a data team, Hex is a strong tool for them. If you don’t, Arcus does the work a notebook assumes someone on your team will do.',
     sections: [
-      ['What Hex is built for', 'Hex is known as a shared workspace for data teams: notebooks where analysts write queries and code, build charts and turn their work into pages others can use. [Check on their site for current features and pricing.]\n\nIt assumes someone on your team knows how to query data, and that the data is already connected and organized. For a data team, that’s the right assumption.'],
+      ['What Hex is built for', 'Hex is known as a shared workspace for data teams: notebooks where analysts write queries and code, build charts and turn their work into pages others can use. For current features and pricing, see their site.\n\nIt assumes someone on your team knows how to query data, and that the data is already connected and organized. For a data team, that’s the right assumption.'],
       ['What changes without a data team', 'A notebook is a blank page. Someone has to know which question to ask, where the data lives, how to join sales with what each channel reports, and how to count each result once. Then someone has to explain it to the brand team.\n\nFor a brand marketing lead without analysts, a notebook is a tool built for a role you don’t have yet.'],
       ['What Arcus does in its place', 'Arcus connects your data into one place you own over about three months, inside your own setup, and adds what people say online. Our team does the counting, reads the conversation and writes the answers.\n\nYou ask questions in your own words. You get a few slides back: the answer on top, the evidence, then what to keep, test and stop.'],
     ],
@@ -339,12 +340,12 @@ export const COMPARE_DEEP = {
       'Pick Arcus if you want every answer to end with what to keep, test and stop.',
       'Use both if a small data team wants a workspace and the brand team wants answers on spend and audience.',
     ],
-    both: 'A company with a data team might use Hex for internal analysis and Arcus for the brand-side questions, listening and tests. Because everything Arcus connects is yours, your analysts can use it in their own tools. [Confirm: which workspaces and tools Arcus can share data with.]',
+    both: 'A company with a data team might use Hex for internal analysis and Arcus for the brand-side questions, listening and tests. Because everything Arcus connects is yours, inside your own setup, your analysts can work from the same data.',
     faq: [
       ['Do we need to know SQL to use Arcus?', 'No. You read slides and ask questions. Our team does the data work.'],
       ['Is Hex a competitor to Arcus?', 'Only loosely. Hex is a workspace for analysts. Arcus connects your data and answers the questions for you. Some companies could use both.'],
-      ['What does Hex cost?', 'We don’t publish other companies’ pricing. [Check on their site.]'],
-      ['If we hire an analyst later, can they work with what Arcus built?', 'Everything Arcus connects is yours and lives inside your own setup, so they can work with it in the tools they prefer, Hex included. [Confirm: how in-house analysts get access.]'],
+      ['What does Hex cost?', 'We don’t publish other companies’ pricing. See Hex’s site for what it costs today.'],
+      ['If we hire an analyst later, can they work with what Arcus built?', 'Yes. Everything Arcus connects is yours and lives inside your own setup, so they can work from the same data. We walk them through how to reach it.'],
     ],
   },
 };
@@ -357,20 +358,19 @@ export const FAQ_MORE = [
   ['The basics', 'Most of our sales happen at retail. Can you still tell what worked?', 'Yes. We line campaigns up with the sales data you have, whether that’s retailer data, scan data or depletions from distributors, by week and by region. Retail data usually arrives later and in less detail, so some answers need a test where you run ads in some regions and pause them in others, then compare sales. We’ll say when.'],
   ['The basics', 'Why line up listening with our own numbers?', 'Conversation on its own tells you what people say. Your own numbers tell you what they do. Lined up, you can see which topics, formats and creators move sales, tickets, sign-ups or streams, and which ones only get talked about.'],
 
-  ['Trying it free', 'What happens after we try it free?', `We walk you through it on a 30-minute call. If it’s useful, we talk about a full setup: about three months to build, a one-time setup fee of ${TBD.setup} and a monthly fee of ${TBD.monthly}. If not, the answer is yours to keep. [Confirm: contract length and notice terms.]`],
-  ['Trying it free', 'Do our partners need to be involved?', '[Confirm: Arcus does not contact your partners for the free question, and whether to share the findings is your call.]'],
+  ['Trying it free', 'What happens after we try it free?', 'We walk you through it on a 30-minute call. If it’s useful, we scope the setup and the monthly work for your brand and send you a quote. If not, the answer is yours to keep.'],
+  ['Trying it free', 'Do our partners need to be involved?', 'If one of them has to grant access to an account your question touches, we tell you before we start. You decide who sees the answer.'],
   ['Trying it free', 'What if our numbers are messy?', 'Most are. We work with what you have, note what’s missing, and tell you which findings are solid and which are directional. A gap in your data is a finding too.'],
 
   ['Working with us', 'What does a report look like?', 'A few slides. The answer is on top, then the evidence, then a short list of what to keep, test and stop. The last slide says what to know before quoting a number: small samples, missing data, anything that limits the call. In a real Arcus content report for a hard seltzer brand, that meant marking any content type with fewer than four posts as directional.'],
-  ['Working with us', 'How much of our team’s time does this take?', 'Most of it comes at the start: a kickoff, access to the tools you use, and a few short calls during setup. After that, it’s asking questions, reading answers and a walkthrough when you want one. [Confirm: typical hours per month for the brand team.]'],
+  ['Working with us', 'How much of our team’s time does this take?', 'Most of it comes at the start: a kickoff, access to the tools you use, and a few short calls during setup. After that, it’s asking questions, reading answers and a walkthrough when you want one.'],
   ['Working with us', 'Who on our team should be involved?', 'The person who owns the budget, usually a brand or marketing lead. During setup, it helps to have someone who can grant access to sales data, email or CRM, and ad accounts. Nobody needs to be technical.'],
-  ['Working with us', 'What does a normal month look like once you’re set up?', 'Anyone on the team can ask a question when one comes up, like whether to book a creator again or what fans said about a launch. Answers land in Slack, email or Sheets, with a walkthrough if you want one. Regular answers arrive on the schedule you choose. [Confirm: report cadence included in the monthly fee.]'],
+  ['Working with us', 'What does a normal month look like once you’re set up?', 'Anyone on the team can ask a question when one comes up, like whether to book a creator again or what fans said about a launch. Answers land in Slack, email or Sheets, with a walkthrough if you want one. Regular answers arrive on the schedule you choose.'],
 
-  ['Listening', 'Where do you listen?', 'Wherever your audience talks in public: Reddit, TikTok, YouTube, Instagram, X, Threads, Bluesky, Facebook groups, Discord, Twitch, Kick, Google Search, Goodreads, Fable, Letterboxd, IMDb, Rotten Tomatoes, Steam, Roblox, Spotify and podcasts, Substack, Pinterest, reviews and trade press. We pick the places that matter for your brand. [Confirm: how private or invite-only communities are handled.]'],
+  ['Listening', 'Where do you listen?', 'Wherever your audience talks in public: Reddit, TikTok, YouTube, Instagram, X, Threads, Bluesky, Facebook groups, Discord, Twitch, Kick, Google Search, Goodreads, Fable, Letterboxd, IMDb, Rotten Tomatoes, Steam, Roblox, Spotify and podcasts, Substack, Pinterest, reviews and trade press. We pick the places that matter for your brand.'],
   ['Listening', 'How is this different from a sentiment dashboard?', 'We count specific things: the words people use, the formats they reward, the complaints that keep coming back. In a real Arcus audience report for a streaming service, we counted 6,622 comments and found one word in 62 was slang. A person checks the labels, because sarcasm and in-jokes fool automated sentiment. If you already have a listening tool, we plug it in.'],
   ['Listening', 'What do you do with what you hear?', 'Turn it into what to make next. A real Arcus audience report for a streaming service ended with four rules for the brand’s voice, each backed by counts, like replying to fans’ jokes instead of starting your own. Where we can, we check a listening finding against your own numbers before you act on it.'],
 
-  ['Data and trust', 'What access do you need, and is it read-only?', '[Confirm: read-only access] to the tools that hold your own numbers (sales, tickets, sign-ups or viewing), your email or CRM platform, your social accounts and the ad accounts you or your partners run. When you try it free, we only need the accounts your question touches.'],
-  ['Data and trust', 'Where does our data live?', 'In one place you own, inside your own setup. [Confirm: what, if anything, is copied outside your environment, how long it’s kept, and how it’s deleted if you leave.]'],
-  ['Data and trust', 'Are you SOC 2 compliant?', '[Confirm: SOC 2 status.] The Security page covers how we handle access, how every step is logged, and which jobs the AI is allowed to do.'],
+  ['Data and trust', 'What access do you need?', 'Access to the tools that hold your own numbers (sales, tickets, sign-ups or viewing), your email or CRM, your social accounts and the ad accounts you or your partners run. You approve exactly what we can access before we connect anything. When you try it free, we only need the accounts your question touches.'],
+  ['Data and trust', 'Where does our data live?', 'In one place you own, inside your own setup. Before we connect anything, we tell you what, if anything, we keep outside it. The Security page covers how we handle access, how every step is logged, and which jobs the AI is allowed to do.'],
 ];

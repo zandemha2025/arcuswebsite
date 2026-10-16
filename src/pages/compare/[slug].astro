@@ -15,11 +15,11 @@ const { c } = Astro.props;
 const crumbs = [{ name: 'Compare', href: '/compare' }, { name: `vs. ${c.name}`, href: `/compare/${c.slug}` }];
 const d = COMPARE_DEEP[c.slug] || {};
 // Mid-sentence name: company names keep their capitals; generic options ("Analytics software") go lowercase.
-const nm = c.checked ? c.name : c.name.charAt(0).toLowerCase() + c.name.slice(1);
+const nm = c.vendor ? c.name : c.name.charAt(0).toLowerCase() + c.name.slice(1);
 const { BOOK_URL } = site;
 // "Other comparisons" links only the non-vendor pages (software, a data team), never another company's page.
-// Vendor pages are the ones that carry a `checked` date for facts taken from that company's site.
-const others = COMPARE.filter((x) => x.slug !== c.slug && !x.checked).slice(0, 2);
+// Vendor pages are the ones marked `vendor: true` (pages about another company).
+const others = COMPARE.filter((x) => x.slug !== c.slug && !x.vendor).slice(0, 2);
 ---
 <Site md={`/compare/${c.slug}.md`} title={`${c.h1} | Arcus`} description={c.short || c.lead} path={`/compare/${c.slug}`} page="compare" crumbs={crumbs} heroCta>
   {/* Landing page: the offer, the action and one concrete answer (the sample insight) in the first screen. */}
@@ -46,7 +46,7 @@ const others = COMPARE.filter((x) => x.slug !== c.slug && !x.checked).slice(0, 2
         <tbody>{c.rows.map(([k, a, b]) => <tr><th scope="row">{k}</th><td data-label={c.name}>{a}</td><td class="us" data-label="Arcus">{b}</td></tr>)}</tbody>
       </table>
     </div>
-    {c.checked && <p class="tiny faint" style="margin-top:12px">Facts about {c.name} come from its public website. {c.checked}</p>}
+    {c.vendor && <p class="small muted" style="margin-top:12px">For {c.name}’s current features and pricing, see its website.</p>}
     <AskRow loc="compare-table" class="after" note="Try it on your own numbers. Nothing changes until you decide." />
   </section>
   <section class="wrap blk">

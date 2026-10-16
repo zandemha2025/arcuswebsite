@@ -9,6 +9,9 @@ import Arrow from '../../components/Arrow.astro';
 import ClientWall from '../../components/ClientWall.astro';
 import { SITE, TBD, BOOK_URL } from '../../data/site.js';
 const crumbs = [{ name: 'Try it free', href: '/free-report' }];
+// The turnaround shows once TBD.turnaround (site.js) holds a real time; filled() there keeps a bracketed or "TBD" value
+// out. Until then the receipt and the FAQ say we tell you the turnaround before we start.
+const turnaround = TBD.turnaround;
 const schema = [{ '@type': 'Offer', name: 'First question, answered free', price: '0', priceCurrency: 'USD', url: `${SITE}/free-report`, seller: { '@id': `${SITE}/#org` }, description: 'Pick one marketing question. Arcus answers it with your own numbers and what your audience says, then walks you through it.' }];
 // Three outcomes, worded apart from the homepage hero (spine §3.3). Each wears the triad with its own shape, so color
 // is never the only cue: paid off (teal, up), fell flat (coral, down), the next dollar (amber, right).
@@ -44,7 +47,7 @@ const STEPS = [
         <p id="bill-h" class="bill-h">What you get</p>
         <ul class="bill-l">{GET.map((t) => <li><span>{t}</span><span>$0</span></li>)}</ul>
         <p class="bill-tot"><span>Total</span><span>$0</span></p>
-        <div class="bill-f"><p>Turnaround: {TBD.turnaround}</p><span class="bill-stamp">No card</span></div>
+        <div class="bill-f"><p>{turnaround ? `Turnaround: ${turnaround}` : 'We tell you the turnaround up front'}</p><span class="bill-stamp">No card</span></div>
       </div>
       {/* Proof beside the ask, as on the homepage: still, uncropped. "What happens next" sits between it and the
           sample answer further down, so no illustrative number is next to or under a client logo. */}
@@ -82,10 +85,10 @@ const STEPS = [
   <PageFAQ id="fr-faq" title="Before you send it" items={[
     ['What do you need from us?', 'Your question, access to the accounts it touches, and 30 minutes for the walkthrough. Usually that means your own numbers (sales, tickets, sign-ups or viewing) and any ad accounts involved. We show you how to connect them.'],
     ['Is it really free?', 'Yes. No card, and no contract. If you want everything connected afterward, we talk about that then.'],
-    ['How long does it take?', `${TBD.turnaround} from access to answer.`],
+    ['How long does it take?', turnaround ? `${turnaround} from access to answer.` : 'We tell you the turnaround before we start, and email you when your answer is ready.'],
     ['Does it have to be one of the questions in the form?', 'No. Pick “Something else” and tell us what you want to know. Same free answer, same walkthrough.'],
-    ['Who sees our data?', '[Confirm: only the Arcus team working with you.] Details are on the Security page.'],
-    ['Do our partners need to be involved?', '[Confirm: Arcus does not contact your partners when you try it free, and whether to share the answer is your call.]'],
+    ['What can you access?', 'Only what you approve before we connect anything. Details are on the Security page.'],
+    ['Do our partners need to be involved?', 'If one of them has to grant access to an account your question touches, we tell you before we start. You decide who sees the answer.'],
     ['Why is it free?', 'Because the fastest way to show you what we do is with your own numbers. If the answer is useful, we talk about connecting all your data so you can ask the next one. If it isn’t, you keep the slides.'],
     ['What if the answer is “it’s working”?', 'Then you walk into the next budget review knowing it. Worst case, you were right.'],
   ]}>

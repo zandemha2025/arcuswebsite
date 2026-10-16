@@ -16,17 +16,17 @@ const topics = [
   ['Why marketing data sits in pieces', 'Sales, viewers, email and agency reports each live with a different team. What that costs a brand, and what changes when it’s all connected.'],
 ];
 ---
-<Site title="Press | Arcus" description="Press resources for Arcus: boilerplate, team, topics our people can speak on, logo files and a press contact." path="/press" page="press" crumbs={crumbs}>
+<Site title="Press | Arcus" description="Press resources for Arcus: boilerplate, fast facts, who to talk to, topics our people can speak on, and a press contact." path="/press" page="press" crumbs={crumbs}>
   <header class="phero l">
     <Crumbs items={crumbs} />
     <h1 class="dh d96">Press.</h1>
     <p class="lead">Writing about whether marketing works, how audiences talk, or brands moving into retail? We connect a brand’s data, count what people say about it online, and show where every number came from. We’re happy to show our work.</p>
-    <QuickAnswer q="What is Arcus?" a={ENTITY} points={['Press contact: [press@usearcus.ai]', 'We reply within [Confirm: one business day]']} />
+    <QuickAnswer q="What is Arcus?" a={ENTITY} points={['Press contact: hello@usearcus.ai', 'Tell us your deadline when you write.']} />
   </header>
   <section class="wrap blk">
     <div class="honest">
       <div><h2 class="h3">Boilerplate (50 words)</h2><p class="muted">Arcus helps entertainment and lifestyle brands see where their marketing money is working. It connects the data a brand’s teams have, from sales and CRM to ad accounts and agency reports, with what people say online, in one place the brand owns, and answers any question with the whole picture.</p></div>
-      <div><h2 class="h3">One-liner</h2><p class="muted">{SHORT}</p><h2 class="h3" style="margin-top:12px">Fast facts</h2><ul class="dash"><li>Website: usearcus.ai</li><li>Start: try it free on one question, with a 30-minute walkthrough</li><li>Setup: about three months to connect everything into one place inside the brand’s own setup, and the brand owns it</li><li>Founded: [Confirm: year] · HQ: [Confirm: city]</li></ul></div>
+      <div><h2 class="h3">One-liner</h2><p class="muted">{SHORT}</p><h2 class="h3" style="margin-top:12px">Fast facts</h2><ul class="dash"><li>Website: usearcus.ai</li><li>Start: try it free on one question, with a 30-minute walkthrough</li><li>Setup: about three months to connect everything into one place inside the brand’s own setup, and the brand owns it</li></ul></div>
     </div>
   </section>
   <section class="wrap blk">
@@ -43,8 +43,8 @@ const topics = [
   <ClientWall />
   <section class="wrap sec">
     <div class="honest">
-      <div><h2 class="h3">Logo</h2><p class="muted">Download: [Confirm: link to logo pack (SVG and PNG, light and dark)]. Use as supplied. Write the name as “Arcus”.</p></div>
-      <div><h2 class="h3">Contact</h2><p class="muted">Interviews, data requests and materials: [press@usearcus.ai]. Anything else: <a class="ul" href={BOOK_URL}>book a call</a>.</p></div>
+      <div><h2 class="h3">Our name</h2><p class="muted">Write it as “Arcus”.</p></div>
+      <div><h2 class="h3">Contact</h2><p class="muted">Interviews and data requests: <a class="ul" href="mailto:hello@usearcus.ai">hello@usearcus.ai</a>. Anything else: <a class="ul" href={BOOK_URL}>book a call</a>.</p></div>
     </div>
   </section>
 </Site>

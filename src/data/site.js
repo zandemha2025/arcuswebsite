@@ -13,19 +13,24 @@ export const ENTITY =
 // The one-liner. Its last sentence is also the schema `slogan` in Site.astro; change the two together.
 export const SHORT = 'Arcus connects every piece of your data, plus what people say online, into one place you own, and shows which spend works. If it can’t be checked, it doesn’t count.';
 
-// Placeholders the team still has to confirm. Anything in brackets stays out of structured data.
-// To go live, replace the bracketed value, brackets and all: calLink takes the cal.com scheduling link (both thanks pages then show its calendar), turnaround the plain time from access to answer.
-export const TBD = {
-  setup: '[$X]',
-  monthly: '[$Y]',
-  turnaround: '[turnaround]',
-  reportsEmail: '[reports@usearcus.ai]',
-  securityEmail: '[security@usearcus.ai]',
-  calLink: '[cal.com/arcus/walkthrough]',
-};
-// The calendar, once TBD.calLink holds a real link ("cal.com/x/y" or "https://cal.com/x/y"); empty until then, and every
-// booking surface falls back to "we'll email you to set a time". Only cal.com embeds: the CSP's frame-src allows it alone.
-export const CAL_URL = TBD.calLink && !TBD.calLink.startsWith('[') ? `https://cal.com/${TBD.calLink.trim().replace(/^(?:https?:\/\/)?(?:www\.)?cal\.com\//, '')}` : '';
+// Facts the founders will supply later. Each value is empty until it is set, and an empty value never shows: every page
+// reads finished without it. filled() is the guard: a value that is still empty, or still holds [brackets] or "TBD",
+// comes out as '' so a note-to-self can never reach a page, its meta tags or its structured data.
+// To go live, type the plain value between the quotes. calLink takes the cal.com scheduling link ("cal.com/x/y" or
+// "https://cal.com/x/y"), and both thanks pages then show its calendar. The other values don't put themselves back on a
+// page: docs/PLACEHOLDERS-RESOLVED.md lists where each one goes and the question it answers.
+export const filled = (v) => (typeof v === 'string' && v.trim() && !/[[\]]|\bTBD\b/i.test(v) ? v.trim() : '');
+export const TBD = Object.fromEntries(Object.entries({
+  setup: '', // the one-time setup fee, if there is one, as it should read on /pricing
+  monthly: '', // the monthly fee, as it should read on /pricing
+  turnaround: '', // the plain time from access to a free answer
+  reportsEmail: '', // the address answers and reports come from
+  securityEmail: '', // the address for security questions
+  calLink: '', // the cal.com scheduling link for walkthroughs
+}).map(([k, v]) => [k, filled(v)]));
+// The calendar, once TBD.calLink holds a real link; empty until then, and every booking surface falls back to "we'll
+// email you to set a time". Only cal.com embeds: the CSP's frame-src allows it alone.
+export const CAL_URL = TBD.calLink ? `https://cal.com/${TBD.calLink.replace(/^(?:https?:\/\/)?(?:www\.)?cal\.com\//, '')}` : '';
 
 // Company profiles for structured data (sameAs). Add each URL once the profile is live (gtm/entity-kit.md).
 export const SAME_AS = [
@@ -40,16 +45,16 @@ export const SAME_AS = [
 export const TEAM = [
   { slug: 'nazeem-ahmed', photo: '', linkedin: '', credentials: [], knowsAbout: [], name: 'Nazeem Ahmed', title: 'Chief AI Officer', initials: 'NA',
     line: 'Runs our AI, and makes sure it only does the jobs we approved.',
-    bio: 'Nazeem leads the AI side of Arcus: the checks that run on your data and the rules that limit what they can do. If a number shows up in a report, he can tell you where it came from. [Background to add.]' },
+    bio: 'Nazeem leads the AI side of Arcus: the checks that run on your data and the rules that limit what they can do. If a number shows up in a report, he can tell you where it came from.' },
   { slug: 'min-kwak', photo: '', linkedin: '', credentials: [], knowsAbout: [], name: 'Min Kwak', title: 'Chief Revenue Officer', initials: 'MK',
     line: 'Runs sales and partnerships. Probably the first person you talk to.',
-    bio: 'Min works with the brand teams who use Arcus, from trying it free to the setup and every answer after. [Background to add.]' },
+    bio: 'Min works with the brand teams who use Arcus, from trying it free to the setup and every answer after.' },
   { slug: 'devin-min', photo: '', linkedin: '', credentials: [], knowsAbout: [], name: 'Devin Min', title: 'Chief Product Officer', initials: 'DM',
     line: 'Runs the product: what your answers say and how they read.',
-    bio: 'Devin decides what goes into an Arcus answer and what stays out. His rule: the answer goes on top, and every number has a source. [Background to add.]' },
+    bio: 'Devin decides what goes into an Arcus answer and what stays out. His rule: the answer goes on top, and every number has a source.' },
   { slug: 'brendon-ghaderi', photo: '', linkedin: '', credentials: [], knowsAbout: [], name: 'Brendon Ghaderi', title: 'Chief Technology Officer', initials: 'BG',
     line: 'Runs engineering: connecting your data into one place and tracing every number to its source.',
-    bio: 'Brendon builds what sits behind every Arcus answer: the connections to every system you run, the checks, and the logs that trace each number back to its source. Security and legal questions come to him. [Background to add.]' },
+    bio: 'Brendon builds what sits behind every Arcus answer: the connections to every system you run, the checks, and the logs that trace each number back to its source. Security and legal questions come to him.' },
 ];
 
 // Where we listen. Third-party sources, read alongside a brand's own (first-party) data.

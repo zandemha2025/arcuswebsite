@@ -1,6 +1,6 @@
 // Long-form content for each industry page, keyed by the INDUSTRIES slugs in content.js.
 // Every number comes from a real, anonymized Arcus report (see reports.js) or is labeled "Example".
-// Anything in square brackets still needs the team to confirm it.
+// Unconfirmed specifics are left out of the copy. docs/PLACEHOLDERS-RESOLVED.md lists what to add once the founders confirm them.
 // `answer` is the short answer shown high on each industry page; it introduces the industry questions listed under it (content.js).
 // `pieces` is "what you know" in the industry's own words, for a what-you-know + what-people-say block. Pair it with the `listen` names.
 // `agencyQuestions` keeps its name because the page and its .md twin read it. The questions are for your own team and partners, in a budget meeting.
@@ -59,14 +59,14 @@ export const IND_DEEP = {
     start: [
       ['Try it free', 'Pick a question, like “which flavor should lead the summer push?” We answer it with your own numbers, from depletions and retail data to direct sales, plus what drinkers say online. You get a few slides with the answer on top. No card.'],
       ['Walk through it together', 'We go through the answer on a 30-minute call, including where your sales data is too thin to call and what it would take to fill the gap.'],
-      ['We build it for you', 'If you go ahead, we connect your distributor files, retail data, direct sales, CRM, ad accounts and social accounts, plus what drinkers say online. It all goes into one place you own, inside your own setup: your own data lake. We build it around your brand, with your regions, seasons and flavors written in, so every answer knows your business. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
-      ['Ask anything', 'Any leader on your team can ask, and the answer sees the whole picture. Each one is a few slides: the answer on top, the evidence, then what to keep, test and stop. [Confirm: whether partners are told when we connect their reports.]'],
+      ['We build it for you', 'If you go ahead, we connect your distributor files, retail data, direct sales, CRM, ad accounts and social accounts, plus what drinkers say online. It all goes into one place you own, inside your own setup: your own data lake. We build it around your brand, with your regions, seasons and flavors written in, so every answer knows your business. It takes about three months. Before we connect anything, we agree with you on exactly what we can access. You approve each step, and answers arrive along the way.'],
+      ['Ask anything', 'Any leader on your team can ask, and the answer sees the whole picture. Each one is a few slides: the answer on top, the evidence, then what to keep, test and stop. Regular answers can also arrive on a schedule you choose.'],
     ],
     faq: [
       ['What are depletions, and why do they matter for marketing?', 'Depletions are what your distributors sell through to retailers and bars. They are the most common sales line in drinks, and they are a fair thing to measure campaigns against, because the ad platforms can’t see them.'],
       ['Can creator codes measure in-store sales?', 'Only a slice of them. A code shows up where someone types it, usually on direct or delivery sales. We check codes against your own numbers, look for codes leaking to coupon sites, and use regional tests for the in-store side.'],
       ['Is social listening useful for a beverage brand?', 'Yes, when it counts specific things and lines them up with sales. We count the flavors, occasions and serves drinkers mention, where they mention them, and whether those regions sell more.'],
-      ['Do you work with alcohol brands that sell through distributors?', 'Yes. Arcus works from the data you have, and for most alcohol brands that means distributor and retail data instead of direct sales. [Confirm: any limits on using distributor data under existing contracts.]'],
+      ['Do you work with alcohol brands that sell through distributors?', 'Yes. Arcus works from the data you have, and for most alcohol brands that means distributor and retail data instead of direct sales. If your distributor agreements limit how that data can be used, tell us before we start and we’ll work within them.'],
     ],
   },
 
@@ -123,7 +123,7 @@ export const IND_DEEP = {
     start: [
       ['Try it free', 'Pick a question, like “who is our next title really for?” We answer it with your own tickets, sign-ups or viewing, plus what fans say online. You get a few slides with the answer on top. No card.'],
       ['Walk through it together', 'We go through it on a 30-minute call, including which numbers you hold, which ones partners hold, and where the data is too thin to call.'],
-      ['We build it for you', 'If you go ahead, we connect your ticketing data, sign-up records, viewing, CRM, ad accounts, YouTube channel and social accounts, plus what fans say online. It all goes into one place you own, inside your own setup: your own data lake. We build it around your slate, with your release dates, titles and markets written in, so every answer knows your business. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
+      ['We build it for you', 'If you go ahead, we connect your ticketing data, sign-up records, viewing, CRM, ad accounts, YouTube channel and social accounts, plus what fans say online. It all goes into one place you own, inside your own setup: your own data lake. We build it around your slate, with your release dates, titles and markets written in, so every answer knows your business. It takes about three months. Before we connect anything, we agree with you on exactly what we can access. You approve each step, and answers arrive along the way.'],
       ['Ask anything, around your dates', 'Ask before a release, during it or between seasons, and the answer sees the whole picture. Each one is a few slides: the answer on top, the evidence, then what to keep, test and stop. Regular answers can also arrive on a schedule you choose.'],
     ],
     faq: [
@@ -187,13 +187,13 @@ export const IND_DEEP = {
     start: [
       ['Try it free', 'Pick a question, like “which creators bring players who stay?” We answer it with your own wishlists, sales, players or streams, plus what fans say online. You get a few slides with the answer on top. No card.'],
       ['Walk through it together', 'We go through it on a 30-minute call, including which numbers your storefronts and partners hold and where the data is too thin to call.'],
-      ['We build it for you', 'If you go ahead, we connect your storefront dashboards, game or streaming data, CRM, ad accounts and social accounts, plus what players and fans say online. It all goes into one place you own, inside your own setup: your own data lake. We build it around your releases, with your launch dates, platforms and creators written in, so every answer knows your business. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
+      ['We build it for you', 'If you go ahead, we connect your storefront dashboards, game or streaming data, CRM, ad accounts and social accounts, plus what players and fans say online. It all goes into one place you own, inside your own setup: your own data lake. We build it around your releases, with your launch dates, platforms and creators written in, so every answer knows your business. It takes about three months. Before we connect anything, we agree with you on exactly what we can access. You approve each step, and answers arrive along the way.'],
       ['Ask anything, around your launches', 'Ask before a launch, an update, a drop or a tour, and the answer sees the whole picture. Each one is a few slides: the answer on top, the evidence, then what to keep, test and stop. Regular answers can also arrive on a schedule you choose.'],
     ],
     faq: [
       ['Can you track Steam wishlists against marketing?', 'Yes. Wishlist adds by day are one of the clearest early signals in games. We match them to trailers, creator streams and campaigns, then check which wishlists became sales at launch.'],
       ['How do you measure music marketing when most listening happens on streaming services?', 'We use the data the services give you: streams, saves, playlist adds and listener locations. We line those up with campaign dates and regions, and read the conversation on TikTok, YouTube and Reddit around the track.'],
-      ['Can you read our own Discord server, or only public ones?', 'We read public Discord servers and Twitch and Kick chat. [Confirm: how private or brand-owned servers are accessed, and with whose permission.]'],
+      ['Can you read our own Discord server, or only public ones?', 'We read public Discord servers, yours included if it’s public, plus Twitch and Kick chat. If your server is private, ask us about it before we start.'],
       ['Should our game or artist account use gamer slang?', 'Usually not. In our audience report, one word in 62 was slang, and the most searched slang of the year barely appeared. Players can hear a script. Reply to their lines, and let a fan’s words lead.'],
     ],
   },
@@ -251,14 +251,14 @@ export const IND_DEEP = {
     start: [
       ['Try it free', 'Pick a question, like “who are our best customers, really?” We answer it with your own numbers, plus what reviews and comments say. You get a few slides with the answer on top. No card.'],
       ['Walk through it together', 'We go through it on a 30-minute call, including how much of the result came from customers you already had and where retail data is too thin to call.'],
-      ['We build it for you', 'If you go ahead, we connect your site, marketplace and retail data, email and CRM, ad accounts and social accounts, plus what reviews and comments say. It all goes into one place you own, inside your own setup: your own data lake. We build it around your brand, with your drops, shades, seasons and retailers written in, so every answer knows your business. It takes about three months. You approve each step, and answers arrive along the way. [Confirm: read-only access to every account.]'],
+      ['We build it for you', 'If you go ahead, we connect your site, marketplace and retail data, email and CRM, ad accounts and social accounts, plus what reviews and comments say. It all goes into one place you own, inside your own setup: your own data lake. We build it around your brand, with your drops, shades, seasons and retailers written in, so every answer knows your business. It takes about three months. Before we connect anything, we agree with you on exactly what we can access. You approve each step, and answers arrive along the way.'],
       ['Ask anything, around your drops', 'Ask before a launch or after it, and the answer sees the whole picture. Each one is a few slides: the answer on top, the evidence, then what to keep, test and stop. Regular answers can also arrive on a schedule you choose.'],
     ],
     faq: [
       ['How do you measure creator marketing for a beauty brand?', 'We check each creator’s codes and links against your own numbers, remove uses from coupon sites, and count each sale once. Because many viewers buy at a retailer without a code, we also line up creator posts with retail sell-through and search, and run a regional test when you need proof of cause.'],
       ['Will moving into retail hurt our online sales?', 'In our market report, none of the five brands studied saw retail eat their online business. The share shifted toward stores and online kept growing. The cost that is real is margin: the retailer’s cut, trade spend and fees.'],
       ['What numbers do retail buyers look at?', 'Our market report found four: distribution reach, units per store per week against the category, household penetration and repeat. Door counts matter less. Reporting those four after a launch helps sell the next retailer.'],
-      ['Can you read reviews across retailer sites and Amazon?', 'Yes. We read reviews across your site, Amazon, Trustpilot and retailer listings, count the themes, and line them up with sales. [Confirm: which retailer review pages are covered.]'],
+      ['Can you read reviews across retailer sites and Amazon?', 'Yes. We read reviews across your site, Amazon, Trustpilot and retailer listings, count the themes, and line them up with sales. Tell us which retailers carry you, and we’ll tell you which of their review pages we read before we start.'],
     ],
   },
 };

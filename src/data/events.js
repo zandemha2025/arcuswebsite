@@ -4,7 +4,7 @@ export const SERIES = {
   name: 'Live Teardown',
   lead: 'Once a month, we take one example campaign apart, live: which spend paid off, what fell flat, and the one test worth running before you move budget. 45 minutes. No data background needed.',
   hosts: ['devin-min', 'min-kwak'],
-  platform: '[Confirm: webinar platform]',
+  platform: null, // Not shown on the site. Set to the webinar tool’s name once chosen (see docs/PLACEHOLDERS-RESOLVED.md).
 };
 export const EPISODES = [
   { n: 1, slug: 'the-creator-nobody-paid', title: 'The creator nobody paid', date: null, body: 'Example: sales jump 18% in week 3, and nobody can say why. We put the brand’s sales and CRM next to what people posted that week, and find 1,240 TikTok and Reddit posts about one creator the brand never paid. Then we plan the test that shows whether that creator moved sales.', take: 'How to test a creator before you pay them: half your regions, your own sales.' },

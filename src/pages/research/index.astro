@@ -20,7 +20,7 @@ const shown = preview ? STUDIES : live;
   <section class="wrap blk">
     {shown.length ? shown.map((s) => (
       <a href={`/research/${s.slug}`} class="listrow">
-        <span class="tag t-k">{s.published ? 'Study' : '[Pending client OK]'}</span>
+        <span class="tag t-k">Study</span>
         <span class="stack-6"><span class="h3">{s.title}</span><span class="muted small">{s.short}</span></span>
         <span class="go"><Arrow /></span>
       </a>

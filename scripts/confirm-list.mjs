@@ -1,60 +1,81 @@
-// Lists every unconfirmed fact on the site: anything in [Confirm ...], [$X], [Check ...] and similar brackets.
-// Usage: node scripts/confirm-list.mjs > gtm/CONFIRM_LIST.md
+// Lists every specific the founders still have to supply. The site shows no placeholders: each one was rewritten to read
+// finished without the missing fact, and docs/PLACEHOLDERS-RESOLVED.md (the ledger) records the original, the new
+// wording and the question that would make it specific. This script turns that ledger into a checklist, adds the TBD
+// values in src/data/site.js that are still empty, and flags any bracketed note that has crept back into src/ or api/.
+// Usage: npm run confirm-list (writes gtm/CONFIRM_LIST.md)
 import fs from 'node:fs';
 import path from 'node:path';
-const roots = ['src', 'api'];
-const out = new Map();
-const re = /\[(?:Confirm|Check|Last checked|Counsel|Company legal|Origin story|Background|Add |Needs|privacy@|legal@|press@|security@|reports@|hello@|cal\.com|\$X|\$Y|turnaround|find )[^\]]*\]/g;
-(function walk(d) {
-  for (const f of fs.readdirSync(d)) {
-    const p = path.join(d, f);
-    if (fs.statSync(p).isDirectory()) { if (f !== 'node_modules') walk(p); continue; }
-    if (!/\.(astro|js|mjs|md)$/.test(f) || f.startsWith('_knowledge')) continue;
+import { TBD } from '../src/data/site.js';
+
+const LEDGER = 'docs/PLACEHOLDERS-RESOLVED.md';
+
+// 1. Open questions, by page, from the ledger's tables (one "### <page>" heading per table).
+const cells = (line) => line.trim().replace(/^\||\|$/g, '').split(/(?<!\\)\|/).map((c) => c.trim().replace(/\\\|/g, '|'));
+const pages = new Map();
+let page = null;
+for (const line of fs.readFileSync(LEDGER, 'utf8').split('\n')) {
+  const h = line.match(/^###\s+(.+)/);
+  if (h) { page = h[1].trim(); continue; }
+  if (/^##\s/.test(line)) { page = null; continue; }
+  if (!page || !line.startsWith('| ') || line.startsWith('| File:line')) continue;
+  const [where = '', , , q = ''] = cells(line);
+  if (!q || /^None\b/.test(q)) continue;
+  const loc = where.replace(/^related:\s*/, '').replace(/\s+\(.*$/, '');
+  if (!pages.has(page)) pages.set(page, new Map());
+  const qs = pages.get(page);
+  if (!qs.has(q)) qs.set(q, []);
+  qs.get(q).push(loc);
+}
+
+// 2. Values set once in src/data/site.js. Empty until a founder types them in; filled() keeps brackets out.
+const TBD_Q = {
+  turnaround: 'How long from access to a finished free answer? Set TBD.turnaround; /free-report, its thanks page, /faq and /compare/hiring-a-data-team pick it up on their own.',
+  calLink: 'The cal.com scheduling link for walkthroughs. Set TBD.calLink; both thanks pages then show the calendar.',
+  securityEmail: 'A separate address for security questions, if any. Set TBD.securityEmail; /security picks it up.',
+  setup: 'The setup price (or range), and whether setup is billed separately. No page reads TBD.setup: the TBD table in docs/PLACEHOLDERS-RESOLVED.md lists every place to add it.',
+  monthly: 'The monthly price (or range). No page reads TBD.monthly: see the TBD table in docs/PLACEHOLDERS-RESOLVED.md.',
+  reportsEmail: 'The address answers and reports come from. Nothing reads TBD.reportsEmail today.',
+};
+const unset = Object.keys(TBD_Q).filter((k) => !TBD[k]);
+
+// 3. Safety net: any bracketed note-to-self back in the source (should be none).
+const re = /\[(?:Confirm|Check|Last checked|Counsel|Company legal|Origin story|Background|Add |Needs|Pending|TBD|privacy@|legal@|press@|security@|reports@|hello@|cal\.com|\$X|\$Y|turnaround|find )[^\]]*\]/g;
+const stray = new Map();
+function scan(dir, ext) {
+  if (!fs.existsSync(dir)) return;
+  for (const f of fs.readdirSync(dir)) {
+    const p = path.join(dir, f);
+    if (fs.statSync(p).isDirectory()) { if (f !== 'node_modules') scan(p, ext); continue; }
+    if (!ext.test(f) || f.startsWith('_knowledge')) continue;
     fs.readFileSync(p, 'utf8').split('\n').forEach((line, i) => {
       for (const m of line.matchAll(re)) {
-        const k = m[0];
-        if (!out.has(k)) out.set(k, []);
-        out.get(k).push(`${p}:${i + 1}`);
+        if (!stray.has(m[0])) stray.set(m[0], []);
+        stray.get(m[0]).push(`${p}:${i + 1}`);
       }
     });
   }
-})(...roots.slice(0, 1));
-roots.slice(1).forEach((r) => fs.existsSync(r) && (function walk(d) { for (const f of fs.readdirSync(d)) { const p = path.join(d, f); if (fs.statSync(p).isDirectory()) walk(p); else if (/\.js$/.test(f) && !f.startsWith('_knowledge')) fs.readFileSync(p, 'utf8').split('\n').forEach((line, i) => { for (const m of line.matchAll(re)) { if (!out.has(m[0])) out.set(m[0], []); out.get(m[0]).push(`${p}:${i + 1}`); } }); } })(r));
-const groups = { 'Data, access and security': /read-only|data|stor|delet|SOC|DPA|sees|access|private|AI|train/i, 'Pricing and contracts': /\$X|\$Y|price|contract|billing|fee|notice/i, 'Agencies': /agenc/i, 'Legal pages': /Counsel|Company legal|privacy@|legal@|CPRA/i, 'Company and team': /Origin|Background|location|own|founded|headquarters|LinkedIn|Add /i, 'Contact and links': /@usearcus|cal\.com|turnaround/i, 'Competitor facts': /Check on their site|Last checked/i };
-let md = `# Everything still to confirm\n\nGenerated by \`node scripts/confirm-list.mjs\`. ${out.size} unique items. Answer each once; then search and replace the bracket.\n`;
-// Blockers: the two answers a prospect needs the moment they try it free. Set both in src/data/site.js (TBD) before the
-// preview goes to prospects; every page picks them up from there.
-md += `\n## Blockers before the preview goes to prospects\n\n`;
-md += `- [ ] [turnaround]: how long from access to answer. Shown on the Try it free receipt (first screen), its FAQ and the thanks page. Set TBD.turnaround in src/data/site.js.\n`;
-md += `- [ ] [cal.com/arcus/walkthrough]: the scheduling link (cal.com). Until it is set, the /book form and both thanks pages say we will email to set a time. Set TBD.calLink in src/data/site.js.\n`;
-const used = new Set();
-for (const [g, rx] of Object.entries(groups)) {
-  const items = [...out.keys()].filter((k) => !used.has(k) && rx.test(k));
-  if (!items.length) continue;
-  md += `\n## ${g}\n\n`;
-  items.forEach((k) => { used.add(k); md += `- [ ] ${k}  \n  ${out.get(k).slice(0, 4).join(', ')}${out.get(k).length > 4 ? ` and ${out.get(k).length - 4} more` : ''}\n`; });
 }
-const rest = [...out.keys()].filter((k) => !used.has(k));
-if (rest.length) { md += `\n## Other\n\n`; rest.forEach((k) => { md += `- [ ] ${k}  \n  ${out.get(k).slice(0, 4).join(', ')}\n`; }); }
-// Questions whose wording changed or that left the site with a removed page. Kept here so they survive regeneration
-// and the founders answer the current question, not the old one.
-const CHANGED = [
-  ['[Confirm: whether price changes with number of agencies or brands]', '[Confirm: whether price changes with the number of brands or data sources]', 'pricing'],
-  ['[Confirm: whether agencies are told about a check, and who decides.]', '[Confirm: whether partners are told when we connect their reports, and who decides.]', 'partners'],
-];
-const RETIRED = [
-  ['[Confirm: whether agencies are told, and how.]', 'left with /reports/agency-check (A7)'],
-  ['[Confirm: whether agencies are told, and whether Arcus contacts them.]', 'left with /compare/agency-audit-firms (A6)'],
-  ['[Confirm: read-only access to ad accounts and first-party data.]', 'left with the agency-check deep page (A7); still asked elsewhere as read-only access'],
-  ['[Confirm: turnaround for a first question.]', 'left with the agency-check deep page (A7); [turnaround] still stands'],
-];
+scan('src', /\.(astro|js|mjs|md)$/);
+scan('api', /\.js$/);
+
+// Founder questions that never had a placeholder on the page.
 const OPEN = [
   ['Partner program: should agencies that refer clients get a referral fee? (/partners says “There’s no referral fee” for now, SPINE C9.)', 'src/pages/partners.astro'],
 ];
+
+const total = [...pages.values()].reduce((n, qs) => n + qs.size, 0);
+let md = `# Everything still to confirm\n\nGenerated by \`npm run confirm-list\` from ${LEDGER}. Nothing here shows on the site: every page reads finished without these facts, and answering one lets us put the specific back. ${total} questions on ${pages.size} pages, plus ${unset.length} values in src/data/site.js.\n`;
+md += `\n## Values in src/data/site.js (TBD)\n\n`;
+md += unset.length ? unset.map((k) => `- [ ] \`${k}\`: ${TBD_Q[k]}\n`).join('') : 'All set.\n';
+md += `\n## Questions by page\n`;
+for (const [p, qs] of pages) {
+  md += `\n### ${p}\n\n`;
+  for (const [q, locs] of qs) md += `- [ ] ${q}  \n  ${locs.slice(0, 4).join(', ')}${locs.length > 4 ? ` and ${locs.length - 4} more` : ''}\n`;
+}
 md += `\n## Founder questions not on the page\n\n`;
 OPEN.forEach(([q, w]) => { md += `- [ ] ${q}  \n  ${w}\n`; });
-md += `\n## Reworded (answer the new question)\n\n`;
-CHANGED.forEach(([a, b, w]) => { md += `- ${a} → ${b}  \n  ${w}\n`; });
-md += `\n## Retired with removed pages (no answer needed)\n\n`;
-RETIRED.forEach(([a, why]) => { md += `- ${a}  \n  ${why}\n`; });
+md += `\n## Bracketed notes back in the source\n\n`;
+md += stray.size
+  ? [...stray].map(([k, v]) => `- [ ] ${k}  \n  ${v.slice(0, 4).join(', ')}\n`).join('') + '\nRewrite each one so the page reads finished, and log it in the ledger.\n'
+  : 'None.\n';
 process.stdout.write(md);

@@ -8,6 +8,8 @@ import Arrow from '../../components/Arrow.astro';
 import { ENTITY, TEAM, SITE } from '../../data/site.js';
 const crumbs = [{ name: 'About', href: '/about' }];
 const schema = [{ '@type': 'AboutPage', name: 'About Arcus', url: `${SITE}/about`, mainEntity: { '@id': `${SITE}/#org` } }];
+// The client quote shows only once their written OK to quote them is on file (house rule 6 on this page).
+const QUOTE_OK = false;
 ---
 <Site title="About Arcus: the team and how we work | Arcus" description="Meet the Arcus team and the house rules behind every answer: the answer on top, a source for every number, and a test before we say an ad caused a sale." path="/about" page="about" crumbs={crumbs} schema={schema}>
   <header class="phero l">
@@ -53,12 +55,14 @@ const schema = [{ '@type': 'AboutPage', name: 'About Arcus', url: `${SITE}/about
     </div>
   </section>
 
-  <section class="slab s-paper" aria-label="What a client said">
-    <figure class="narrow" style="margin:0 auto;display:flex;flex-direction:column;gap:20px;text-align:center">
-      <blockquote class="quote m0">“I like talking to you guys because you help me make sense of it.”</blockquote>
-      <figcaption class="small">A brand marketing lead we work with <span>[Needs their OK before launch]</span></figcaption>
-    </figure>
-  </section>
+  {QUOTE_OK && (
+    <section class="slab s-paper" aria-label="What a client said">
+      <figure class="narrow" style="margin:0 auto;display:flex;flex-direction:column;gap:20px;text-align:center">
+        <blockquote class="quote m0">“I like talking to you guys because you help me make sense of it.”</blockquote>
+        <figcaption class="small">A brand marketing lead we work with</figcaption>
+      </figure>
+    </section>
+  )}
 
   <section class="wrap sec" aria-labelledby="story-h">
     <div class="split">
@@ -66,7 +70,6 @@ const schema = [{ '@type': 'AboutPage', name: 'About Arcus', url: `${SITE}/about
       <div class="prose">
         <p>At a big brand, every team holds a different piece of the data. Sales sit in one system, viewers or players in another, email and CRM with a third team. Add up what every channel reports and the total is often bigger than what the brand sold.</p>
         <p>Nobody sees the whole picture, so nobody can tell which spend is working. Big companies throw data teams at this. Most brand teams don’t have one. So we connect every piece into one place the brand owns, inside its own setup, add what people say online, and answer any question in a few slides. Once it’s all in one place, any team can ask anything. And it stays theirs.</p>
-        <p class="faint">[Origin story to add: how the team met and the moment that started Arcus.]</p>
       </div>
     </div>
   </section>
@@ -98,9 +101,7 @@ const schema = [{ '@type': 'AboutPage', name: 'About Arcus', url: `${SITE}/about
   </section>
 
   <PageFAQ id="about-faq" items={[
-    ['Where is Arcus based?', '[Confirm location before publishing.]'],
     ['Is Arcus an agency?', 'No. We don’t make ads, buy media, run campaigns or take a cut of spend. We connect your data into one place you own, add what people say online, and answer your questions with it.'],
-    ['Who owns Arcus?', '[Confirm before publishing.]'],
   ]} />
   <Close variant="paper" lines={['Put us', 'to the test.']} loc="about-close" />
 </Site>

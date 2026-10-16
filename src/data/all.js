@@ -7,7 +7,7 @@ export const GLOSS = [...GLOSSARY, ...GLOSSARY_NEW.filter((n) => !GLOSSARY.some(
 export const GLOSS_DEEP = GLOSSARY_DEEP;
 export const FAQ_ALL = [...FAQ, ...FAQ_MORE];
 const ALT_DEEP = Object.fromEntries(ALTERNATIVES.map((a) => [a.slug, { summary: a.summary, sections: a.sections, decide: a.decide, both: a.both, faq: a.faq }]));
-export const COMPARE_ALL = [...COMPARE, ...ALTERNATIVES.map(({ slug, name, h1, short, lead, rows, better, checked }) => ({ slug, name, h1, short, lead, rows, better, checked }))];
+export const COMPARE_ALL = [...COMPARE, ...ALTERNATIVES.map(({ slug, name, h1, short, lead, rows, better, vendor }) => ({ slug, name, h1, short, lead, rows, better, vendor }))];
 export const COMPARE_DEEP_ALL = { ...COMPARE_DEEP, ...ALT_DEEP };
 export { COMPARE_DEEP };
 export const ALL_ARTICLES = [...ARTICLES, ...CHANNELS];

@@ -64,6 +64,8 @@ export const INDUSTRIES = [
   },
 ];
 
+// `vendor: true` marks a page about another company: compare/[slug].astro keeps its name capitalized, leaves the page
+// out of "Other comparisons", and points readers to that company's own site for its current features and pricing.
 export const COMPARE = [
   {
     slug: 'analytics-software', name: 'Analytics software', h1: 'Arcus vs. analytics software',
@@ -74,18 +76,18 @@ export const COMPARE = [
   {
     slug: 'hiring-a-data-team', name: 'Hiring a data team', h1: 'Arcus vs. hiring a data team',
     lead: 'What it takes to hire, build and manage a marketing data team yourself, and when that’s the right call.',
-    rows: [['Time to first answer', 'Months to hire, then months to build', `${TBD.turnaround} when you try it free, then full setup in about three months`], ['Who you manage', 'The hires, the tools and the setup', 'Nobody. We keep it running inside your own setup'], ['Skills covered', 'Whoever you could hire', 'AI, data engineering and marketing together'], ['When it ends', 'You keep the team', 'You keep everything we built, and every answer']],
+    rows: [['Time to first answer', 'Months to hire, then months to build', TBD.turnaround ? `${TBD.turnaround} from access to a free answer. Full setup takes about three months` : 'A free answer first, and we tell you when to expect it. Full setup takes about three months'], ['Who you manage', 'The hires, the tools and the setup', 'Nobody. We keep it running inside your own setup'], ['Skills covered', 'Whoever you could hire', 'AI, data engineering and marketing together'], ['When it ends', 'You keep the team', 'You keep everything we built, and every answer']],
     better: 'If data is core to how your company competes, build the team. Arcus can be the bridge while you hire.',
   },
   {
-    slug: 'haus', name: 'HAUS', h1: 'Arcus vs. HAUS', checked: '[Last checked: date]',
+    slug: 'haus', name: 'HAUS', h1: 'Arcus vs. HAUS', vendor: true,
     short: 'HAUS runs lift tests for growth teams at e-commerce brands. Arcus connects a brand’s data and what people say online, and answers your questions for you.',
     lead: 'HAUS is an incrementality testing platform built for growth teams at e-commerce brands. Arcus connects every piece of a brand’s data, plus what people say online, into one place the brand owns, and answers any question with the whole picture, for entertainment and lifestyle brands.',
     rows: [['Built for', 'Performance and e-commerce growth teams', 'Brand teams at entertainment and lifestyle companies'], ['Main job', 'Running and reading lift tests', 'Connecting every piece of your data into one place you own, and answering any question'], ['Who does the work', 'Your team, in the platform', 'We do, and send you the answers'], ['Conversation online', 'Not the focus', 'Read and counted']],
     better: 'If your team runs paid media in-house and wants to run its own lift tests, HAUS is built for that.',
   },
   {
-    slug: 'hex', name: 'Hex', h1: 'Arcus vs. Hex', checked: '[Last checked: date]',
+    slug: 'hex', name: 'Hex', h1: 'Arcus vs. Hex', vendor: true,
     short: 'Hex is a workspace where data teams write queries and build notebooks. Arcus connects your data into one place you own and answers the questions for you.',
     lead: 'Hex is a workspace where data teams write queries (questions written in code) and build notebooks. Arcus connects your data into one place you own and answers the questions for you.',
     rows: [['Built for', 'Data analysts and data scientists', 'Marketing leaders'], ['What you do', 'Write queries, build notebooks', 'Read a few slides, ask questions'], ['Setup', 'Your data team connects and models the data', 'We do'], ['Output', 'Analyses your team builds', 'A few slides with the answer on top']],
@@ -105,15 +107,15 @@ export const FAQ = [
   ['Trying it free', 'What do we get when we try it free?', 'One question, answered with your own numbers and what people say online: which spend paid off, which posts work, what your audience says, or anything else you need to know. You get a few slides with the answer on top, ending on what to keep, test and stop, plus a 30-minute walkthrough.'],
   ['Trying it free', 'What do you need from us?', 'Your question, access to the accounts it touches, and 30 minutes for the walkthrough. Usually that means your own numbers (sales, tickets, sign-ups or viewing) and any ad accounts involved.'],
   ['Trying it free', 'Is it really free?', 'Yes. No card. If you want everything connected afterward, we talk about that then.'],
-  ['Trying it free', 'How long does it take?', `${TBD.turnaround} from access to answer.`],
+  ['Trying it free', 'How long does it take?', TBD.turnaround ? `${TBD.turnaround} from access to answer.` : 'We tell you the turnaround before we start, and email you when your answer is ready.'],
   ['Working with us', 'How long does setup take?', 'About three months from kickoff to everything connected. You approve each step, and answers arrive along the way.'],
   ['Working with us', 'What kinds of reports do you send?', 'Most answers fall into four kinds: spend reports, content reports, audience reports and market reports. You can ask anything else too. Each answer is a few slides with the answer on top and what to keep, test and stop at the end.'],
   ['Working with us', 'How often do reports come?', 'On a schedule you choose, or whenever you have a question.'],
   ['Working with us', 'Do we have to change our tools or partners?', 'No. We connect to what you already use.'],
-  ['Working with us', 'How much does it cost?', 'Trying it is free. If you want everything connected after that, there’s a one-time setup fee and a monthly fee. The Pricing page has the details.'],
+  ['Working with us', 'How much does it cost?', 'Trying it is free. If you want everything connected after that, we scope the setup and the monthly work for your brand and quote it once you’ve seen your free answer. The Pricing page explains how it works.'],
   ['Data and trust', 'Is this the same as attribution?', 'No. Attribution hands out credit. We check whether the credit holds up: every reported result is matched against your own numbers, so each one counts once. When you need to know whether something caused a sale, we run a simple test: show it in some regions and not others, then compare.'],
   ['Data and trust', 'Who checks the AI?', 'A person on our team reads every answer before you do and writes up what it means. The AI can only do jobs we’ve approved, and every step is logged.'],
-  ['Data and trust', 'Who sees our data?', '[Confirm: only the Arcus team working with you.] The Security page has the details.'],
+  ['Data and trust', 'Who sees our data?', 'We tell you who at Arcus will work with your data before we start, and you decide who else sees what we find. The Security page has the details.'],
 ];
 
 export const GLOSSARY = [

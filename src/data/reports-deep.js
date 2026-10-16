@@ -1,5 +1,5 @@
 // Long-form content for each report page. Keyed by the slugs in reports.js.
-// Numbers come only from the anonymized client decks. Unconfirmed company facts sit in [Confirm: ...] brackets.
+// Numbers come only from the anonymized client decks. Unconfirmed company facts are left out of the copy; docs/PLACEHOLDERS-RESOLVED.md lists what to add once confirmed.
 
 export const DEEP = {
   'content-report': {
@@ -43,9 +43,9 @@ export const DEEP = {
       ['A share needs someone to send it to', 'The posts that got passed on were about the viewer’s friends or a moment they had all been in. If you want shares, write the post so the obvious next move is sending it to a specific person.'],
     ],
     applyToYou: [
-      ['Could Arcus run this on our own social accounts?', 'Yes. You give us your social media management export, or access to the tool [Confirm: read-only access], for a campaign or a quarter, plus the labels you use for campaigns. We watch every post, sort it, score it against your own account average and send a few slides: the answer on top, a scorecard by kind of post, and what to keep, test and stop.'],
+      ['Could Arcus run this on our own social accounts?', 'Yes. You give us your social media management export, or access to the tool, for a campaign or a quarter, plus the labels you use for campaigns. We watch every post, sort it, score it against your own account average and send a few slides: the answer on top, a scorecard by kind of post, and what to keep, test and stop.'],
       ['We post on TikTok and YouTube too. Does the method change?', 'No. It works the same on every platform: sort by what is on screen, score each kind against that account’s own average, and keep the platforms apart. We can also line your posts up with public conversation about the brand and with your own numbers, like sales or sign-ups, so you can see which content shows up next to results. Showing cause takes a test.'],
-      ['How do we start?', 'Try it free. Pick a question and we answer it with your own numbers, then walk you through it in 30 minutes. No card. “Which of our posts work?” is a common place to start. Once everything is connected, you can ask it again every quarter, with your sales or sign-ups in the same picture. [Confirm: turnaround for a content report.]'],
+      ['How do we start?', 'Try it free. Pick a question and we answer it with your own numbers, then walk you through it in 30 minutes. No card. “Which of our posts work?” is a common place to start, and we tell you when to expect the answer before we begin. Once everything is connected, you can ask it again every quarter, with your sales or sign-ups in the same picture.'],
     ],
     limits: [
       'Small groups. Hosting hacks is four posts, the brief’s minimum for a read that is not directional. The tournament archetype is three posts and 3D animation is two, so both are directional. Every Facebook archetype is eight posts or fewer.',
@@ -97,13 +97,13 @@ export const DEEP = {
     ],
     lessons: [
       ['Count before you brief a voice', 'A voice brief built on a glossary guesses at an audience. A voice brief built on counts (line length, first person, what the top replies are) describes one. Run the same ruler over your own captions and the gap shows up in one table.'],
-      ['Borrowed slang reads as a script', 'A 2025 Journal of Marketing Research study [Confirm: authors and title] found slang in a brand’s posts cost likes and sales in every age group. Their words are for judging things. A brand that wears them looks like it is trying.'],
+      ['Borrowed slang reads as a script', 'The report cites a 2025 Journal of Marketing Research study that found slang in a brand’s posts cost likes and sales in every age group. Their words are for judging things. A brand that wears them looks like it is trying.'],
       ['Find the room where your category gets discussed', 'These young men almost never ask what to watch. They talk inside the show’s own thread. Every category has rooms like this, under the trailer, on the game’s forum, in the book’s reviews, and those rooms are where a brand can join in.'],
     ],
     applyToYou: [
       ['Could Arcus run this on our audience?', 'Yes. You tell us who you want to understand, which of your accounts and titles to include, and what decision the report should inform. We pull public posts and comments from the places that audience talks, label and count them, and run the same measures on your own captions. You get a few slides with the answer on top, the counts behind it, and voice rules, with every label filed.'],
       ['Our audience isn’t on TikTok. Does this still work?', 'The method moves with the audience. Arcus listens on Reddit, YouTube, Instagram, X, Threads, Bluesky, Discord, Twitch, Kick, Steam, Roblox, Goodreads, Letterboxd, Substack, review sites and more. The steps stay the same: pull their own spaces, measure how they write, label what gets rewarded, count their words.'],
-      ['Can it connect to our own numbers?', 'Yes. Once the setup is in place, what people say publicly sits next to your own numbers: viewing, sign-ups, sales, email and your own social accounts. That lets you see whether a spike in conversation shows up next to a rise in results. Proving one caused the other takes a test. [Confirm: who on the Arcus team sees first-party data.]'],
+      ['Can it connect to our own numbers?', 'Yes. Once the setup is in place, what people say publicly sits next to your own numbers: viewing, sign-ups, sales, email and your own social accounts. That lets you see whether a spike in conversation shows up next to a rise in results. Proving one caused the other takes a test.'],
     ],
     limits: [
       'r/AskMen skews older than 24, so the 57 posters who state an age of 18 to 24 are shown on their own. The Reddit rooms about the service also skew older than 24.',
@@ -113,7 +113,7 @@ export const DEEP = {
     ],
     faq: [
       ['What is social listening?', 'Reading what people say in public posts and comments about a topic, a brand or a category. Arcus counts it as well as reading it: how often a word appears, which kinds of comments get the most likes, and how that lines up with your own numbers.'],
-      ['Should brands use Gen Z slang in social posts?', 'In this study, no. Young men used one slang word in 62, and the glossary words brands reach for barely appeared. A 2025 Journal of Marketing Research study found slang in brand posts cost likes and sales across age groups.'],
+      ['Should brands use Gen Z slang in social posts?', 'In this study, no. Young men used one slang word in 62, and the glossary words brands reach for barely appeared. The report also cites a 2025 Journal of Marketing Research study that found slang in brand posts cost likes and sales across age groups.'],
       ['How do you find out how an audience really talks?', 'Pull the spaces they run themselves, measure how they write with a fixed script, label what the most-liked comments do, and count their words. Then run the same script on your own captions to see the gap.'],
       ['How many comments do you need?', 'This report used 2,965 measured comments, 480 hand-labeled, 6,622 counted and 78,682 counted under trailers. The right size depends on the audience and the question, and the report always says which findings rest on small groups.'],
     ],
@@ -159,8 +159,8 @@ export const DEEP = {
     ],
     applyToYou: [
       ['Could Arcus build a case series for our category?', 'Yes. You bring the decision you are facing, such as a retail move, a new market or a new format. We choose the brands that already made that move and left a public trail, source every number into a ledger, and send a few slides with the answer on top, the evidence, and the moves for your plan. The source ledger comes with it.'],
-      ['Can it include our own numbers?', 'Yes, and that is where it gets sharper. Your own sales by channel, your retail data and your agency reports can sit next to the public cases, so the gaps are specific to you. [Confirm: how first-party data is stored and deleted.]'],
-      ['What does it cost?', 'Once everything is connected, a case series like this is one more question you can ask: setup fee [$X], then monthly [$Y]. Most teams start by trying it free: pick a question, and we answer it and walk you through it in 30 minutes.'],
+      ['Can it include our own numbers?', 'Yes, and that is where it gets sharper. Your own sales by channel, your retail data and your agency reports can sit next to the public cases, so the gaps are specific to you.'],
+      ['What does it cost?', 'Trying it is free: pick a question, and we answer it and walk you through it in 30 minutes. If you want everything connected after that, we scope the setup and the monthly work for your brand and quote it once you’ve seen your free answer. Then a case series like this is one more question you can ask.'],
     ],
     limits: [
       'Five brands, chosen because they made the move and left a public trail. Brands that tried retail and struggled leave fewer records, so this series can’t show how often the move fails.',

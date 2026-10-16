@@ -8,17 +8,16 @@ import Related from '../components/Related.astro';
 import Arrow from '../components/Arrow.astro';
 import AnswerStage from '../components/AnswerStage.astro';
 import * as site from '../data/site.js';
-const { TBD } = site;
 const { BOOK_URL } = site;
 const crumbs = [{ name: 'Pricing', href: '/pricing' }];
 ---
-<Site title="Pricing: try it free, then setup and monthly | Arcus" description="Try Arcus free on the question you’re least sure about. Then a one-time fee for about three months of setup, and a monthly fee for answers and listening." path="/pricing" active="pricing" page="pricing" crumbs={crumbs} heroCta>
+<Site title="Pricing: try it free, then setup and monthly | Arcus" description="Try Arcus free on the question you’re least sure about. Then we scope the setup and the monthly work for your brand and quote it once you’ve seen your answer." path="/pricing" active="pricing" page="pricing" crumbs={crumbs} heroCta>
   {/* Landing page: the offer, the action and one concrete answer (the sample insight) in the first screen. */}
   <header class="split-hero">
     <div class="stack-24">
       <Crumbs items={crumbs} />
       <h1 class="dh d96">Itemized, like everything else.</h1>
-      <p class="lead">Three lines: try it free, a one-time setup, then a monthly fee. The first one costs nothing.</p>
+      <p class="lead">Three lines: try it free, setup, then monthly. The first one costs nothing, and we quote the other two for your brand.</p>
       <div class="btnrow l">
         <a href="/free-report" class="jb k" data-jelly data-loc="pricing-hero"><span class="bg"></span><span class="lb">Try it out for free</span><Arrow /></a>
         <a href={BOOK_URL} class="jb ln" data-jelly data-loc="pricing-hero-2"><span class="bg"></span><span class="lb">Book a call</span></a>
@@ -28,7 +27,7 @@ const crumbs = [{ name: 'Pricing', href: '/pricing' }];
     <AnswerStage />
   </header>
   <section class="wrap blk-s">
-    <QuickAnswer q="How much does Arcus cost?" a={`Trying Arcus is free: pick a question and we answer it with your own numbers. If you want Arcus running for your brand, there’s a one-time setup fee of ${TBD.setup} and a monthly fee of ${TBD.monthly}. Setup takes about three months.`} />
+    <QuickAnswer q="How much does Arcus cost?" a="Trying Arcus is free: pick a question and we answer it with your own numbers. If you want Arcus running after that, we scope the setup and the monthly work for your brand and quote it once you’ve seen your free answer. Setup takes about three months." />
   </section>
 
   <section class="wrap blk">
@@ -37,8 +36,8 @@ const crumbs = [{ name: 'Pricing', href: '/pricing' }];
         <div class="rc wide price-rc">
           <div class="hd">Arcus, itemized</div>
           <div class="r"><span>Try it free</span><span>$0</span></div>
-          <div class="r"><span>Setup: about three months, done for you</span><span>{TBD.setup}</span></div>
-          <div class="r"><span>Monthly: answers, reports and listening</span><span>{TBD.monthly}/mo</span></div>
+          <div class="r"><span>Setup: about three months, done for you</span><span>Quoted</span></div>
+          <div class="r"><span>Monthly: answers, reports and listening</span><span>Quoted</span></div>
           <div class="r tot"><span>To start</span><span>$0</span></div>
           <div class="rc-foot"><div class="bar"></div><span class="stamp inline stp rc-stamp">$0 to start</span></div>
         </div>
@@ -46,8 +45,8 @@ const crumbs = [{ name: 'Pricing', href: '/pricing' }];
       <div class="stack-16">
         {[
           ['Try it free', '$0', 'Pick a question. We answer it with your own numbers and what people say, then walk you through it in 30 minutes.', ['Your own numbers, lined up with what people say', 'Every number traced to its source', 'What to keep, test and stop'], ['Try it out for free', '/free-report?start=what_worked']],
-          ['Setup', TBD.setup, 'One time. About three months to connect every system you run into one place you own, inside your own setup: your own data lake. Answers arrive along the way, and it’s yours to keep.', ['Sales, viewers or players, email and CRM, ads, social and agency reports, connected', 'Built around your brand, so every answer knows your business', 'Listening sources picked for your audience', 'Every number tested before it reaches an answer'], null],
-          ['Monthly', `${TBD.monthly}/mo`, 'Ask anything, any time, plus regular reports on the schedule you pick.', ['Spend, content, audience and market reports', 'A person reads every answer before you do', 'The listening keeps running'], ['Book a call', BOOK_URL]],
+          ['Setup', 'Quoted', 'About three months to connect every system you run into one place you own, inside your own setup: your own data lake. Answers arrive along the way, and it’s yours to keep.', ['Sales, viewers or players, email and CRM, ads, social and agency reports, connected', 'Built around your brand, so every answer knows your business', 'Listening sources picked for your audience', 'Every number tested before it reaches an answer'], null],
+          ['Monthly', 'Quoted', 'Ask anything, any time, plus regular reports on the schedule you pick.', ['Spend, content, audience and market reports', 'A person reads every answer before you do', 'The listening keeps running'], ['Book a call', BOOK_URL]],
         ].map(([t, p, d, items, cta]) => (
           <div class="tile">
             <div class="tile-h"><p class="h2s">{t}</p><p class="h3 num">{p}</p></div>
@@ -75,7 +74,7 @@ const crumbs = [{ name: 'Pricing', href: '/pricing' }];
   </section>
 
   <section class="wrap blk" aria-labelledby="not-h">
-    <div class="honest">
+    <div class="honest" style="grid-template-columns:minmax(0,1fr)">
       <div>
         <h2 id="not-h" class="h3">What Arcus doesn’t do</h2>
         <ul class="nolist">
@@ -84,14 +83,6 @@ const crumbs = [{ name: 'Pricing', href: '/pricing' }];
           <li>Replace your agencies or tools. We connect what you already have</li>
           <li>Take a cut of your media spend</li>
           <li>Sell you software seats</li>
-        </ul>
-      </div>
-      <div>
-        <h2 class="h3">Still to confirm</h2>
-        <ul class="nolist tbc">
-          <li>[Confirm: contract length and notice period]</li>
-          <li>[Confirm: whether price changes with the number of brands or data sources]</li>
-          <li>[Confirm: billing schedule for setup]</li>
         </ul>
       </div>
     </div>
@@ -116,8 +107,7 @@ const crumbs = [{ name: 'Pricing', href: '/pricing' }];
   <PageFAQ id="price-faq" items={[
     ['Is trying it really free?', 'Yes. No card and no contract.'],
     ['What does setup include?', 'About three months of connecting every system you run into one place you own, building it around your brand, adding what people say online, and testing every number. We do the work. You approve each step.'],
-    ['Are there contracts?', '[Confirm contract terms before publishing.]'],
-    ['Does price change with the number of brands or data sources?', '[Confirm before publishing.]'],
+    ['Are there contracts?', 'Not to try it free. For setup and the monthly work, the terms come with your quote, and we walk you through them.'],
     ['Do we pay for software seats?', 'No. Answers land in Slack, email or Sheets.'],
   ]} />
   <Related items={[['Make the case', 'A one-pager and an email to send your boss.', '/make-the-case'], ['How it works', 'What happens during setup, step by step.', '/how-it-works'], ['Security', 'What we access, and how it’s handled.', '/security']]} />

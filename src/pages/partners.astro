@@ -12,7 +12,7 @@ const crumbs = [{ name: 'Partners', href: '/partners' }];
       <Crumbs items={crumbs} />
       <h1 class="dh d96">Help your clients see the whole picture.</h1>
       <p class="lead">Your clients’ data is in pieces: every team, tool and partner holds its own piece. Good advice needs the whole picture. Introduce a brand to Arcus. They try it free: we answer one question with their own numbers and what people say online. If they sign, you get paid.</p>
-      <QuickAnswer q="How does the Arcus partner program work?" a="Introduce a brand team. They try Arcus free: we answer one of their questions with their own numbers, then walk them through it in 30 minutes. If the brand signs, you receive a referral fee. [Confirm: fee or revenue share, and payment terms.]" />
+      <QuickAnswer q="How does the Arcus partner program work?" a="Introduce a brand team. They try Arcus free: we answer one of their questions with their own numbers, then walk them through it in 30 minutes. If the brand signs, we pay you, on terms agreed up front." />
     </div>
     <form class="form paper" data-lead="partner" method="post" action="/api/lead" novalidate aria-labelledby="pt-h">
       <input type="hidden" name="form_id" value="partner" />
@@ -29,7 +29,7 @@ const crumbs = [{ name: 'Partners', href: '/partners' }];
         <button type="submit" class="jb k" data-jelly data-loc="partners-form"><span class="bg"></span><span class="lb">Become a partner</span></button>
         <p data-status class="form-err" hidden tabindex="-1" role="alert"></p>
       </div>
-      <p data-ok hidden tabindex="-1" role="status" class="ok"><b>Thanks.</b> Min will reply within a business day with your partner link.</p>
+      <p data-ok hidden tabindex="-1" role="status" class="ok"><b>Thanks.</b> Min will send your partner link by email.</p>
     </form>
   </section>
   <section class="wrap blk">
@@ -44,15 +44,15 @@ const crumbs = [{ name: 'Partners', href: '/partners' }];
   <section class="wrap blk">
     <div class="honest">
       <div><h2 class="h3">What your clients get</h2><p class="muted">They try it free: one question, answered with their own numbers and what people say online. Then a 30-minute walkthrough of the answer and the one test worth running next.</p></div>
-      <div><h2 class="h3">What you get</h2><ul class="nolist yeslist"><li>A seat in the walkthrough, if your client wants you there</li><li>A seat at our monthly Live Teardown</li><li>Early access to Arcus research</li><li>One named contact: Min Kwak, Chief Revenue Officer</li></ul><ul class="nolist tbc" style="margin-top:12px"><li>[Confirm: referral fee or revenue share]</li></ul></div>
+      <div><h2 class="h3">What you get</h2><ul class="nolist yeslist"><li>Payment when a brand you introduce signs</li><li>A seat in the walkthrough, if your client wants you there</li><li>A seat at our monthly Live Teardown</li><li>Early access to Arcus research</li><li>One named contact: Min Kwak, Chief Revenue Officer</li></ul></div>
     </div>
   </section>
   <PageFAQ id="pt-faq" items={[
     ['Do I see my client’s data?', 'Only if your client gives permission in writing. We share findings with the brand. If they want you in the walkthrough, you’re welcome.'],
-    ['Do the brand’s other partners need to be involved?', '[Confirm: whether partners are told when we connect their reports, and who decides.] The brand decides who sees the answers.'],
+    ['Where do the brand’s other partners fit in?', 'We connect the reports they already send the brand. The brand decides who sees the answers.'],
     ['Can agencies join?', 'Agencies are welcome to send clients our way. There’s no referral fee.'],
     ['What kinds of brands are a good fit?', 'In-house marketing teams at entertainment and lifestyle brands (studios, streamers, drinks, games, music, fashion and beauty) that spend serious money on marketing and want to know what it did.'],
-    ['What does it cost my client after they try it free?', 'A one-time setup fee, then a monthly fee. The Pricing page has the details.'],
+    ['What does it cost my client after they try it free?', 'If they want everything connected, we scope the setup and the monthly work for their brand and quote it once they’ve seen their free answer. The Pricing page explains how it works.'],
   ]} />
   <Close variant="navy" title="Know a team that needs answers?" lines={['Know a team that', 'needs answers?']} primary={['Become a partner', '#pt-h']} body="Introduce one brand. They try it free, with a 30-minute walkthrough. If they sign, you get paid." loc="partners-close" />
 </Site>

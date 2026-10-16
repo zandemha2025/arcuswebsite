@@ -310,9 +310,9 @@ export const ARTICLES = [
 <p>What she does instead: she tries Arcus free on one question, whether the summer push paid off. The answer comes from her own sales data and what people said online, and she takes it into her next budget meeting. If that first answer earns its place, the setup follows. A few months later she has the answers she was missing, and a much better idea of whether she’ll ever need to hire.</p>
 
 <h2 id="arcus">What getting help looks like with Arcus</h2>
-<p>Arcus is the third path for entertainment and lifestyle brands, and we build it for you. First we connect every piece of your data, from sales and email to social accounts and agency reports, into one place you own: your own data lake, inside your own setup. Then we add what people say online, and write down what we learn about your products, seasons, audiences and goals, so every answer starts from your business. That’s your context layer. It takes about three months. Answers arrive as a few slides: the answer on top, the evidence, then what to keep, test and stop. They land in Slack, email or Sheets. [Confirm: read-only access to connected accounts, and where data is stored.]</p>
+<p>Arcus is the third path for entertainment and lifestyle brands, and we build it for you. First we connect every piece of your data, from sales and email to social accounts and agency reports, into one place you own: your own data lake, inside your own setup. Then we add what people say online, and write down what we learn about your products, seasons, audiences and goals, so every answer starts from your business. That’s your context layer. It takes about three months. Answers arrive as a few slides: the answer on top, the evidence, then what to keep, test and stop. They land in Slack, email or Sheets. Before we connect anything, we agree with you on exactly what we can access.</p>
 <p>Once it’s connected, any leader can ask a question and get an answer that sees the whole picture: whether the summer push paid off, which posts work, who a launch is really for. See <a href="/how-it-works">how it works</a>.</p>
-<p>The way in is small on purpose: you try it free first. After that there’s a one-time setup fee of [$X] and a monthly fee of [$Y]. The <a href="/pricing">pricing page</a> has the details.</p>
+<p>The way in is small on purpose: you try it free first. If you want it built after that, we scope the setup and the monthly work for your brand and quote it once you’ve seen your free answer. The <a href="/pricing">pricing page</a> explains how it works.</p>
 
 <h2 id="mistakes">Common mistakes, and what this checklist doesn’t decide</h2>
 <ul>
@@ -322,11 +322,11 @@ export const ARTICLES = [
 <li><b>Hiring before you know the questions.</b> The questions decide the skills. Write ten of them down before you write a job description.</li>
 <li><b>Treating it as forever.</b> The right answer this year may change next year.</li>
 </ul>
-<p>Questions to ask anyone offering to do it for you: Who owns the setup, and where does it live? Which of our existing tools do you connect to? Who reads the data, and how often? What do we get each month, and in what form? What happens to the setup if we stop? [Confirm: the answers Arcus gives to each.]</p>
+<p>Questions to ask anyone offering to do it for you, Arcus included: Who owns the setup, and where does it live? Which of our existing tools do you connect to? Who reads the data, and how often? What do we get each month, and in what form? What happens to the setup if we stop?</p>
 <p>The checklist tells you which path fits your questions today. It doesn’t tell you what any path will cost your company, or how good your data is until someone looks. The quickest way to see what your data can answer is to ${fr('try it free')}: pick a question, and we answer it with your own numbers and walk you through it in 30 minutes.</p>`,
     faq: [
       ['Can Arcus work alongside a data team?', 'Yes. Some teams use Arcus while they hire, or for listening and spend reports their team doesn’t cover.'],
-      ['What happens to the setup if we stop?', '[Confirm: contract terms, and what the brand keeps from the setup in its own environment.]'],
+      ['What happens to the setup if we stop?', 'You keep every answer we sent you, and everything we built inside your setup stays yours. We walk you through the contract terms before you sign anything.'],
       ['Do we need to hire anyone to work with Arcus?', 'No. A brand marketing lead who can say which questions matter is enough.'],
     ],
   },

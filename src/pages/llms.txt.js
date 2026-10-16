@@ -27,7 +27,7 @@ ${l('Ask anything', '/how-it-works#report', 'any leader can ask any question; an
 ## Start
 ${l('Try it out for free', '/free-report', 'pick a question; Arcus answers it with the brand’s own numbers and what people say online, then walks the team through it in 30 minutes; free, no card')}
 ${l('Then we build it for you', '/how-it-works', 'Arcus connects the brand’s data into one place it owns and builds it around the brand, so any team can ask anything')}
-${l('Pricing', '/pricing', 'try it free, then a one-time setup fee and a monthly fee')}
+${l('Pricing', '/pricing', 'try it free, then setup and monthly work, scoped and quoted for your brand after the free answer')}
 ${l('Book a call', BOOK_URL)}
 
 ## Real answers (names removed)
@@ -56,7 +56,7 @@ ${l('Make the case', '/make-the-case', 'a one-pager and a copy-ready email for g
 ${l('The Receipts', '/newsletter', 'a free monthly email: one number marketing gets wrong, and how to check it yourself')}
 ${l(SERIES.name, '/events', 'a free monthly live session that takes an example campaign apart')}
 ${l('Partners', '/partners', 'for fractional CMOs, advisors and consultants who introduce brands')}
-${l('Press', '/press', 'boilerplate, team, logo files and a press contact')}
+${l('Press', '/press', 'boilerplate, fast facts, who to talk to and a press contact')}
 
 ## Company
 ${l('About', '/about')}

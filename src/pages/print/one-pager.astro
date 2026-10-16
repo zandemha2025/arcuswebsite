@@ -1,7 +1,7 @@
 ---
 import Print from '../../layouts/Print.astro';
 import * as site from '../../data/site.js';
-const { ENTITY, TBD, TEAM, DOMAIN } = site;
+const { ENTITY, TEAM, DOMAIN } = site;
 const { BOOK_URL } = site;
 const book = BOOK_URL.startsWith('/') ? `${DOMAIN}${BOOK_URL}` : BOOK_URL.replace(/^https?:\/\//, '');
 import { REPORTS } from '../../data/reports.js';
@@ -21,7 +21,7 @@ const real = REPORTS.filter((r) => !r.example);
   <h2>Real questions, real answers (names removed)</h2>
   <ul>{real.map((r) => <li><span class="fig">{r.headline.n}</span> {r.headline.label} ({r.kind.toLowerCase()}, {r.who.toLowerCase()}).</li>)}</ul>
   <div class="grid">
-    <div><h2>What it costs</h2><ul><li>Try it free: $0, plus a 30-minute walkthrough</li><li>Setup, about three months: {TBD.setup}</li><li>Monthly answers, reports and listening: {TBD.monthly}</li></ul></div>
+    <div><h2>What it costs</h2><ul><li>Try it free: $0, plus a 30-minute walkthrough</li><li>Setup (about three months) and monthly answers, reports and listening: scoped and quoted for your brand after the free answer</li></ul></div>
     <div><h2>What we need to start</h2><ul><li>One question you want answered</li><li>Access to the accounts it touches, like your own sales, tickets or sign-ups</li></ul></div>
   </div>
   <p class="small faint"><b>Team:</b> {TEAM.map((t) => `${t.name}, ${t.title}`).join(' · ')}</p>

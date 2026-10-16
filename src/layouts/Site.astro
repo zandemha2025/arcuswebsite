@@ -29,7 +29,8 @@ const { title: rawTitle, description: rawDescription, path, active = 'none', pag
 // Arcus") stays only when the whole title fits; otherwise the page's own words win and the suffix drops.
 const SUFFIX = / \| (?:Arcus(?: glossary| research)?|The Receipts by Arcus)$/;
 const title = rawTitle.length > 60 && SUFFIX.test(rawTitle) ? rawTitle.replace(SUFFIX, '') : rawTitle;
-// Placeholders stay on the page ([Check on their site], [Confirm: …]) but never in a search or share snippet.
+// No page shows a bracketed note to visitors. As a safety net, anything in square brackets is still stripped from a
+// search or share snippet.
 // Search shows about 160 characters of a description: a longer one keeps the whole sentences that fit, or, when that
 // would leave too little, is cut at a word with an ellipsis. Pages whose lead runs long pass a shorter `description`.
 const clip = (s: string, max = 160) => {

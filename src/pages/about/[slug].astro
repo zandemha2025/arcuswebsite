@@ -24,7 +24,7 @@ const schema = [{ '@type': 'ProfilePage', url: `${SITE}/about/${t.slug}`, mainEn
       <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px">
         <p class="h3">Written by {t.name.split(' ')[0]}</p>
         {posts.length ? posts.map((p) => <a class="arrow" href={`/library/${p.slug}`}>{p.title} <Arrow /></a>) : <p class="muted small">Nothing published yet.</p>}
-        {t.linkedin ? <a class="arrow" href={t.linkedin} rel="me noopener" target="_blank">LinkedIn <Arrow /></a> : <p class="small faint">[Add LinkedIn profile link]</p>}
+        {t.linkedin && <a class="arrow" href={t.linkedin} rel="me noopener" target="_blank">LinkedIn <Arrow /></a>}
         {t.credentials?.length > 0 && <ul class="dash">{t.credentials.map((c) => <li>{c}</li>)}</ul>}
       </div>
     </div>
