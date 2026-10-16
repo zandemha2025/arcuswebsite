@@ -856,16 +856,28 @@ function initUnlit() {
   new IntersectionObserver(([e]) => set(e.isIntersecting), { rootMargin: '-72px 0px 0px 0px' }).observe(hero);
 }
 
-/* ---------- homepage: the scroll story ("Your data is in pieces.") ---------- */
-// The page's one scroll-linked motion (site.css "homepage motion" 2). The markup is the assembled end state; this only
-// measures where each piece starts and arms it. Wide screens: the 13 pieces start as a loose pile in the free field
+/* ---------- homepage: the scroll story ("Your data is in pieces."), starting in the hero ---------- */
+// The page's one scroll-linked motion (site.css "homepage motion" 2 and 2b). The markup is the assembled end state; this
+// only measures where everything starts and arms it. Wide screens: the 13 pieces start as a loose pile in the free field
 // right of the heading, above the stage, and land in a cascade over 62% of a viewport (the stage's top travels from the
 // bottom of the screen to 38%; the last piece lands where the answer posts). Up to 1100px: each piece starts knocked
 // loose inside its own card and lands as it reaches 58% of the screen. Where the browser has scroll-driven animations,
-// CSS runs it on a view timeline; elsewhere (and with ?fallback) one passive, rAF-throttled scroll listener writes the
-// same mapping: one rect read per frame, transform and opacity only, written on each piece itself. Never armed under
+// CSS runs it on timelines; elsewhere (and with ?fallback) one passive, rAF-throttled scroll listener writes the same
+// mapping: one rect read per frame, transform and opacity only, written on each element itself. Never armed under
 // reduced motion or ?still. It re-measures only when the width changes or the fonts land, never on a height-only resize
-// (a phone's URL bar collapsing).
+// (a phone's URL bar collapsing); above 1100px (desktop windows) a height change re-measures too.
+//
+// The hand-off (2b): the story starts in the hero. As the hero scrolls away, the three planes separate in depth (the
+// nearer, the faster: the tile behind lags and recedes most, the slide less, the card scrolls with the page), and the
+// card sheds its answer, numbers first, then collapses into its question. Wide (>1100): that question travels as a
+// chip into the pile, leaves with the pieces, and lands on the answer's question line just before the answer posts
+// around it (initPost); then the chip fades and the question is the card's. Scrolling back up above the post line, the
+// chip takes the question away with it (the card's own line hides while the chip is away), so it is never shown twice.
+// The card itself never moves while it still carries a number, so no illustrative number ever comes nearer the logo
+// row than it sits at rest. Up to 1100px (no pile) the lighter version: the planes separate a little and the card
+// collapses to its question in place. Each track is a range of page scroll (--h0 to --h1) and end values, written on
+// the element; CSS runs it on the root scroll timeline, the fallback writes the same values from scrollY.
+let storyPosted = () => {};
 function initStory() {
   const slab = document.querySelector('[data-story]'), chapter = document.querySelector('[data-chapter]');
   if (!slab || !chapter) return;
@@ -873,27 +885,131 @@ function initStory() {
   const PILE = [[.10, .30, -8], [.62, .06, 6], [.36, .70, -4], [.90, .26, 10], [.18, .92, 5], [.50, .40, -11], [.80, .68, 4], [.30, .08, -6], [.96, .94, -9], [.06, .66, 7], [.62, .98, -5], [.74, .40, 12], [.42, .18, 3]];
   const LOOSE = [[-26, -16, -7], [30, 12, 6], [-18, 10, -9], [24, -14, 8], [-30, 6, -6], [18, -10, 10], [-12, 14, -8], [28, 8, 7], [-22, -12, -10], [16, 16, 5], [-28, -6, 9], [20, -8, -6], [-14, 10, 8]];
   const css = !!window.CSS?.supports?.('animation-timeline: view()') && !/[?&]fallback\b/.test(location.search);
-  let tiles = [], vh0 = innerHeight, mode = 'off', lastW = 0, ticking = false;
+  const hc = document.querySelector('.hero-card');
+  const H = hc?.querySelector('.hc-q') && {
+    win: document.querySelector('.hs-d-win'), sat: document.querySelector('.hs-d-sat'), full: hc.querySelector('.hc-full'),
+    q: hc.querySelector('.hc-q'), qm: hc.querySelector('.hc-qm'), qc: hc.querySelector('.hc-qc'), hq: hc.querySelector('.insight-q'),
+    body: hc.querySelector('.insight-b'), rest: [...hc.querySelectorAll('.insight-h,.insight-src')],
+    card: slab.querySelector('.ic-eq'), eq: slab.querySelector('.ic-eq .insight-q'), out: slab.querySelector('.eq-out'),
+  };
+  let tiles = [], tracks = [], vh0 = innerHeight, mode = 'off', hand = '', lastW = 0, lastH = 0, ticking = false, atEnd = false, posted = false, gio = null;
+  const KINDS = ['hd-m', 'hd-f', 'hd-fold', 'hd-glide'], VARS = ['--h0', '--h1', '--tx', '--ty', '--tr', '--ts', '--to'], PROPS = ['translate', 'rotate', 'scale', 'opacity', 'transform-origin', 'will-change'];
+  // Once the card's rows have faded it stops taking the pointer, so its invisible marks never light the slide on hover.
+  // A class, flipped by an IntersectionObserver when the card's bottom crosses where it sits at that scroll (y px from
+  // the top of the screen): no scroll listener, no per-frame work.
+  const watchFold = (y) => {
+    gio = new IntersectionObserver(([e]) => H.full.classList.toggle('hc-gone', e.boundingClientRect.bottom <= (e.rootBounds?.top ?? y) + 1), { rootMargin: `${-y}px 0px 0px 0px` });
+    gio.observe(hc);
+  };
   const reset = () => {
-    root.classList.remove('armed');
+    root.classList.remove('armed', 'ho', 'hl', 'q-home');
     tiles.forEach((t) => { t.el.classList.remove('fly'); t.el.style.transform = ''; t.el.style.removeProperty('--sh'); t.el.style.removeProperty('--cv'); });
-    tiles = []; mode = 'off';
+    tracks.forEach((t) => { t.el.classList.remove(...KINDS); [...VARS, ...PROPS].forEach((v) => t.el.style.removeProperty(v)); });
+    if (H) { ['--qx', '--qy', '--qw'].forEach((v) => H.q.style.removeProperty(v)); H.card?.style.removeProperty('transform-origin'); H.full.classList.remove('hc-gone'); }
+    gio?.disconnect(); gio = null;
+    tiles = []; tracks = []; mode = 'off'; hand = '';
+  };
+  // The chip's two trips (site.css @keyframes hd-glide): its speed ramps up from 0 over the first quarter, holds, and
+  // ramps back to 0 over the last, so it leaves the card, lands in the pile, leaves the pile and lands on the answer's
+  // question line with no velocity step.
+  const glide = (p) => (p < 0.25 ? 8 / 3 * p * p : p < 0.75 ? 1 / 6 + (p - 0.25) * 4 / 3 : 1 - 8 / 3 * (1 - p) * (1 - p));
+  // Fallback writes: only what changed since the last frame. Only the elements that move are promoted (at arm).
+  const put = (t, p) => {
+    const f = t.kind === 'hd-glide' ? glide(p) : p, w = t.w || (t.w = {}), st = t.el.style;
+    const set = (k, v) => { if (w[k] !== v) { w[k] = v; st[k] = v; } };
+    if (t.kind !== 'hd-f') {
+      if (t.tx || t.ty) set('translate', `${(t.tx * f).toFixed(1)}px ${(t.ty * f).toFixed(1)}px`);
+      if (t.tr) set('rotate', `${(t.tr * f).toFixed(2)}deg`);
+      if (t.ts !== 1) set('scale', String(t.ts).split(' ').map((s) => (1 + (s - 1) * f).toFixed(4)).join(' '));
+    }
+    if (t.kind === 'hd-f') set('opacity', (t.o0 + (t.o1 - t.o0) * p).toFixed(3));
+    if (t.kind === 'hd-fold') set('opacity', p < 0.7 ? '1' : ((1 - p) / 0.3).toFixed(3)); // holds, then goes in the last 30%
   };
   const frame = () => {
     ticking = false;
     if (mode !== 'raf') return;
-    const off = vh0 - slab.getBoundingClientRect().top; // the view timeline's "cover" offset, in px
+    const off = vh0 - slab.getBoundingClientRect().top, s = scrollY; // the view timeline's "cover" offset, and the page's scroll
     for (const t of tiles) {
       const p = Math.min(1, Math.max(0, (off - t.r0) / (t.r1 - t.r0))), q = 1 - p;
       t.el.style.transform = q ? `translate(${(t.sx * q).toFixed(1)}px,${(t.sy * q).toFixed(1)}px) rotate(${(t.sr * q).toFixed(2)}deg)` : '';
       t.el.style.setProperty('--sh', p < 0.7 ? '1' : ((1 - p) / 0.3).toFixed(3));
       t.el.style.setProperty('--cv', p < 0.82 ? '1' : ((1 - p) / 0.18).toFixed(3));
     }
+    for (const t of tracks) put(t, Math.min(1, Math.max(0, (s - t.h0) / (t.h1 - t.h0))));
   };
+  // Layout offsets from el up to an ancestor: transform-free, so a card still posting from the load sequence measures
+  // where it will rest.
+  const offs = (el, stop) => { let x = 0, y = 0; for (let e = el; e && e !== stop; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; } return [x, y]; };
+  // The hand-off's tracks. Reads only; returns what to write. f = the pile's free field (viewport px), S0 = the scroll
+  // at which the story starts (the stage's top at the bottom of the screen), run = the story's run.
+  const handoff = (wide, f, S0, run) => {
+    const T = [], add = (el, kind, h0, h1, v = {}) => { if (el) T.push({ el, kind, h0, h1: Math.max(h1, h0 + 1), tx: v.tx || 0, ty: v.ty || 0, tr: v.tr || 0, ts: v.ts ?? 1, o0: v.o0 ?? 1, o1: v.o1 ?? 0, origin: v.origin }); };
+    const sy = scrollY, cr = hc.getBoundingClientRect(), [qx, qy] = offs(H.hq, H.full), qh = H.hq.offsetHeight;
+    // The chip hugs the question on one line; if the question wraps (narrow phones), the chip takes its width and wraps
+    // the same way.
+    let qw = H.hq.offsetWidth;
+    if (qh < 30) { const r = document.createRange(); r.selectNodeContents(H.hq); qw = Math.ceil(r.getBoundingClientRect().width / ((H.hq.getBoundingClientRect().width / qw) || 1)) + 1; }
+    // u: the hand-off's own unit of scroll. The hero stops growing at 780px tall, so on a taller screen its lengths
+    // stay what they are at 900 instead of stretching with the window (which used to leave the chip no room to travel).
+    const u = Math.min(vh0, 900), top0 = cr.top + sy, full = Math.max(0, cr.bottom + sy + 16 - vh0); // full: the whole card is on screen
+    const cw = qw + 24, chh = qh + 16, e1 = S0 + 0.96 * run;
+    let ho = wide && f.R - f.L >= cw + 16 && f.B - f.T >= chh + 16, b0, d1 = 0, e0 = 0;
+    if (ho) {
+      // The answer stays to be read until the card's top crosses 38% of the screen, or earlier (never before 45%) so
+      // the chip still has a real trip and lands in the pile as the pieces start to leave (S0 + .10 run); and never
+      // within the first wheel notch or so after the whole card is in view (.12u). On a tall screen, where the story
+      // starts almost at once, the chip lands later and joins the pieces in flight; on a very tall one (a portrait
+      // monitor) there is no room for its second trip, and the hero gets the lighter version.
+      b0 = Math.max(full + 0.12 * u, Math.min(top0 - 0.38 * vh0, Math.max(top0 - 0.45 * vh0, S0 + 0.10 * run - 0.45 * u)));
+      d1 = Math.max(S0 + 0.10 * run, b0 + 0.45 * u); // the trip into the pile: at least .3u long
+      e0 = Math.max(S0 + 0.14 * run, d1 + 0.08 * u); // and it waits there for at least .08u, so the landing reads
+      if (e1 - e0 < 0.3 * run) ho = false;
+    }
+    if (!ho) b0 = Math.max(full + 0.12 * u, top0 - 0.25 * vh0); // no travel: the answer stays until the card's top reaches 25% of the screen
+    const c1 = b0 + 0.15 * u;
+    // Depth: the nearer a plane, the faster it moves. The card (front) scrolls with the page; the slide lags a little
+    // and recedes; the tile behind it lags most and recedes most, drifting a little apart.
+    const plane = (w, v) => { const p = w?.firstElementChild; if (p?.offsetParent) add(w, 'hd-m', 0, ho ? 0.6 * u : c1, { ...v, origin: `${p.offsetLeft + p.offsetWidth / 2}px ${p.offsetTop + p.offsetHeight / 2}px` }); };
+    plane(H.win, ho ? { ty: 20, ts: 0.95 } : { ty: 10, ts: 0.97 });
+    plane(H.sat, ho ? { tx: 20, ty: 48, tr: 1.5, ts: 0.9 } : { tx: 10, ty: 24, tr: 1, ts: 0.95 });
+    // The card sheds its answer: its two numbers go first; then the stamp and the sources; the question line lifts
+    // out as a chip (it lights with a periwinkle edge, so it can be followed); and the card collapses into the chip,
+    // scaled about the question toward the chip's own size (every row has gone by then, so the uneven scale shows
+    // only as a white surface shrinking into the chip), and goes in the last 30%. It never shows as an empty frame.
+    const [Wc, Hc] = [H.full.offsetWidth, H.full.offsetHeight], ox = qx + qw / 2, oy = qy + qh / 2;
+    const fx = Math.min(1, (cw / 2 - 4) / Math.max(ox, Wc - ox)), fy = Math.min(1, (chh / 2 - 4) / Math.max(oy, Hc - oy));
+    add(H.body, 'hd-f', b0, b0 + 0.08 * u);
+    H.rest.forEach((el) => add(el, 'hd-f', b0 + 0.04 * u, b0 + 0.085 * u));
+    add(H.qc, 'hd-f', b0 + 0.06 * u, b0 + 0.09 * u, { o0: 0, o1: 1 });
+    add(H.full, 'hd-fold', b0 + 0.07 * u, c1, { ts: `${fx.toFixed(4)} ${fy.toFixed(4)}`, origin: `${ox}px ${oy}px` });
+    let eqo = '';
+    if (ho && H.eq && H.out && H.card) {
+      // Into the pile, level and on top of it; then with the pieces to the answer's question line.
+      const sx = cr.left + ox, sy0 = cr.top + oy;
+      const px = Math.min(Math.max(f.L + 0.40 * (f.R - f.L), f.L + cw / 2 + 8), f.R - cw / 2 - 8);
+      const py = Math.min(Math.max(f.T + 0.34 * (f.B - f.T), f.T + chh / 2 + 8), f.B - chh / 2 - 8);
+      const or = H.out.getBoundingClientRect(), [ex, ey] = offs(H.eq, H.out), [cx, cy] = offs(H.eq, H.card);
+      add(H.q, 'hd-glide', c1, d1, { tx: px - sx, ty: py - sy0 });
+      add(H.qm, 'hd-glide', e0, e1, { tx: or.left + ex + qw / 2 - px, ty: or.top + ey + qh / 2 - py });
+      eqo = `${cx + qw / 2}px ${cy + qh / 2}px`; // the answer waits scaled about its question line (site.css .ho .eq-wait)
+    }
+    // The card stops taking the pointer once its rows have gone (its marks are what light the slide and the tile).
+    return { tracks: T, hand: ho ? 'ho' : 'hl', qx, qy, qw, eqo, gone: Math.round(cr.bottom + sy - (b0 + 0.085 * u)) };
+  };
+  // Back home: once the answer has posted and the stage is past the post line, the chip fades into the card's own
+  // question line; above the line it is back at once, on its way up.
+  const home = (instant) => {
+    const on = hand === 'ho' && atEnd && posted;
+    if (on === root.classList.contains('q-home')) return;
+    if (instant) H.qm.style.transition = 'none';
+    root.classList.toggle('q-home', on);
+    if (instant) { void H.qm.offsetWidth; H.qm.style.transition = ''; }
+  };
+  storyPosted = (instant) => { posted = true; if (H) home(instant); };
   const arm = () => {
     reset();
     if (reduce) return;
-    lastW = innerWidth; vh0 = innerHeight;
+    lastW = innerWidth; lastH = innerHeight; vh0 = innerHeight;
     const wide = innerWidth > 1100;
     const els = [...slab.querySelectorAll('.piece')].filter((t) => t.offsetParent);
     // Read everything first, then write, so arming lays the page out once.
@@ -927,19 +1043,41 @@ function initStory() {
       }
       return { el, sx, sy, sr, r0, r1 };
     });
+    const ho = H && handoff(wide, { L: fL, R: fR, T: fT, B: fB }, sTop + scrollY - vh0, run);
+    atEnd = sTop < vh0 * 0.38;
     tiles.forEach((t) => {
       const st = t.el.style;
       st.setProperty('--sx', `${t.sx.toFixed(1)}px`); st.setProperty('--sy', `${t.sy.toFixed(1)}px`); st.setProperty('--sr', `${t.sr}deg`);
       st.setProperty('--r0', `${t.r0.toFixed(0)}px`); st.setProperty('--r1', `${t.r1.toFixed(0)}px`);
       t.el.classList.add('fly');
     });
+    if (ho) {
+      tracks = ho.tracks; hand = ho.hand;
+      const qs = H.q.style; qs.setProperty('--qx', `${ho.qx}px`); qs.setProperty('--qy', `${ho.qy}px`); qs.setProperty('--qw', `${ho.qw}px`);
+      if (ho.eqo) H.card.style.transformOrigin = ho.eqo;
+      tracks.forEach((t) => {
+        const st = t.el.style;
+        if (t.origin) st.transformOrigin = t.origin;
+        if (!css) { if (t.kind !== 'hd-f') st.willChange = 'transform'; return; } // the rows only fade: left unpromoted
+        st.setProperty('--h0', `${t.h0.toFixed(0)}px`); st.setProperty('--h1', `${t.h1.toFixed(0)}px`);
+        st.setProperty('--tx', `${t.tx.toFixed(1)}px`); st.setProperty('--ty', `${t.ty.toFixed(1)}px`); st.setProperty('--tr', `${t.tr}deg`);
+        st.setProperty('--ts', String(t.ts)); st.setProperty('--to', String(t.o1));
+        t.el.classList.add(t.kind);
+      });
+      root.classList.add(hand);
+      home(true);
+      if ('IntersectionObserver' in window) watchFold(ho.gone);
+    }
     if (css) { mode = 'css'; root.classList.add('armed'); } else { mode = 'raf'; frame(); }
   };
   addEventListener('scroll', () => { if (mode === 'raf' && !ticking) { ticking = true; requestAnimationFrame(frame); } }, { passive: true });
   arm();
+  if (H && 'IntersectionObserver' in window) new IntersectionObserver(([e]) => { atEnd = e.boundingClientRect.top < innerHeight * 0.38; home(false); }, { rootMargin: '0px 0px -62% 0px' }).observe(slab);
   document.fonts?.ready.then(() => { if (mode !== 'off') arm(); });
   let rt;
-  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (innerWidth !== lastW) arm(); }, 150); }, { passive: true });
+  // Desktop (>1100) re-measures on a height change too, whatever mode it is in, so a window that passed through a very
+  // tall size comes back to the hand-off; phones and tablets never do (a URL bar collapsing is not a new layout).
+  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (innerWidth !== lastW || (innerWidth > 1100 && innerHeight !== lastH)) arm(); }, 150); }, { passive: true });
   onReduce(() => setTimeout(arm));
 }
 
@@ -996,6 +1134,7 @@ function initPost() {
   const post = (instant) => {
     if (posted) return;
     posted = true; io?.disconnect();
+    storyPosted(instant); // the hand-off's question chip fades into the card's own question line (initStory)
     if (instant) { atRest([card, slab.querySelector('.op-eq')].filter(Boolean)); slab.classList.remove('eq-wait'); setPop('a', true, false); return; }
     slab.classList.remove('eq-wait'); slab.classList.add('eq-play');
     setTimeout(() => { if (trig.b.getAttribute('aria-expanded') !== 'true' && !card.contains(document.activeElement)) setPop('a', true); }, 960); // after the marks have swept
@@ -1026,7 +1165,14 @@ function initTrack() {
   const prev = arrows.find((b) => b.dataset.dir === '-1'), next = arrows.find((b) => b.dataset.dir === '1');
   const cur = document.querySelector('[data-cur]');
   if (slides.length < 2) return;
-  const snaps = () => { const max = rail.scrollWidth - rail.clientWidth, pad = slides[0].offsetLeft; return slides.map((s, i) => (i === slides.length - 1 ? max : Math.min(max, s.offsetLeft - pad))); };
+  // Snap positions match the CSS: centered slides on desktop, start-aligned (last one end-aligned) on phones.
+  const snaps = () => {
+    const max = rail.scrollWidth - rail.clientWidth, pad = slides[0].offsetLeft;
+    const center = getComputedStyle(slides[0]).scrollSnapAlign.includes('center');
+    return slides.map((s, i) => (center
+      ? Math.max(0, Math.min(max, Math.round(s.offsetLeft + s.offsetWidth / 2 - rail.clientWidth / 2)))
+      : i === slides.length - 1 ? max : Math.min(max, s.offsetLeft - pad)));
+  };
   const idx = () => { const p = snaps(), x = rail.scrollLeft; let best = 0; p.forEach((v, i) => { if (Math.abs(v - x) < Math.abs(p[best] - x)) best = i; }); return best; };
   let shown = 0;
   const sync = () => {

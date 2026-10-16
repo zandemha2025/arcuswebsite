@@ -73,13 +73,15 @@ const arrowR = '<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stro
         {/* Founder decision: the first screen says what Arcus is, under the buttons and the note. */}
         <p class="hero-what">Arcus connects your sales, ads, CRM and what people say online into one place you own.</p>
       </div>
+      {/* Each plane has a wrapper (.hs-d) for the scroll hand-off (site.js initStory), so the load sequence (on the
+          planes themselves) and the scroll mapping (on the wrappers) compose instead of fighting. */}
       <div class="hero-stage">
-        <div class="hs-sat ring rp" aria-hidden="true">
+        <div class="hs-d hs-d-sat"><div class="hs-sat ring rp" aria-hidden="true">
           <span class="pk"><i class="dot p3"></i>What people say</span>
           <p class="hs-sat-t"><span class="hs-ic"><img src="/logos/tiktok.svg" alt="" width="16" height="16" /><img src="/logos/reddit.svg" alt="" width="16" height="16" /></span>TikTok and Reddit</p>
           <span class="mchip say">1,240 posts</span>
-        </div>
-        <div class="hs-win" role="group" aria-label="Sample report slide">
+        </div></div>
+        <div class="hs-d hs-d-win"><div class="hs-win" role="group" aria-label="Sample report slide">
           <p class="pk"><i class="dot p1" aria-hidden="true"></i>Sales, week 3</p>
           <p class="hs-t">Week 3: sales up 18%.</p>
           {/* Drawn to the stated ratio: week 3 is 1.18 × week 2. "Next" is an empty dashed slot: not spent yet. */}
@@ -89,9 +91,13 @@ const arrowR = '<svg width="18" height="18" viewBox="0 0 16 16" fill="none" stro
             <span class="hs-b nx" style="--h:.6844"><i></i></span>
           </div>
           <div class="hs-axis" aria-hidden="true"><span>Week 2</span><span class="ax-hi">Week 3</span><span class="ax-nx"><i class="dot nx"></i>Next</span></div>
-        </div>
+        </div></div>
+        {/* The hand-off: on scroll the card sheds its answer (the numbers first) down to its question, and on wide
+            screens that question travels as a chip into the pile below and on to the answer on the stage. The chip is
+            a copy for the eye only (aria-hidden), never shown without the motion (no JS, reduced motion, ?still). */}
         <div class="hero-card" data-consent-avoid>
-          <InsightCard surface="photo" motion="load" link="hero" />
+          <div class="hc-full"><InsightCard surface="photo" motion="load" link="hero" /></div>
+          <div class="hc-q" aria-hidden="true"><div class="hc-qm"><div class="hc-ql"><p class="hc-qc"><b>You asked:</b> What drove sales in week&nbsp;3?</p></div></div></div>
         </div>
       </div>
     </div>

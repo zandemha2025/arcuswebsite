@@ -1051,6 +1051,20 @@ details[open] .a{animation:fadeonly 150ms ease-out}
 .hs-sat .mchip{margin-top:10px}
 .hero-card{position:absolute;left:0;top:400px;z-index:3;width:420px}
 .hero-card .insight{box-shadow:var(--z4)}
+/* The scroll hand-off (site.js initStory; "homepage motion" 2b). Each plane sits in a wrapper that covers the stage,
+   so the plane keeps its own position and its load animation, and the scroll mapping moves the wrapper. Only the
+   planes take the pointer. The question chip is the card's question on its own: placed exactly over the card's
+   question line (site.js writes --qx/--qy), shown only while the hand-off is armed, never for assistive tech. It is
+   level and carries a periwinkle edge the pieces don't have, so the eye can follow it through the pile. */
+.hs-d{position:absolute;inset:0;pointer-events:none}
+.hs-d>*{pointer-events:auto}
+.hs-d-sat{z-index:1}.hs-d-win{z-index:2}
+.hc-full{position:relative}
+.hc-q{position:absolute;left:var(--qx,22px);top:var(--qy,66px);z-index:1;display:none;width:var(--qw,auto);pointer-events:none}
+.ho .hc-q,.hl .hc-q{display:block}
+.hc-qc{margin:-8px -12px;padding:8px 12px;border-radius:12px;background:#FFFFFF;color:var(--muted);box-shadow:inset 0 0 0 1.5px var(--peri),var(--z3);font-size:14px;line-height:1.55;letter-spacing:0;text-wrap:pretty;opacity:0}
+.hc-full.hc-gone{pointer-events:none} /* its rows have faded (site.js, an IntersectionObserver): its invisible marks never light the slide */
+.hc-qc b{font-weight:600;color:var(--ink)}
 /* Pointer users: a number lights the place it came from (hover only here; the equation also does it on focus). */
 @media (hover:hover) and (pointer:fine){
   .hero-stage:has(.hm-a:hover) :is(.hm-a,.hs-b.hi .mchip,.hc-a)::after,
@@ -1342,6 +1356,7 @@ details[open] .a{animation:fadeonly 150ms ease-out}
   .insight-av i{right:5px;bottom:6px}
   .insight-n{font-size:14px}.insight-meta{font-size:12px}
   .insight-q{margin-top:12px;font-size:13px}
+  .hc-qc{font-size:13px} /* the hand-off's chip matches the question line it lifts out of */
   .insight-b{margin-top:6px;font-size:16px}
   .insight-src{gap:6px;margin-top:12px}
   .insight-src li{min-height:26px;padding:0 9px;font-size:12px}
@@ -1381,12 +1396,13 @@ details[open] .a{animation:fadeonly 150ms ease-out}
 .arw[aria-disabled=true]{opacity:.38;cursor:default;transform:none}
 @media (hover:hover) and (pointer:fine){.arw:not([aria-disabled=true]):hover{background:#FFFFFF14}}
 .arw:focus-visible{border-radius:50%}
-.track{position:relative;--pad:max(32px,calc((100% - 1376px) / 2 + 32px));display:flex;gap:24px;margin-top:48px;padding:14px var(--pad) 44px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--pad);scrollbar-width:none}
+/* Desktop: the active slide snaps to the center of the chapter, with its neighbors peeking on both sides; the side
+   padding is exactly what lets the first and last slides center too. Phones (<=900) keep the start-aligned swipe. */
+.track{position:relative;--sw:760px;--pad:max(32px,calc(50% - var(--sw) / 2));display:flex;gap:24px;margin-top:48px;padding:14px var(--pad) 44px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
 .track::-webkit-scrollbar{display:none}
 .track::after{content:"";flex:0 0 1px} /* keeps the end padding inside the scroll range */
 .track:focus-visible{outline-offset:-6px;border-radius:24px}
-.aslide-w{flex:0 0 760px;display:flex;min-width:0;scroll-snap-align:start}
-.aslide-w:last-child{scroll-snap-align:end}
+.aslide-w{flex:0 0 var(--sw);display:flex;min-width:0;scroll-snap-align:center}
 /* The figure panel is on the left, so the next slide's figure is what peeks: two numbers compare at a glance. */
 .aslide{position:relative;flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:32px;padding:16px 28px 16px 16px;border-radius:24px;background:#FFFFFF;color:var(--ink);box-shadow:var(--z-on-navy);transition:transform 220ms var(--ease-out);-webkit-tap-highlight-color:transparent}
 .aslide::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:var(--z-on-navy-up);opacity:0;transition:opacity 220ms ease;pointer-events:none} /* the deeper drop fades in; no box-shadow transition */
@@ -1407,7 +1423,7 @@ details[open] .a{animation:fadeonly 150ms ease-out}
 .sl-q{margin-top:auto;padding-top:22px;border-top:1px solid var(--silver)}
 .sl-qq{font-size:19px;font-weight:600;line-height:1.3;letter-spacing:-.02em;text-wrap:pretty}
 .aslide .sl-see{min-height:0;margin-top:16px;font-size:15px}
-@media (max-width:1240px){.aslide-w{flex-basis:700px}}
+@media (max-width:1240px){.track{--sw:700px}}
 @media (max-width:900px){
   .ans-s{padding:104px 8px 0}
   .ans{padding:72px 0 36px;border-radius:24px}
@@ -1417,8 +1433,9 @@ details[open] .a{animation:fadeonly 150ms ease-out}
   .ans-cta .arrow{align-self:flex-start}
   .ans-ctl{justify-content:flex-start;margin-top:20px}
   .ans-count{min-width:0;text-align:left}
-  .track{--pad:16px;gap:12px;margin-top:24px;padding-bottom:28px}
-  .aslide-w{flex-basis:calc(100% - 44px)}
+  .track{--pad:16px;gap:12px;margin-top:24px;padding-bottom:28px;scroll-padding-inline:var(--pad)}
+  .aslide-w{flex-basis:calc(100% - 44px);scroll-snap-align:start}
+  .aslide-w:last-child{scroll-snap-align:end}
   .aslide{grid-template-columns:minmax(0,1fr);padding:12px 12px 18px;border-radius:20px}
   .sl-fig{min-height:0;padding:20px 18px 22px;border-radius:14px}
   .sl-big{font-size:76px}
@@ -1617,6 +1634,30 @@ details[open] .qrow-b{animation:fadeonly 150ms ease-out}
     .armed:not(.still) [data-story] .piece.fly>.cv{animation-name:uncover;animation-timing-function:linear;animation-fill-mode:both;animation-timeline:--story;animation-range:cover var(--r0) cover var(--r1)}
   }
 
+  /* 2b. The story starts in the hero (site.js initStory measures each track and writes its range, --h0 to --h1 in
+        px of page scroll, and its end values on the element itself). The slide and the tile lift away and recede;
+        the card sheds its answer, the numbers first, down to its question; on wide screens that question travels as
+        a chip, with no number on it, past the logo row into the pile, and leaves with the pieces for the answer's
+        question line, where the answer posts around it. Up to 1100px it stays in the hero (a lighter version).
+        Absolute offsets, so the root scroll timeline. The load sequence runs on the planes and the card; the scroll
+        runs on their wrappers and rows, so the two compose and scrolling during the load blends. Longhands only. */
+  .js:not(.still) .hc-ql{animation:fadeonly 560ms ease-out 560ms both} /* the chip can never show before the card has posted */
+  @supports (animation-timeline:scroll()){
+    .armed:not(.still) :is(.hd-m,.hd-f,.hd-fold,.hd-glide){animation-timing-function:linear;animation-fill-mode:both;animation-timeline:scroll(root block);animation-range-start:var(--h0);animation-range-end:var(--h1)}
+    .armed:not(.still) .hd-m{animation-name:hd-move}
+    .armed:not(.still) .hd-f{animation-name:hd-fade}
+    .armed:not(.still) .hd-fold{animation-name:hd-fold}
+    .armed:not(.still) .hd-glide{animation-name:hd-glide}
+  }
+  .ho .hero2{position:relative;z-index:2} /* the traveling question passes over the logo row and the stage */
+  /* The answer waits scaled about its own question line, so that line stays under the chip while the card fades in
+     around it; then the chip fades and the question is the card's. Scrolling back above the post line swaps them back
+     in the same frame (they sit exactly on top of each other): the chip shows and the card's own line hides while
+     the chip is away, so the question moves instead of being copied. */
+  .ho .eq-wait .ic-eq{transform:scale(.97)}
+  .ho:not(.q-home) .ic-eq .insight-q{opacity:0}
+  .ho.q-home .hc-qm{opacity:0;transition:opacity 200ms ease 460ms}
+
   /* 3. Then, by time and never by scroll: "=" lands, the answer posts, its marks sweep, its first source opens once.
         It never un-posts. */
   .eqfig .op-eq{transition:opacity 200ms ease-out,transform 300ms var(--ease-out)}
@@ -1704,6 +1745,19 @@ details[open] .qrow-b{animation:fadeonly 150ms ease-out}
 @keyframes assemble{from{translate:var(--sx) var(--sy);rotate:var(--sr)}to{translate:0 0;rotate:0deg}}
 @keyframes unlift{0%,70%{opacity:1}100%{opacity:0}}
 @keyframes uncover{0%,82%{opacity:1}100%{opacity:0}}
+/* The hand-off. hd-fold collapses the card into its question chip (scale toward the chip's size; it goes in the last
+   30%). hd-glide is each of the chip's two trips (card to pile, pile to the answer): its speed ramps up from 0 over the
+   first quarter (quadratic), holds, and ramps back to 0 over the last, so it leaves, lands and leaves again with no
+   velocity step. site.js mirrors these exactly on the fallback path. */
+@keyframes hd-move{to{translate:var(--tx,0px) var(--ty,0px);rotate:var(--tr,0deg);scale:var(--ts,1)}}
+@keyframes hd-fade{to{opacity:var(--to,0)}}
+@keyframes hd-fold{70%{opacity:1}to{opacity:0;scale:var(--ts,1)}}
+@keyframes hd-glide{
+  0%{translate:0 0;animation-timing-function:cubic-bezier(.3333,0,.6667,.3333)}
+  25%{translate:calc(var(--tx) / 6) calc(var(--ty) / 6);animation-timing-function:linear}
+  75%{translate:calc(var(--tx) * 5 / 6) calc(var(--ty) * 5 / 6);animation-timing-function:cubic-bezier(.3333,.6667,.6667,1)}
+  100%{translate:var(--tx) var(--ty)}
+}
 
 /* Ask Arcus */
 /* Ask Arcus. A full pill only where it fits in the side gutter (1720px and up); below that a 48px icon. It steps
