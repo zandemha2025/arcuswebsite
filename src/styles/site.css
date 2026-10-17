@@ -871,8 +871,8 @@ details[open] .a{animation:fadeonly 150ms ease-out}
 .lg-t{display:inline-block;background:currentColor;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center}
 .tl .lg{color:var(--muted)}.tl .lg-n{color:var(--ink)}
 
-/* Tools: a still strip (ToolsStrip.astro). Two rows of chips, the second offset 84px, cropped by the page edge with
-   a 6% mask fade, in one region you can swipe or scroll with the keys. It never moves by itself: no marquee, no loop. */
+/* Tools: a still strip (ToolsStrip.astro). One list laid out as two rows of chips, cropped by the page edge with a 6%
+   mask fade, in one region you can swipe or scroll with the keys. It never moves by itself: no marquee, no loop. */
 .tools{padding:120px 0 0;container-type:inline-size} /* 100cqw below: the page width without the scrollbar */
 .tools-h{margin-bottom:28px}
 .tools-t{font-size:30px;font-weight:650;letter-spacing:-.025em;line-height:1.15;text-wrap:balance}
@@ -880,13 +880,20 @@ details[open] .a{animation:fadeonly 150ms ease-out}
 .tl{--tl-x:max(16px,calc((100cqw - 1312px) / 2));display:grid;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;padding:6px 0 14px;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .tl::-webkit-scrollbar{display:none}
 .tl:focus-visible{outline-offset:-2px;border-radius:14px}
-.tl ul{list-style:none;margin:0;padding:0 var(--tl-x);display:flex;gap:12px;width:max-content}
-.tl ul+ul{padding-left:max(0px,calc(var(--tl-x) - 84px))}
+.tl ul{list-style:none;margin:0;padding:0 var(--tl-x);display:grid;grid-template-rows:repeat(2,auto);grid-auto-flow:column;grid-auto-columns:max-content;justify-items:start;gap:12px;width:max-content}
 .tl li{display:inline-flex;align-items:center;min-height:48px;padding:10px 18px 10px 14px;border-radius:999px;background:#FFFFFF;box-shadow:var(--z1)}
 .tl .lg{font-size:15px}
 .tl .lg-i{width:20px;height:20px}
 .tools-f{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:18px}
 .tools-f a.ul{display:inline-block;padding:12px 0;margin:-12px 0} /* 44px tall to a finger, no taller to the eye */
+/* Desktop: one centered block. Heading, chips and footnote are centered, and each row of chips wraps inside the content
+   width, so nothing is cropped by the page edge and there is nothing to scroll. Phones keep the swipeable strip. */
+@media (min-width:901px){
+  .tools-h{text-align:center}.tools-h .muted{margin-inline:auto}
+  .tl{max-width:1312px;margin-inline:auto;padding:6px 32px 14px;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .tl ul{display:flex;width:auto;padding:0;flex-wrap:wrap;justify-content:center}
+  .tools-f{justify-content:center;text-align:center}
+}
 
 /* Client wall: a still hairline wall. Six cells in one row on wide screens, 3 x 2 below 1101px; silver hairlines
    between the cells. Each mark is a mask filled with --muted (ClientWall.astro sets its source, aspect ratio and

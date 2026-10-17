@@ -1174,7 +1174,10 @@ function initTrack() {
       : i === slides.length - 1 ? max : Math.min(max, s.offsetLeft - pad)));
   };
   const idx = () => { const p = snaps(), x = rail.scrollLeft; let best = 0; p.forEach((v, i) => { if (Math.abs(v - x) < Math.abs(p[best] - x)) best = i; }); return best; };
-  let shown = 0;
+  // Desktop (centered snapping) opens on the middle slide, so the neighbors peek evenly on both sides; phones start
+  // at the first slide. The count and arrows follow through sync().
+  const start = slides.length >= 3 && getComputedStyle(slides[0]).scrollSnapAlign.includes('center') ? Math.floor(slides.length / 2) : 0;
+  let shown = start;
   const sync = () => {
     const i = idx();
     if (cur && cur.textContent !== String(i + 1)) cur.textContent = String(i + 1);
@@ -1202,6 +1205,7 @@ function initTrack() {
     rail.scrollTo({ left: p[i], behavior: reduce ? 'auto' : 'smooth' });
   });
   addEventListener('resize', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
+  if (start) rail.scrollTo({ left: snaps()[start], behavior: 'auto' });
   sync();
   if (reduce || !('IntersectionObserver' in window)) return;
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { io.unobserve(e.target); e.target.classList.remove('wait'); } }), { threshold: 0.35 });

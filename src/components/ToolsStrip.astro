@@ -1,14 +1,12 @@
 ---
-// The tools we connect to, as a still strip: two rows of chips, the second offset, cropped by the page edge. It never
-// moves by itself (no marquee, no loop, so no pause control). The rows sit in one region that scrolls sideways, by
-// swipe, trackpad or the arrow keys once it has focus, so every tool is reachable. The marks are tinted --muted (the
+// The tools we connect to, as one list. Desktop: one centered block, the chips wrapping in centered rows. Phones: a
+// still strip of two rows cropped by the page edge, in one region that scrolls sideways by swipe or the arrow keys once
+// it has focus, so every tool is reachable. It never moves by itself (no marquee, no loop, so no pause control). The marks are tinted --muted (the
 // names stay ink), and the link under it goes to the full integrations list, its count computed at build.
 import Logo from './Logo.astro';
 import { TOOLS } from '../data/site.js';
 import { INTEGRATIONS } from '../data/all.js';
 const { title = 'Plugs into the tools you already use.', sub = 'Sales, tickets, ads, CRM, app stores, dashboards. We connect to the accounts you have. Nothing changes for your team.' } = Astro.props;
-const half = Math.ceil(TOOLS.length / 2);
-const rows = [TOOLS.slice(0, half), TOOLS.slice(half)];
 ---
 <section class="tools" aria-labelledby="tools-h">
   <div class="wrap tools-h">
@@ -16,7 +14,7 @@ const rows = [TOOLS.slice(0, half), TOOLS.slice(half)];
     <p class="muted">{sub}</p>
   </div>
   <div class="tl" tabindex="0" role="region" aria-label="Tools Arcus works with">
-    {rows.map((r) => <ul>{r.map((t) => <li><Logo name={t.name} logo={t.logo} size={20} tint /></li>)}</ul>)}
+    <ul>{TOOLS.map((t) => <li><Logo name={t.name} logo={t.logo} size={20} tint /></li>)}</ul>
   </div>
   <div class="wrap tools-f">
     <p class="tiny faint">And the spreadsheets, exports and partner decks you already have. If you use it, we can usually read it. <a class="ul" href="/integrations">See all {INTEGRATIONS.length} integrations</a></p>
