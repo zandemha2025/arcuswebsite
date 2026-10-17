@@ -107,8 +107,9 @@ export const TOOLS = [
 // Companies that have trusted Arcus. Add a logo only with the company's written OK.
 // { name: 'Company', logo: 'file-in-public-logos-clients' }. Empty slots show as placeholders on preview builds only.
 export const CLIENTS = [
-  { name: 'Starface', logo: 'starface.svg', h: 22 }, { name: 'Paramount Games', logo: 'paramount.svg', h: 52 }, { name: 'Truly', logo: 'truly.svg', h: 30 },
-  { name: 'MrBeast', logo: 'mrbeast.svg', h: 26 }, { name: 'Amazon', logo: 'amazon.svg', h: 32 }, { name: 'Hardee’s', logo: 'hardees.svg', h: 40 },
+  { name: 'Starface', logo: 'starface.svg', h: 22 }, { name: 'Paramount Games', logo: 'paramount.svg', h: 52 },
+  { name: 'Boston Beer Company', logo: 'bostonbeer.svg', h: 30 }, { name: 'ESSX', logo: 'essx.png', h: 26 },
+  { name: 'Clean Cause', logo: 'cleancause.png', h: 34 }, { name: 'Amazon', logo: 'amazon.svg', h: 32 },
 ];
 export const CLIENT_SLOTS = 6;
 

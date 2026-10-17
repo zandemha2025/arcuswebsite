@@ -11,10 +11,14 @@ const preview = import.meta.env.PUBLIC_PREVIEW === 'true' || import.meta.env.DEV
 const slots = CLIENTS.length ? CLIENTS : (preview ? Array.from({ length: CLIENT_SLOTS }, (_, i) => ({ name: `Client logo ${i + 1}`, logo: '' })) : []);
 // small: a compact 3 x 2 wall for a side column (Try it free, under the receipt).
 const { title = 'Brands we’ve worked with', bare = false, small = false } = Astro.props;
-const SIZE = { 'starface.svg': [22, 18], 'paramount.svg': [42, 34], 'truly.svg': [24, 20], 'mrbeast.svg': [20, 17], 'amazon.svg': [26, 22], 'hardees.svg': [30, 26] };
-// Aspect ratio from the file itself (viewBox, else width/height), so a new logo needs no measuring.
+const SIZE = { 'starface.svg': [22, 18], 'paramount.svg': [42, 34], 'bostonbeer.svg': [26, 15], 'essx.png': [20, 17], 'cleancause.png': [30, 25], 'amazon.svg': [26, 22] };
+// Aspect ratio from the file itself (SVG viewBox, else width/height; PNG header), so a new logo needs no measuring.
 const ratio = (file) => {
   try {
+    if (file.endsWith('.png')) {
+      const b = fs.readFileSync(path.join(process.cwd(), 'public/logos/clients', file));
+      return b.readUInt32BE(16) / b.readUInt32BE(20);
+    }
     const head = fs.readFileSync(path.join(process.cwd(), 'public/logos/clients', file), 'utf8').slice(0, 4000);
     const svg = (head.match(/<svg[\s\S]*?>/) || [''])[0];
     const vb = svg.match(/viewBox="\s*[\d.-]+[\s,]+[\d.-]+[\s,]+([\d.]+)[\s,]+([\d.]+)/);
